@@ -35,6 +35,7 @@ class AirportController extends React.Component<propTypes,statetypes>{
     }
     handlefuelav(event:any){
         this.setState({fuelavailable: event.target.value});
+        console.log(this.state.fuelavailable)
     }
     handlefuelcap(event:any){
         this.setState({fuelcapacity: event.target.value});
@@ -69,9 +70,9 @@ class AirportController extends React.Component<propTypes,statetypes>{
                     <label >Location</label><br/>
                     <input type="text" value={this.state.location} placeholder="Location" onChange={this.handlelocation}/><br/>
                     <label >Fuel Available:</label><br/>
-                    <input type="text" value={this.state.fuelavailable} placeholder="Fuel Available" onChange={this.handlefuelav}/><br/>
+                    <input type="number" value={this.state.fuelavailable} placeholder="Fuel Available" onChange={this.handlefuelav}/><br/>
                     <label >Fuel Capacity:</label><br/>
-                    <input type="text" value={this.state.fuelcapacity} placeholder="Fuel Capacity" onChange={this.handlefuelcap}/><br/>
+                    <input type="number" value={this.state.fuelcapacity} placeholder="Fuel Capacity" onChange={this.handlefuelcap}/><br/>
                     <input type="submit" value="Submit"/>
                 </form>
             </Fragment>

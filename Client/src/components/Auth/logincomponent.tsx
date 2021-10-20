@@ -26,6 +26,7 @@ class LoginComponent extends React.Component<propTypes,statetypes>{
     }
     handlemail(event:any){
         this.setState({email: event.target.value});
+        console.log(this.state.email)
         this.setState({errormsg:''})
     }
     handlepassword(event:any){
@@ -35,7 +36,6 @@ class LoginComponent extends React.Component<propTypes,statetypes>{
     handlesubmit=async (event:any)=>{
         event.preventDefault();
         const reqbody = {email:this.state.email,password:this.state.password}
-        console.log(reqbody)
         try{
             const response = await axios.post('http://localhost:9000/user/signin',reqbody)
             console.log('user loggged in');
