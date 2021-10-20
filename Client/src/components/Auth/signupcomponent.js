@@ -31,7 +31,6 @@ class SignUpComponent extends React.Component{
         console.log(reqbody)
         try{
             const response = await axios.post('http://localhost:9000/user/signup',reqbody)
-            const token = response.data.token
             console.log(response);
         }
         catch(e){

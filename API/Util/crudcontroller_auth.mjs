@@ -10,7 +10,20 @@ export const loginController = model =>async(req,res)=>{
     {
         return res.status(401).json("user not found");
     }
-    return res.send('user found')
+    const payload = {
+        user:{
+            id:result._id
+        }
+    }
+    console.log(payload)
+    jwt.sign(payload,'shhhhh',
+    {expiresIn:360000},
+    (err,token)=>{
+        console.log('error')
+        if(err) throw err;
+        console.log(token)
+        return res.json(token);
+    });
 }
 export const SignupController = model =>async(req,res)=>{
     var name = req.body.name
@@ -20,23 +33,8 @@ export const SignupController = model =>async(req,res)=>{
         return res.status(401).json("users exist");
     }
     try{
-        console.log(name,req.body.email,req.body.password)
         const data = await model.create({name:req.body.name,password:req.body.password,email:req.body.email});
-        console.log(data)
-        const payload = {
-            user:{
-                id:data._id
-            }
-        }
-        console.log(payload)
-        jwt.sign(payload,'shhhhh',
-        {expiresIn:360000},
-        (err,token)=>{
-            console.log('error')
-            if(err) throw err;
-            console.log(token)
-            res.json({token,data});
-        });
+        res.send('user created')
     }
     catch(e){
         return res.status(404).json({msg:'Email ID Taken'});

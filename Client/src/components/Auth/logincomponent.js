@@ -1,16 +1,17 @@
 import React, { Fragment } from "react";
-import { Redirect } from "react-router-dom";
 import axios from "axios";
+import isAuthenticated from "./authservice";
 
 class LoginComponent extends React.Component{
     constructor(props)
     {
         super(props);
+        this.props=props;
         this.state={
             password:'',
             email:'',
             errormsg:'',
-            loggedin:''
+            loggedin:false
         }
         this.handlemail=this.handlemail.bind(this);
         this.handlepassword=this.handlepassword.bind(this);
@@ -31,8 +32,13 @@ class LoginComponent extends React.Component{
         try{
             const response = await axios.post('http://localhost:9000/user/signin',reqbody)
             console.log('user loggged in');
-            this.setState({loggedin:true})
-            
+            const Accesstoken = response.data
+            if(Accesstoken)
+            {
+                localStorage.setItem("user", JSON.stringify(response.data));
+            }
+            this.setState({loggedin:true});
+            this.props.history.push("/welcome")
         }
         catch(e){
             this.setState({errormsg:'Invalid Credentials'})
@@ -41,6 +47,7 @@ class LoginComponent extends React.Component{
     }
     render()
     {
+        isAuthenticated(this.state.loggedin);
         return(
             <Fragment>
                 <form onSubmit={this.handlesubmit}>

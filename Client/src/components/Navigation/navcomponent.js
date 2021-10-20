@@ -1,5 +1,6 @@
 import React from 'react'
 import {NavLink} from 'react-router-dom'
+import isAuthenticated from '../Auth/authservice'
 class NavigationComponent extends React.Component
 {
     render()
@@ -8,15 +9,23 @@ class NavigationComponent extends React.Component
             <div>
             <nav>
                 <ul>
+                {!isAuthenticated()&&
                 <li>
-                    <NavLink to="/login">Login</NavLink>
+                      <NavLink to="/login">Login</NavLink>
                 </li>
+                }
+                {!isAuthenticated()&&
                 <li>
                     <NavLink to="/signup">SignUp</NavLink>
+                </li>
+                }
+                <li>
+                    <NavLink to="/welcome">Welcome</NavLink>
                 </li>
                 </ul>
             </nav>
             </div>
+        
         )
     }
 }
