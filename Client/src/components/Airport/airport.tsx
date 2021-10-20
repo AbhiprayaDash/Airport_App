@@ -1,8 +1,19 @@
-import React from "react";
-import { Fragment } from "react";
-import axios from "axios";
-class WelcomeComponent extends React.Component{
-    constructor(props)
+import React from 'react'
+import axios from 'axios';
+import { Fragment } from 'react';
+
+
+type statetypes={
+    name:string,
+    location:string,
+    fuelcapacity:number,
+    fuelavailable:number
+}
+type propTypes={
+
+}
+class AirportController extends React.Component<propTypes,statetypes>{
+    constructor(props:propTypes)
     {
         super(props);
         this.state={
@@ -16,25 +27,31 @@ class WelcomeComponent extends React.Component{
         this.handlefuelav=this.handlefuelav.bind(this);
         this.handlefuelcap=this.handlefuelcap.bind(this);
     }
-    handlename(event){
+    handlename(event:any){
         this.setState({name: event.target.value});
     }
-    handlelocation(event){
+    handlelocation(event:any){
         this.setState({location: event.target.value});
     }
-    handlefuelav(event){
+    handlefuelav(event:any){
         this.setState({fuelavailable: event.target.value});
     }
-    handlefuelcap(event){
+    handlefuelcap(event:any){
         this.setState({fuelcapacity: event.target.value});
     }
-    handlesubmit=async (event)=>{
+    handlesubmit=async (event:any)=>{
         event.preventDefault();
-        const reqbody = {name:this.state.name,email:this.state.email,password:this.state.password}
+        const reqbody = {
+            details:{
+                name:this.state.name,
+                location:this.state.location
+            },
+            fuelavailable:this.state.fuelavailable,
+            fuelcapacity:this.state.fuelcapacity
+        }
         console.log(reqbody)
         try{
-            const response = await axios.post('http://localhost:9000/user/signup',reqbody)
-            const token = response.data.token
+            const response = await axios.post('http://localhost:9000/airport',reqbody)
             console.log(response);
         }
         catch(e){
@@ -47,13 +64,13 @@ class WelcomeComponent extends React.Component{
             <Fragment>
                 <h1>Add Aiport</h1>
                 <form onSubmit={this.handlesubmit}>
-                    <label for="fname">Name:</label><br/>
+                    <label >Name:</label><br/>
                     <input type="text" value={this.state.name} placeholder="name" onChange={this.handlename}/><br/>
-                    <label for="email">Location</label><br/>
+                    <label >Location</label><br/>
                     <input type="text" value={this.state.location} placeholder="Location" onChange={this.handlelocation}/><br/>
-                    <label for="password">Fuel Available:</label><br/>
+                    <label >Fuel Available:</label><br/>
                     <input type="text" value={this.state.fuelavailable} placeholder="Fuel Available" onChange={this.handlefuelav}/><br/>
-                    <label for="password">Fuel Capacity:</label><br/>
+                    <label >Fuel Capacity:</label><br/>
                     <input type="text" value={this.state.fuelcapacity} placeholder="Fuel Capacity" onChange={this.handlefuelcap}/><br/>
                     <input type="submit" value="Submit"/>
                 </form>
@@ -61,4 +78,4 @@ class WelcomeComponent extends React.Component{
         )
     }
 }
-export default WelcomeComponent
+export default AirportController

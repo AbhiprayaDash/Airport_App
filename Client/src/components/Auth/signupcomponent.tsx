@@ -1,9 +1,16 @@
 import React, { Fragment } from 'react'
 import axios from 'axios'
 
-
-class SignUpComponent extends React.Component{
-    constructor(props)
+type statetypes={
+    name:string,
+    password:string,
+    email:string,
+}
+type propTypes={
+    history:any
+}
+class SignUpComponent extends React.Component<propTypes,statetypes>{
+    constructor(props:propTypes)
     {
         super(props);
         this.state={
@@ -16,16 +23,16 @@ class SignUpComponent extends React.Component{
         this.handlepassword=this.handlepassword.bind(this);
         this.handlesubmit=this.handlesubmit.bind(this);
     }
-    handlemail(event){
+    handlemail(event:any){
         this.setState({email: event.target.value});
     }
-    handlename(event){
+    handlename(event:any){
         this.setState({name: event.target.value});
     }
-    handlepassword(event){
+    handlepassword(event:any){
         this.setState({password: event.target.value});
     }
-    handlesubmit=async (event)=>{
+    handlesubmit=async (event:any)=>{
         event.preventDefault();
         const reqbody = {name:this.state.name,email:this.state.email,password:this.state.password}
         console.log(reqbody)
@@ -42,11 +49,11 @@ class SignUpComponent extends React.Component{
         return(
             <Fragment>
                 <form onSubmit={this.handlesubmit}>
-                    <label for="fname">Name:</label><br/>
+                    <label >Name:</label><br/>
                     <input type="text" value={this.state.name} placeholder="name" onChange={this.handlename}/><br/>
-                    <label for="email">Email</label><br/>
+                    <label >Email</label><br/>
                     <input type="text" value={this.state.email} placeholder="email" onChange={this.handlemail}/><br/>
-                    <label for="password">Password:</label><br/>
+                    <label >Password:</label><br/>
                     <input type="text" value={this.state.password} placeholder="password" onChange={this.handlepassword}/><br/>
                     <input type="submit" value="Submit"/>
                 </form>

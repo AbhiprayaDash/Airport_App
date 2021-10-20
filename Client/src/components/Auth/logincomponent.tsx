@@ -1,12 +1,19 @@
 import React, { Fragment } from "react";
 import axios from "axios";
-import isAuthenticated from "./authservice";
 
-class LoginComponent extends React.Component{
-    constructor(props)
+type statetypes={
+    password:string,
+    email:string,
+    errormsg:string,
+    loggedin:boolean
+}
+type propTypes={
+    history:any
+}
+class LoginComponent extends React.Component<propTypes,statetypes>{
+    constructor(props:propTypes)
     {
         super(props);
-        this.props=props;
         this.state={
             password:'',
             email:'',
@@ -17,15 +24,15 @@ class LoginComponent extends React.Component{
         this.handlepassword=this.handlepassword.bind(this);
         this.handlesubmit=this.handlesubmit.bind(this);
     }
-    handlemail(event){
+    handlemail(event:any){
         this.setState({email: event.target.value});
         this.setState({errormsg:''})
     }
-    handlepassword(event){
+    handlepassword(event:any){
         this.setState({password: event.target.value});
         this.setState({errormsg:''})
     }
-    handlesubmit=async (event)=>{
+    handlesubmit=async (event:any)=>{
         event.preventDefault();
         const reqbody = {email:this.state.email,password:this.state.password}
         console.log(reqbody)
@@ -47,13 +54,12 @@ class LoginComponent extends React.Component{
     }
     render()
     {
-        isAuthenticated(this.state.loggedin);
         return(
             <Fragment>
                 <form onSubmit={this.handlesubmit}>
-                    <label for="email">Email</label><br/>
+                    <label >Email</label><br/>
                     <input type="text" value={this.state.email} placeholder="email" onChange={this.handlemail}/><br/>
-                    <label for="password">Password:</label><br/>
+                    <label >Password:</label><br/>
                     <input type="text" value={this.state.password} placeholder="password" onChange={this.handlepassword}/><br/>
                     <input type="submit" value="Submit"/>
                 </form>
