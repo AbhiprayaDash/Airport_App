@@ -1,7 +1,16 @@
 import React from 'react'
 import axios from 'axios';
 import { Fragment } from 'react';
-
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import WelcomeComponent from '../welcome'
 
 type statetypes={
     name:string,
@@ -79,10 +88,11 @@ class AirportController extends React.Component<propTypes,statetypes>{
             fuelavailable:this.state.fuelavailable,
             fuelcapacity:this.state.fuelcapacity
         }
-        console.log(reqbody)
         try{
-            const response = await axios.post('http://localhost:9000/airport',reqbody)
-            console.log(response);
+            console.log(reqbody)
+            await axios.post('http://localhost:9000/airport',reqbody)
+            const response = await axios.get('http://localhost:9000/airport')
+            this.setState({responsedata:response.data})
         }
         catch(e){
             console.log(e)
@@ -91,31 +101,111 @@ class AirportController extends React.Component<propTypes,statetypes>{
     render()
     {
         const responsedata:Array<typeProvider> = this.state.responsedata
-        console.log(responsedata)
+        const theme = createTheme();
         return(
             <Fragment>
-                <h1>Add Aiport</h1>
-                <form onSubmit={this.handlesubmit}>
-                    <label >Name:</label><br/>
-                    <input type="text" value={this.state.name} placeholder="name" onChange={this.handlename}/><br/>
-                    <label >Location</label><br/>
-                    <input type="text" value={this.state.location} placeholder="Location" onChange={this.handlelocation}/><br/>
-                    <label >Fuel Available:</label><br/>
-                    <input type="number" value={this.state.fuelavailable} placeholder="Fuel Available" onChange={this.handlefuelav}/><br/>
-                    <label >Fuel Capacity:</label><br/>
-                    <input type="number" value={this.state.fuelcapacity} placeholder="Fuel Capacity" onChange={this.handlefuelcap}/><br/>
-                    <input type="submit" value="Submit"/>
-                </form>
-                <ul>
-                {
-                    
+                <WelcomeComponent/>
+                <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Add Airport
+          </Typography>
+          <Box component="form" onSubmit={this.handlesubmit} noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="name"
+              type="text"
+              value={this.state.name}
+              label="Name"
+              name="text"
+              onChange={this.handlename}
+              autoComplete="email"
+              autoFocus
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="location"
+              value={this.state.location}
+              label="Location"
+              type="text"
+              onChange={this.handlelocation}
+              id="password"
+              autoComplete="current-password"
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="Fuel Available"
+              value={this.state.fuelavailable}
+              label="Fuel Available"
+              type="number"
+              onChange={this.handlefuelav}
+              id="password"
+              autoComplete="current-password"
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="Fuel Capacity"
+              value={this.state.fuelcapacity}
+              label="Fuel Capacity"
+              type="number"
+              onChange={this.handlefuelcap}
+              id="password"
+              autoComplete="current-password"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Add Airport
+            </Button>
+          </Box>
+        </Box>
+      </Container>
+    </ThemeProvider>
+
+                <table style={{alignContent:'center',alignItems:'center',marginLeft:'550px',border:'1px solid black'}} className="center">
+                <tr>
+                    <th style={{border:'1px solid black'}}><h2>Aircraft Name  </h2></th>
+                    <th style={{border:'1px solid black'}}><h2>Airport Location</h2></th>
+                    <th style={{border:'1px solid black'}}><h2>Fuel Available</h2></th>
+                </tr>
+                    {
                     responsedata.map(function(value:typeProvider,index:number){
-                        return <h1><li key={index}>Airport Name:{value.details.name} , Airport Location:{value.details.location} , Fuel Available:{value.fuelavailable}</li></h1>
+                        return <tr>
+                        <td style={{border:'1px solid black'}}><p>Airport Name: {value.details.name}</p></td>
+                        <td style={{border:'1px solid black'}}><p>Airport Location: {value.details.location}</p></td>
+                        <td style={{border:'1px solid black'}}><p>Fuel Available:{value.fuelavailable}</p></td>
+                      </tr>
                     })
-                }
-                </ul>
+                    }
+                </table>
             </Fragment>
         )
     }
 }
 export default AirportController
+
+
+

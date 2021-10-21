@@ -9,10 +9,6 @@ type propTypes = {
 
 }
 class LogoutComponent extends React.Component<propTypes,stateTypes>{
-    constructor(props:propTypes)
-    {
-        super(props)
-    }
     render(){
         localStorage.removeItem("user")
         return(

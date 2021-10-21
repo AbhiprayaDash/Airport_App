@@ -39,7 +39,7 @@ app.get('/aircraft', (req, res) => {
 app.post('/airport', (req, res) => {
   _AirportController.AirportController.AddAirport(req, res);
 });
-app.post('/airport', (req, res) => {
+app.get('/airport', (req, res) => {
   _AirportController.AirportController.getAirport(req, res);
 });
 app.listen(port, () => {

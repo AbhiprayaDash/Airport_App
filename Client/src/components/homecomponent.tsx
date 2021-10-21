@@ -6,8 +6,8 @@ class HomeComponent extends React.Component{
     {
         return(
             <Fragment>
-                <h1>Welcome to Airport App</h1>
                 <NavigationComponent/>
+                
             </Fragment>
         )
     }

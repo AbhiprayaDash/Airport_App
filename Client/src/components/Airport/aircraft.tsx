@@ -1,7 +1,16 @@
 import React from 'react'
 import axios from 'axios';
 import { Fragment } from 'react';
-
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import WelcomeComponent from '../welcome'
 type statetypes={
     number:number,
     airline:string,
@@ -20,7 +29,7 @@ class AircraftController extends React.Component<propTypes,statetypes>{
         super(props);
         this.state ={
             number:0,
-            airline:'Indigo',
+            airline:'',
             response:[],
         }
         this.handlenumber=this.handlenumber.bind(this);
@@ -36,12 +45,11 @@ class AircraftController extends React.Component<propTypes,statetypes>{
     }
     componentDidUpdate()
     {
-        console.log('mounted')
         var loaddata = async()=>{
-            console.log('inside the loaddata function')
             const response = await axios.get('http://localhost:9000/aircraft')
-            if(this.state.response!==response)
+            if(JSON.stringify(this.state.response)!==JSON.stringify(response.data))
             {
+                console.log('added')
                 this.setState({response:response.data})
             }
         }
@@ -49,6 +57,7 @@ class AircraftController extends React.Component<propTypes,statetypes>{
     }
     handlenumber(event:any){
         this.setState({number: event.target.value});
+        console.log(this.state.number)
     }
     handleairline(event:any){
         const val:string = event.target.value
@@ -62,8 +71,9 @@ class AircraftController extends React.Component<propTypes,statetypes>{
         }
         console.log(reqbody)
         try{
-            const response = await axios.post('http://localhost:9000/aircraft',reqbody)
-            console.log(response);
+            await axios.post('http://localhost:9000/aircraft',reqbody)
+            const response = await axios.get('http://localhost:9000/aircraft')
+            this.setState({response:response.data})
         }
         catch(e){
             console.log(e)
@@ -72,28 +82,89 @@ class AircraftController extends React.Component<propTypes,statetypes>{
     render()
     {
         const responsedata:Array<typeProvider> = this.state.response
-        console.log(responsedata)
-        
+        const theme = createTheme();
         return(
             <Fragment>
-                <h1>Add Aircraft</h1>
-                <form onSubmit={this.handlesubmit}>
-                    <label>Aircraft_no:</label><br/>
-                    <input type="number" value={this.state.number} placeholder="Aircraft Number" onChange={this.handlenumber}/><br/>
-                    <label >Airline:</label><br/>
-                    <input type="text" value={this.state.airline} placeholder="Airline" onChange={this.handleairline}/><br/>
-                    <input type="submit" value="Submit"/>
-                </form>
-                <ul>
-                {
-                    
+                <WelcomeComponent/>
+<ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+            <Typography component="h1" variant="h5">
+            Add Aircraft
+          </Typography>
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Box component="form" onSubmit={this.handlesubmit} noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              type="number"
+              value={this.state.number}
+              label="Airport Number"
+              name="text"
+              onChange={this.handlenumber}
+              autoComplete="email"
+              autoFocus
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="Airlines"
+              value={this.state.airline}
+              label="Airlines"
+              type="text"
+              onChange={this.handleairline}
+              id="password"
+              autoComplete="current-password"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Add Airport
+            </Button>
+          </Box>
+        </Box>
+      </Container>
+    </ThemeProvider>
+                <table style={{alignContent:'center',alignItems:'center',marginLeft:'780px',border:'1px solid black'}} className="center">
+                <tr>
+                    <th style={{border:'1px solid black'}}><h2>Aircraft No  </h2></th>
+                    <th style={{border:'1px solid black'}}><h2>Airplane</h2></th>
+                </tr>
+                    {
                     responsedata.map(function(value:typeProvider,index:number){
-                        return <h1><li key={index}>Aircraft no:{value.aircraft_no} Airline:{value.airline}</li></h1>
+                        return <tr>
+                        <td style={{border:'1px solid black'}}><p>{value.aircraft_no}</p></td>
+                        <td style={{border:'1px solid black'}}><p>{value.airline}</p></td>
+                      </tr>
                     })
-                }
-                </ul>
+                    }
+                </table>
             </Fragment>
         )
     }
 }
 export default AircraftController
+
+
+
+
+
+
+
+
