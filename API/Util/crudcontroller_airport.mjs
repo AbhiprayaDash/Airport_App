@@ -1,9 +1,14 @@
 export const AddAirport = model=>async (req,res)=>{
     const result = await model.create({details:req.body.details,fuelcapacity:req.body.fuelcapacity,fuelavailable:req.body.fuelavailable})
-    console.log(result);
     res.send('airport added');
 }
 
+export const getAirport = model =>async(req,res)=>{
+    const result = await model.find({},{_id:0}).sort({details:1}).limit(10);
+    res.send(result);
+}
+
 export const AirportControllerutil = model =>({
-    AddAirport:AddAirport(model)
+    AddAirport:AddAirport(model),
+    getAirport:getAirport(model)
 })

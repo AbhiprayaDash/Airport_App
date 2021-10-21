@@ -33,8 +33,14 @@ app.get('/', (req, res) => {
 app.post('/aircraft', (req, res) => {
   _AircraftController.AircraftController.AddAircraft(req, res);
 });
+app.get('/aircraft', (req, res) => {
+  _AircraftController.AircraftController.getAircraft(req, res);
+});
 app.post('/airport', (req, res) => {
   _AirportController.AirportController.AddAirport(req, res);
+});
+app.post('/airport', (req, res) => {
+  _AirportController.AirportController.getAirport(req, res);
 });
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
