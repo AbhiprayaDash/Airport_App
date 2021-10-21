@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Redirect, Route,RouteProps } from "react-router";
-import isAuthenticated from "../Auth/authservice"
+import {isAuthenticated} from "../Auth/authservice"
 
 interface proptypes extends RouteProps{
     component:any,

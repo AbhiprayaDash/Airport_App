@@ -6,6 +6,7 @@ import WelcomeComponent from './components/welcome';
 import {PrivateRoute} from './components/Route/PrivateRoute'
 import AirportController from "./components/Airport/airport";
 import AircraftController from "./components/Airport/aircraft";
+import LogoutComponent from "./components/Auth/logout";
 function App() {
   return (
     <Switch>
@@ -15,6 +16,7 @@ function App() {
       <PrivateRoute exact path="/welcome" component={WelcomeComponent}/>
       <PrivateRoute exact path="/airport" component={AirportController}/>
       <PrivateRoute exact path="/aircraft" component={AircraftController}/>
+      <PrivateRoute exact path="/logout" component={LogoutComponent}/>
       <Route >
       </Route>
   </Switch>

@@ -1,7 +1,6 @@
 import React from 'react'
 import {NavLink} from 'react-router-dom'
-import isAuthenticated from '../Auth/authservice'
-console.log(typeof(isAuthenticated()))
+import {isAuthenticated} from '../Auth/authservice'
 class NavigationComponent extends React.Component
 {
     render()
@@ -23,6 +22,11 @@ class NavigationComponent extends React.Component
                 <li>
                     <NavLink to="/welcome">Welcome</NavLink>
                 </li>
+                {isAuthenticated()===null&&
+                <li>
+                    <NavLink to="/logout">Log Out</NavLink>
+                </li>
+                }
                 </ul>
             </nav>
             </div>

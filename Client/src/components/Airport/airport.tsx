@@ -7,10 +7,20 @@ type statetypes={
     name:string,
     location:string,
     fuelcapacity:number,
-    fuelavailable:number
+    fuelavailable:number,
+    responsedata:any
 }
 type propTypes={
 
+}
+type detailObjectType={
+    name:string,
+    location:string
+}
+interface typeProvider{
+    details:detailObjectType,
+    fuelcapacity:number,
+    fuelavailable:number
 }
 class AirportController extends React.Component<propTypes,statetypes>{
     constructor(props:propTypes)
@@ -21,11 +31,30 @@ class AirportController extends React.Component<propTypes,statetypes>{
             location:'',
             fuelcapacity:0,
             fuelavailable:0,
+            responsedata:[]
         }
         this.handlename=this.handlename.bind(this);
         this.handlelocation=this.handlelocation.bind(this);
         this.handlefuelav=this.handlefuelav.bind(this);
         this.handlefuelcap=this.handlefuelcap.bind(this);
+    }
+    componentDidMount(){
+        var loaddata = async()=>{
+            const response = await axios.get('http://localhost:9000/airport')
+            this.setState({responsedata:response.data})
+        }
+        loaddata()
+    }
+    componentDidUpdate()
+    {
+        var loaddata = async()=>{
+            const response = await axios.get('http://localhost:9000/airport')
+            if(this.state.responsedata!==response)
+            {
+                this.setState({responsedata:response.data})
+            }
+        }
+        loaddata()
     }
     handlename(event:any){
         this.setState({name: event.target.value});
@@ -61,6 +90,8 @@ class AirportController extends React.Component<propTypes,statetypes>{
     }
     render()
     {
+        const responsedata:Array<typeProvider> = this.state.responsedata
+        console.log(responsedata)
         return(
             <Fragment>
                 <h1>Add Aiport</h1>
@@ -75,6 +106,14 @@ class AirportController extends React.Component<propTypes,statetypes>{
                     <input type="number" value={this.state.fuelcapacity} placeholder="Fuel Capacity" onChange={this.handlefuelcap}/><br/>
                     <input type="submit" value="Submit"/>
                 </form>
+                <ul>
+                {
+                    
+                    responsedata.map(function(value:typeProvider,index:number){
+                        return <h1><li key={index}>Airport Name:{value.details.name} , Airport Location:{value.details.location} , Fuel Available:{value.fuelavailable}</li></h1>
+                    })
+                }
+                </ul>
             </Fragment>
         )
     }

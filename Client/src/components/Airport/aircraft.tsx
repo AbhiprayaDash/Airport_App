@@ -28,9 +28,7 @@ class AircraftController extends React.Component<propTypes,statetypes>{
     }
     componentDidMount()
     {
-        console.log('mounted')
         var loaddata = async()=>{
-            console.log('inside the loaddata function')
             const response = await axios.get('http://localhost:9000/aircraft')
             this.setState({response:response.data})
         }
