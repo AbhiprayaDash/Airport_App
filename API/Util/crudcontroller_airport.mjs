@@ -4,7 +4,7 @@ export const AddAirport = model=>async (req,res)=>{
 }
 
 export const getAirport = model =>async(req,res)=>{
-    const result = await model.find({},{_id:0}).sort({details:1}).limit(10);
+    const result = await model.find({},{_id:0}).sort({details:1}).limit(5);
     res.send(result);
 }
 

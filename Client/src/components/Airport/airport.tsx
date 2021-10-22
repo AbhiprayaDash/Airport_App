@@ -10,7 +10,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import WelcomeComponent from '../welcome'
+import WelcomeNavigation from '../Welcome/welcomenav'
 
 type statetypes={
     name:string,
@@ -104,7 +104,7 @@ class AirportController extends React.Component<propTypes,statetypes>{
         const theme = createTheme();
         return(
             <Fragment>
-                <WelcomeComponent/>
+                <WelcomeNavigation/>
                 <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />

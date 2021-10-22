@@ -10,7 +10,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import WelcomeComponent from '../welcome'
+import WelcomeNavigation from '../Welcome/welcomenav'
+import DisplayAircrafts from './displayaircraft'
+
 type statetypes={
     number:number,
     airline:string,
@@ -85,9 +87,9 @@ class AircraftController extends React.Component<propTypes,statetypes>{
         const theme = createTheme();
         return(
             <Fragment>
-                <WelcomeComponent/>
-<ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+                <WelcomeNavigation/>
+        <ThemeProvider theme={theme}>
+        <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
           sx={{
@@ -141,7 +143,7 @@ class AircraftController extends React.Component<propTypes,statetypes>{
         </Box>
       </Container>
     </ThemeProvider>
-                <table style={{alignContent:'center',alignItems:'center',marginLeft:'780px',border:'1px solid black'}} className="center">
+    <table style={{alignContent:'center',alignItems:'center',marginLeft:'780px',border:'1px solid black'}} className="center">
                 <tr>
                     <th style={{border:'1px solid black'}}><h2>Aircraft No  </h2></th>
                     <th style={{border:'1px solid black'}}><h2>Airplane</h2></th>
@@ -155,6 +157,7 @@ class AircraftController extends React.Component<propTypes,statetypes>{
                     })
                     }
                 </table>
+                
             </Fragment>
         )
     }

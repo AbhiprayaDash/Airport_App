@@ -31,4 +31,4 @@ const TransactionSchema = new Schema({
     }
 });
 
-export default mongoose.model('airport',AirportSchema);
+export default mongoose.model('transaction',TransactionSchema);

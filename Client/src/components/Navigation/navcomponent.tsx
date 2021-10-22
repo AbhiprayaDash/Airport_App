@@ -11,10 +11,10 @@ class NavigationComponent extends React.Component
     {
         return(
             <Fragment>
-            <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Toolbar sx={{ borderBottom: 1, borderColor: 'divider',color:'#0077b6',backgroundColor:'#edf6f9' }}>
                  <Typography
-                    component="h2"
-                     variant="h5"
+                    component="h1"
+                     variant="h3"
                     color="inherit"
                     align="left"
                     noWrap
