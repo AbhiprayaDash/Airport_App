@@ -1,14 +1,19 @@
 import React, { Fragment } from "react";
 import ImageComponent from "../Image/image";
 import WelcomeNavigation from "./welcomenav";
+import logo from '../../phil-mosley-wOK2f2stPDg-unsplash.jpg'
 
-class WelcomeComponent extends React.Component{
+
+type proptypes = {
+    images:any
+}
+class WelcomeComponent extends React.Component<proptypes>{
     render()
     {
         return(
             <Fragment>
             <WelcomeNavigation/>
-            <ImageComponent/>
+            <ImageComponent logo = {logo}/>
             </Fragment>
         )
     }

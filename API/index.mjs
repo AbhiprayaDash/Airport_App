@@ -5,6 +5,7 @@ import { AirportController } from './controller/AirportController.mjs'
 import bodyParser from 'body-parser';
 import cors from "cors";
 import AuthRoute from './Router/auth_route.mjs'
+import { TransactionController } from './controller/TransactionController.mjs';
 
 const app = express();
 const port = 9000;
@@ -33,6 +34,14 @@ app.post('/airport',(req,res)=>{
 app.get('/airport',(req,res)=>{
   AirportController.getAirport(req,res);
 })
+app.post('/transaction',(req,res)=>{
+  TransactionController.postransaction(req,res);
+})
+
+app.get('/transaction',(req,res)=>{
+  TransactionController.getransaction(req,res);
+})
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })

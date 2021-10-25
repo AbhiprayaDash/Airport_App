@@ -13,7 +13,7 @@ const TransactionSchema = new Schema({
     },
     Type:{
         type:String,
-        required:true,
+        required:true
     },
     airport:{
         type: Schema.Types.ObjectId, 

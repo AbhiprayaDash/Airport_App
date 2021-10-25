@@ -1,13 +1,13 @@
 import { Route, Switch } from "react-router";
-import HomeComponent from './components/homecomponent';
+import HomeComponent from './components/Home/homecomponent';
 import SignUpComponent from './components/Auth/signupcomponent';
 import LoginComponent from './components/Auth/logincomponent'
-import WelcomeComponent from './components/Welcome/welcome';
+import WelcomeComponent from '../src/components/Welcome/welcome';
 import {PrivateRoute} from './components/Route/PrivateRoute'
 import AirportController from "./components/Airport/airport";
 import AircraftController from "./components/Airport/aircraft";
 import LogoutComponent from "./components/Auth/logout";
-import DashboardContent from "./components/dashboard"
+import DashboardContent from "./components/Dashboard/dashboard"
 
 
 function App() {

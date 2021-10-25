@@ -14,6 +14,8 @@ var _cors = _interopRequireDefault(require("cors"));
 
 var _auth_route = _interopRequireDefault(require("./Router/auth_route.mjs"));
 
+var _TransactionController = require("./controller/TransactionController.mjs");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const app = (0, _express.default)();
@@ -41,6 +43,12 @@ app.post('/airport', (req, res) => {
 });
 app.get('/airport', (req, res) => {
   _AirportController.AirportController.getAirport(req, res);
+});
+app.post('/transaction', (req, res) => {
+  _TransactionController.TransactionController.postransaction(req, res);
+});
+app.get('/transaction', (req, res) => {
+  _TransactionController.TransactionController.getransaction(req, res);
 });
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);

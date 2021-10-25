@@ -1,7 +1,6 @@
 import React,{ CSSProperties } from "react";
-import logo from '../../tim-gouw-OwD1ON8O-O4-unsplash.jpg'
 type proptypes={
-
+    logo:any
 }
 type statetypes={
 
@@ -23,7 +22,7 @@ class ImageComponent extends React.Component<proptypes,statetypes>
             position: "relative"
           }as React.CSSProperties;;
         return (
-            <img src={logo} style={mystyle}/>
+            <img src={this.props.logo} style={mystyle}/>
         )
     }
 }
