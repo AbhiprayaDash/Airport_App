@@ -19,7 +19,7 @@ type statetypes={
     response:any
 }
 type propTypes={
-    
+    history:any
 }
 interface typeProvider{
     aircraft_no:number,
@@ -59,7 +59,6 @@ class AircraftController extends React.Component<propTypes,statetypes>{
     }
     handlenumber(event:any){
         this.setState({number: event.target.value});
-        console.log(this.state.number)
     }
     handleairline(event:any){
         const val:string = event.target.value
@@ -71,11 +70,11 @@ class AircraftController extends React.Component<propTypes,statetypes>{
             aircraft_no:this.state.number,
             airline:this.state.airline
         }
-        console.log(reqbody)
         try{
             await axios.post('http://localhost:9000/aircraft',reqbody)
             const response = await axios.get('http://localhost:9000/aircraft')
             this.setState({response:response.data})
+            this.props.history.push("/dashboard")
         }
         catch(e){
             console.log(e)
@@ -113,7 +112,7 @@ class AircraftController extends React.Component<propTypes,statetypes>{
               id="email"
               type="number"
               value={this.state.number}
-              label="Airport Number"
+              label="Aircraft Number"
               name="text"
               onChange={this.handlenumber}
               autoComplete="email"

@@ -37,12 +37,22 @@ export const mainListItems = (
       <ListItemText primary="Add Aircraft" />
       </NavLink>
     </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <ShoppingCartIcon />
+      </ListItemIcon>
+      <NavLink to="/transaction" style={{ textDecoration: 'none',color:'black'}}>
+      <ListItemText primary="Add Transaction" />
+      </NavLink>
+    </ListItem>
 
     <ListItem button>
       <ListItemIcon>
-        <BarChartIcon />
+        <ShoppingCartIcon />
       </ListItemIcon>
-      <ListItemText primary="Reports" />
+      <NavLink to="/report" style={{ textDecoration: 'none',color:'black'}}>
+      <ListItemText primary="Report" />
+      </NavLink>
     </ListItem>
   </div>
 );

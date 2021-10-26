@@ -17,13 +17,12 @@ const TransactionSchema = new Schema({
     },
     airport:{
         type: Schema.Types.ObjectId, 
-        ref: 'airports',
+        ref: 'airport',
         required:true
     },
     aircraft:{
         type: Schema.Types.ObjectId, 
-        ref: 'aircrafts',
-        required:true
+        ref: 'aircraft',
     },
     quantity:{
         type:Number,

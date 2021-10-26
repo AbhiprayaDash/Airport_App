@@ -15,6 +15,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import {mainListItems} from './listitems'
 import DisplayAircrafts from '../Airport/displayaircraft';
 import DisplayAirports from '../Airport/displayairport';
+import DisplayTransaction from '../Transaction/displaytransaction';
 
 const drawerWidth: number = 240;
 
@@ -150,7 +151,13 @@ const Dashboard = ()=> {
                 <DisplayAircrafts/>
               </Grid>
           </Grid>
-            
+            <br/>
+          <Grid container
+            spacing={3}>
+              <Grid item xs>
+                <DisplayTransaction/>
+              </Grid>
+          </Grid>
 
         </Box>
       </Box>

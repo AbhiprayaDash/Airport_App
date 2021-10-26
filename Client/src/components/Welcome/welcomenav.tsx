@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Link } from "react-router-dom";
-
+import { isAuthenticated } from "../Auth/authservice";
 class WelcomenavComponent extends React.Component
 {
     render(){
@@ -25,6 +25,11 @@ class WelcomenavComponent extends React.Component
                     <Button variant="contained" style={{marginLeft:'15px',padding:'10px'}}>
                     <Link to="/dashboard" style={{ textDecoration: 'none',color:'white' }}>Dashboard</Link>
                     </Button>
+                    {isAuthenticated()&&
+                    <Button variant="contained" style={{marginLeft:'15px',padding:'10px'}}>
+                    <Link to="/logout" style={{ textDecoration: 'none',color:'white'}}>Log Out</Link>
+                    </Button>
+                }
             </Toolbar>
         )
     }

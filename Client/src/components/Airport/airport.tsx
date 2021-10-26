@@ -20,7 +20,7 @@ type statetypes={
     responsedata:any
 }
 type propTypes={
-
+  history:any
 }
 type detailObjectType={
     name:string,
@@ -73,7 +73,6 @@ class AirportController extends React.Component<propTypes,statetypes>{
     }
     handlefuelav(event:any){
         this.setState({fuelavailable: event.target.value});
-        console.log(this.state.fuelavailable)
     }
     handlefuelcap(event:any){
         this.setState({fuelcapacity: event.target.value});
@@ -89,10 +88,10 @@ class AirportController extends React.Component<propTypes,statetypes>{
             fuelcapacity:this.state.fuelcapacity
         }
         try{
-            console.log(reqbody)
             await axios.post('http://localhost:9000/airport',reqbody)
             const response = await axios.get('http://localhost:9000/airport')
             this.setState({responsedata:response.data})
+            this.props.history.push("/dashboard")
         }
         catch(e){
             console.log(e)

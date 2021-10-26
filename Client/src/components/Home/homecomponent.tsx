@@ -2,8 +2,16 @@ import React, { Fragment } from "react";
 import NavigationComponent from "../Navigation/navcomponent";
 import ImageComponent from '../Image/image'
 import logo from '../../tim-gouw-OwD1ON8O-O4-unsplash.jpg'
+import { isAuthenticated } from "../Auth/authservice";
 
-class HomeComponent extends React.Component{
+type propTypes={
+    history:any
+}
+class HomeComponent extends React.Component<propTypes>{
+    componentDidMount(){
+        if(isAuthenticated())
+            this.props.history.push("/welcome")
+    }
     render()
     {
         return(

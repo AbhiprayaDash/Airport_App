@@ -8,7 +8,8 @@ import AirportController from "./components/Airport/airport";
 import AircraftController from "./components/Airport/aircraft";
 import LogoutComponent from "./components/Auth/logout";
 import DashboardContent from "./components/Dashboard/dashboard"
-
+import AddTransaction from "./components/Transaction/addtransaction";
+import ReportComponent from "./components/Report/report";
 
 function App() {
   return (
@@ -16,11 +17,13 @@ function App() {
       <Route exact path="/" component={HomeComponent}/>
       <Route exact path="/login" component={LoginComponent}/>
       <Route exact path="/signup" component={SignUpComponent}/>
-      <Route exact path="/dashboard" component={DashboardContent}/>
+      <PrivateRoute exact path="/dashboard" component={DashboardContent}/>
+      <PrivateRoute exact path="/transaction" component={AddTransaction}/>
       <PrivateRoute exact path="/welcome" component={WelcomeComponent}/>
       <PrivateRoute exact path="/airport" component={AirportController}/>
       <PrivateRoute exact path="/aircraft" component={AircraftController}/>
       <PrivateRoute exact path="/logout" component={LogoutComponent}/>
+      <PrivateRoute exact path="/report" component={ReportComponent}/>
       <Route >
       </Route>
   </Switch>

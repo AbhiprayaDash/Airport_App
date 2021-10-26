@@ -20,7 +20,8 @@ const AirportSchema = new Schema({
     },
     fuelavailable:{
         type:Number,
-        required:true
+        required:true,
+        default:0
     },
 });
 
