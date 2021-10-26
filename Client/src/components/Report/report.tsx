@@ -56,7 +56,7 @@ class ReportComponent extends React.Component<propTypes,stateTypes>{
                 })
                 .map((val:any)=>{         
                     return(   
-                    <tr>
+                    <tr key={'1'}>
                         <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}}><p>{moment(val.Duration.date).format('DD/MM/YYYY')} {moment(val.Duration.date).format('hh:mm:ss')}</p></td>
                         <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}}><p>{val.Type}</p></td>
                         <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}}><p>{val.quantity}</p></td>

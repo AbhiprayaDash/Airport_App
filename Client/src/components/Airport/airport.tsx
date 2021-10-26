@@ -16,8 +16,7 @@ type statetypes={
     name:string,
     location:string,
     fuelcapacity:number,
-    fuelavailable:number,
-    responsedata:any
+    fuelavailable:number
 }
 type propTypes={
   history:any
@@ -40,30 +39,11 @@ class AirportController extends React.Component<propTypes,statetypes>{
             location:'',
             fuelcapacity:0,
             fuelavailable:0,
-            responsedata:[]
         }
         this.handlename=this.handlename.bind(this);
         this.handlelocation=this.handlelocation.bind(this);
         this.handlefuelav=this.handlefuelav.bind(this);
         this.handlefuelcap=this.handlefuelcap.bind(this);
-    }
-    componentDidMount(){
-        var loaddata = async()=>{
-            const response = await axios.get('http://localhost:9000/airport')
-            this.setState({responsedata:response.data})
-        }
-        loaddata()
-    }
-    componentDidUpdate()
-    {
-        var loaddata = async()=>{
-            const response = await axios.get('http://localhost:9000/airport')
-            if(this.state.responsedata!==response)
-            {
-                this.setState({responsedata:response.data})
-            }
-        }
-        loaddata()
     }
     handlename(event:any){
         this.setState({name: event.target.value});
@@ -89,8 +69,6 @@ class AirportController extends React.Component<propTypes,statetypes>{
         }
         try{
             await axios.post('http://localhost:9000/airport',reqbody)
-            const response = await axios.get('http://localhost:9000/airport')
-            this.setState({responsedata:response.data})
             this.props.history.push("/dashboard")
         }
         catch(e){
@@ -99,7 +77,6 @@ class AirportController extends React.Component<propTypes,statetypes>{
     }
     render()
     {
-        const responsedata:Array<typeProvider> = this.state.responsedata
         const theme = createTheme();
         return(
             <Fragment>
@@ -184,24 +161,6 @@ class AirportController extends React.Component<propTypes,statetypes>{
       </Container>
     </ThemeProvider>
 
-                <table style={{alignContent:'center',alignItems:'center',marginLeft:'550px',border:'1px solid black'}} className="center">
-                <tbody>
-                <tr>
-                    <th style={{border:'1px solid black'}}><h2>Aircraft Name  </h2></th>
-                    <th style={{border:'1px solid black'}}><h2>Airport Location</h2></th>
-                    <th style={{border:'1px solid black'}}><h2>Fuel Available</h2></th>
-                </tr>
-                    {
-                    responsedata.map(function(value:typeProvider,index:number){
-                        return <tr key={index}>
-                        <td style={{border:'1px solid black'}} key={value.details.name}><p>Airport Name: {value.details.name}</p></td>
-                        <td style={{border:'1px solid black'}} key={value.details.location}><p>Airport Location: {value.details.location}</p></td>
-                        <td style={{border:'1px solid black'}} key={value.fuelavailable}><p>Fuel Available:{value.fuelavailable}</p></td>
-                      </tr>
-                    })
-                    }
-                    </tbody>
-                </table>
             </Fragment>
         )
     }

@@ -14,8 +14,7 @@ import WelcomeNavigation from '../Welcome/welcomenav'
 
 type statetypes={
     number:number,
-    airline:string,
-    response:any
+    airline:string
 }
 type propTypes={
     history:any
@@ -31,30 +30,9 @@ class AircraftController extends React.Component<propTypes,statetypes>{
         this.state ={
             number:0,
             airline:'',
-            response:[],
         }
         this.handlenumber=this.handlenumber.bind(this);
         this.handleairline=this.handleairline.bind(this);
-    }
-    componentDidMount()
-    {
-        var loaddata = async()=>{
-            const response = await axios.get('http://localhost:9000/aircraft')
-            this.setState({response:response.data})
-        }
-        loaddata()
-    }
-    componentDidUpdate()
-    {
-        var loaddata = async()=>{
-            const response = await axios.get('http://localhost:9000/aircraft')
-            if(JSON.stringify(this.state.response)!==JSON.stringify(response.data))
-            {
-                console.log('added')
-                this.setState({response:response.data})
-            }
-        }
-        loaddata()
     }
     handlenumber(event:any){
         this.setState({number: event.target.value});
@@ -71,8 +49,6 @@ class AircraftController extends React.Component<propTypes,statetypes>{
         }
         try{
             await axios.post('http://localhost:9000/aircraft',reqbody)
-            const response = await axios.get('http://localhost:9000/aircraft')
-            this.setState({response:response.data})
             this.props.history.push("/dashboard")
         }
         catch(e){
@@ -81,7 +57,6 @@ class AircraftController extends React.Component<propTypes,statetypes>{
     }
     render()
     {
-        const responsedata:Array<typeProvider> = this.state.response
         const theme = createTheme();
         return(
             <Fragment>
@@ -141,22 +116,7 @@ class AircraftController extends React.Component<propTypes,statetypes>{
         </Box>
       </Container>
     </ThemeProvider>
-    <table style={{alignContent:'center',alignItems:'center',marginLeft:'780px',border:'1px solid black'}} className="center">
-               <tbody>
-                <tr>
-                    <th style={{border:'1px solid black'}}><h2>Aircraft No  </h2></th>
-                    <th style={{border:'1px solid black'}}><h2>Airplane</h2></th>
-                </tr>
-                    {
-                    responsedata.map(function(value:typeProvider,index:number){
-                        return <tr key={index}>
-                        <td style={{border:'1px solid black'}} ><p>{value.aircraft_no}</p></td>
-                        <td style={{border:'1px solid black'}}><p>{value.airline}</p></td>
-                      </tr>
-                    })
-                    }
-                    </tbody>
-                </table>
+    
                 
             </Fragment>
         )

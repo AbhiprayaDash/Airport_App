@@ -2,10 +2,10 @@ import * as React from 'react';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PeopleIcon from '@mui/icons-material/People';
 import {NavLink} from 'react-router-dom'
+import AddIcon from '@mui/icons-material/Add';
+import DescriptionIcon from '@mui/icons-material/Description';
 
 export const mainListItems = (
   <div>
@@ -19,7 +19,7 @@ export const mainListItems = (
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <DashboardIcon />
+        <AddIcon />
       </ListItemIcon>
       <NavLink to="/airport" style={{ textDecoration: 'none',color:'black'}}>
         <ListItemText primary="Add Airport" />
@@ -27,7 +27,7 @@ export const mainListItems = (
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <ShoppingCartIcon />
+        <AddIcon />
       </ListItemIcon>
       <NavLink to="/aircraft" style={{ textDecoration: 'none',color:'black'}}>
       <ListItemText primary="Add Aircraft" />
@@ -35,7 +35,7 @@ export const mainListItems = (
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <ShoppingCartIcon />
+        <AddIcon />
       </ListItemIcon>
       <NavLink to="/transaction" style={{ textDecoration: 'none',color:'black'}}>
       <ListItemText primary="Add Transaction" />
@@ -44,7 +44,7 @@ export const mainListItems = (
 
     <ListItem button>
       <ListItemIcon>
-        <ShoppingCartIcon />
+        <DescriptionIcon />
       </ListItemIcon>
       <NavLink to="/report" style={{ textDecoration: 'none',color:'black'}}>
       <ListItemText primary="Report" />
