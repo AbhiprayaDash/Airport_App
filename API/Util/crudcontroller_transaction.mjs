@@ -3,6 +3,13 @@ export const postransaction = (model,AirportModel,AircraftModel) =>async(req,res
     const Airportresult = await AirportModel.findOne(
         {'details.name':req.body.airport_name}
     )
+    if((Airportresult.fuelcapacity)<Number(req.body.quantity)+Airportresult.fuelavailable)
+    {
+        console.log(Airportresult.fuelcapacity)
+        console.log(Airportresult.fuelavailable)
+        console.log(req.body.quantity)
+        return res.status(401).json("Airport don't have enough capacity");
+    }
     if(!Airportresult)
     {
         return res.status(401).json("Airport not found");
