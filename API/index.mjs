@@ -1,11 +1,11 @@
 import express from 'express'
 import InputCheck from './middleware/InputCheck.mjs'
-import {AircraftController} from './controller/AircraftController.mjs'
-import { AirportController } from './controller/AirportController.mjs'
 import bodyParser from 'body-parser';
 import cors from "cors";
 import AuthRoute from './Router/auth_route.mjs'
-import { TransactionController } from './controller/TransactionController.mjs';
+import AircraftRoute from './Router/aircraft_route.mjs'
+import AirportRoute from './Router/airport_route.mjs';
+import TransactionRoute from './Router/transaction_route.mjs'
 
 const app = express();
 const port = 9000;
@@ -19,29 +19,12 @@ app.use(cors());
 
 //Routes
 app.use('/user',AuthRoute);
+app.use('/aircraft',AircraftRoute);
+app.use('/airport',AirportRoute);
+app.use('/transaction',TransactionRoute)
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
-app.post('/aircraft',(req,res)=>{
-    AircraftController.AddAircraft(req,res);
-})
-app.get('/aircraft',(req,res)=>{
-    AircraftController.getAircraft(req,res);
-})
-app.post('/airport',(req,res)=>{
-    AirportController.AddAirport(req,res);
-})
-app.get('/airport',(req,res)=>{
-  AirportController.getAirport(req,res);
-})
-app.post('/transaction',(req,res)=>{
-  TransactionController.postransaction(req,res);
-})
-
-app.get('/transaction',(req,res)=>{
-  TransactionController.getransaction(req,res);
-})
-
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
