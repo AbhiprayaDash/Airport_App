@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import axios from "axios";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import NavigationComponent from '../Navigation/navcomponent'
+import { postlogindata } from "./authservice";
 type statetypes={
     password:string,
     email:string,
@@ -48,13 +48,8 @@ class LoginComponent extends React.Component<propTypes,statetypes>{
         event.preventDefault();
         const reqbody = {email:this.state.email,password:this.state.password}
         try{
-            const response = await axios.post('http://localhost:9000/user/signin',reqbody)
-            console.log('user loggged in');
-            const Accesstoken = response.data
-            if(Accesstoken)
-            {
-                localStorage.setItem("user", JSON.stringify(response.data));
-            }
+            await postlogindata(reqbody)
+            console.log('after')
             this.setState({loggedin:true});
             this.props.history.push("/welcome")
         }

@@ -37,8 +37,6 @@ class DisplayTransaction extends React.Component<proptypes,statetypes>{
     }
     render()
     {
-        var aircraft;
-        console.log('mounted')
         return(
             <Fragment>
                 <Typography
@@ -52,6 +50,7 @@ class DisplayTransaction extends React.Component<proptypes,statetypes>{
             Transaction Details
             </Typography>
             <table style={{fontFamily:'Arial, Helvetica, sans-serif',alignContent:'center',alignItems:'center',border:'1px solid #ddd',width:'100%'}} className="center">
+                <tbody>
                 <tr style={{backgroundColor:'#e5e5e5'}}>
                     <th style={{border: '1px solid #ddd',backgroundColor:'#34a0a4',color:'white'}}><h2>Date/Time  </h2></th>
                     <th style={{border: '1px solid #ddd',backgroundColor:'#34a0a4',color:'white'}}><h2>Type</h2></th>
@@ -64,14 +63,15 @@ class DisplayTransaction extends React.Component<proptypes,statetypes>{
                         var date2:any = moment(b.Duration.date).format('YYYYMMDD')
                         return date1-date2
                      }).map(function(value:typeProvider,index:number){
-                        return <tr>
-                        <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}}><p>{moment(value.Duration.date).format('DD/MM/YYYY')} {moment(value.Duration.date).format('hh:mm:ss')} </p></td>
-                        <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}}><p>{value.Type}</p></td>
-                        <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}}><p>{value.quantity}</p></td>
-                        <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}}><p>{value.aircraft&&value.aircraft.aircraft_no}</p></td>
+                        return <tr key={index}>
+                        <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}} ><p>{moment(value.Duration.date).format('DD/MM/YYYY')} {moment(value.Duration.date).format('hh:mm:ss')} </p></td>
+                        <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}} ><p>{value.Type}</p></td>
+                        <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}} ><p>{value.quantity}</p></td>
+                        <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}} ><p>{value.aircraft&&value.aircraft.aircraft_no}</p></td>
                       </tr>
                     })
                     }
+                </tbody>
                 </table>
                 </Fragment>
         )

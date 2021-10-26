@@ -185,6 +185,7 @@ class AirportController extends React.Component<propTypes,statetypes>{
     </ThemeProvider>
 
                 <table style={{alignContent:'center',alignItems:'center',marginLeft:'550px',border:'1px solid black'}} className="center">
+                <tbody>
                 <tr>
                     <th style={{border:'1px solid black'}}><h2>Aircraft Name  </h2></th>
                     <th style={{border:'1px solid black'}}><h2>Airport Location</h2></th>
@@ -192,13 +193,14 @@ class AirportController extends React.Component<propTypes,statetypes>{
                 </tr>
                     {
                     responsedata.map(function(value:typeProvider,index:number){
-                        return <tr>
-                        <td style={{border:'1px solid black'}}><p>Airport Name: {value.details.name}</p></td>
-                        <td style={{border:'1px solid black'}}><p>Airport Location: {value.details.location}</p></td>
-                        <td style={{border:'1px solid black'}}><p>Fuel Available:{value.fuelavailable}</p></td>
+                        return <tr key={index}>
+                        <td style={{border:'1px solid black'}} key={value.details.name}><p>Airport Name: {value.details.name}</p></td>
+                        <td style={{border:'1px solid black'}} key={value.details.location}><p>Airport Location: {value.details.location}</p></td>
+                        <td style={{border:'1px solid black'}} key={value.fuelavailable}><p>Fuel Available:{value.fuelavailable}</p></td>
                       </tr>
                     })
                     }
+                    </tbody>
                 </table>
             </Fragment>
         )

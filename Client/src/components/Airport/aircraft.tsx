@@ -11,7 +11,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import WelcomeNavigation from '../Welcome/welcomenav'
-import DisplayAircrafts from './displayaircraft'
 
 type statetypes={
     number:number,
@@ -143,18 +142,20 @@ class AircraftController extends React.Component<propTypes,statetypes>{
       </Container>
     </ThemeProvider>
     <table style={{alignContent:'center',alignItems:'center',marginLeft:'780px',border:'1px solid black'}} className="center">
+               <tbody>
                 <tr>
                     <th style={{border:'1px solid black'}}><h2>Aircraft No  </h2></th>
                     <th style={{border:'1px solid black'}}><h2>Airplane</h2></th>
                 </tr>
                     {
                     responsedata.map(function(value:typeProvider,index:number){
-                        return <tr>
-                        <td style={{border:'1px solid black'}}><p>{value.aircraft_no}</p></td>
+                        return <tr key={index}>
+                        <td style={{border:'1px solid black'}} ><p>{value.aircraft_no}</p></td>
                         <td style={{border:'1px solid black'}}><p>{value.airline}</p></td>
                       </tr>
                     })
                     }
+                    </tbody>
                 </table>
                 
             </Fragment>

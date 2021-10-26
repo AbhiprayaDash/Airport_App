@@ -4,13 +4,6 @@ import WelcomenavComponent from '../Welcome/welcomenav'
 import moment from 'moment'
 
 
-type typeProvider={
-    Duration:Date,
-    type:string,
-    airport:any,
-    quantity:any,
-    aircraft:any
-}
 type stateTypes = {
     response:any,
     airportresponse:any
@@ -40,12 +33,11 @@ class ReportComponent extends React.Component<propTypes,stateTypes>{
     render()
     {   
         var airportdata:any=[]
-        var element
         return(
             <Fragment>
             <WelcomenavComponent/>
         {
-        this.state.airportresponse.map((value:any)=>{
+          this.state.airportresponse.map((value:any)=>{
             return (
                 <div>
                 <h1>{value.details.name}</h1>
@@ -60,13 +52,10 @@ class ReportComponent extends React.Component<propTypes,stateTypes>{
                 airportdata =this.state.response.filter((data:any)=>data.airport._id===value._id ).sort(function(a:any,b:any){
                         var date1:any = moment(a.Duration.date).format('YYYYMMDD')
                         var date2:any = moment(b.Duration.date).format('YYYYMMDD')
-                        return date1-date2
-                        
+                        return date1-date2 
                 })
-                .map((val:any)=>{
-                    console.log(val)           
-                    return(
-                        
+                .map((val:any)=>{         
+                    return(   
                     <tr>
                         <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}}><p>{moment(val.Duration.date).format('DD/MM/YYYY')} {moment(val.Duration.date).format('hh:mm:ss')}</p></td>
                         <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}}><p>{val.Type}</p></td>

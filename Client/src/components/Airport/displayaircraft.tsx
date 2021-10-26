@@ -30,7 +30,6 @@ class DisplayAircrafts extends React.Component<proptypes,statetypes>{
     }
     render()
     {
-        console.log('mounted')
         return(
             <Fragment>
             <Typography
@@ -44,6 +43,7 @@ class DisplayAircrafts extends React.Component<proptypes,statetypes>{
             Aircraft Details
             </Typography>
             <table style={{fontFamily:'Arial, Helvetica, sans-serif',alignContent:'center',alignItems:'center',border:'1px solid #ddd',width:'100%'}} className="center">
+                <tbody>
                 <tr style={{backgroundColor:'#e5e5e5'}}>
                     <th style={{border: '1px solid #ddd',backgroundColor:'#34a0a4',color:'white'}}><h2>Aircraft No  </h2></th>
                     <th style={{border: '1px solid #ddd',backgroundColor:'#34a0a4',color:'white'}}><h2>Airplane</h2></th>
@@ -52,12 +52,13 @@ class DisplayAircrafts extends React.Component<proptypes,statetypes>{
                     this.state.response.sort(function(a:any,b:any){
                         return (a.aircraft_no-b.aircraft_no);
                      }).map(function(value:typeProvider,index:number){
-                        return <tr>
+                        return <tr key={index}>
                         <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}}><p>{value.aircraft_no}</p></td>
                         <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}}><p>{value.airline}</p></td>
                       </tr>
                     })
                     }
+                </tbody>
                 </table>
 
             </Fragment>

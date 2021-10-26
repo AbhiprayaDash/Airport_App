@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import ImageComponent from "../Image/image";
 import WelcomeNavigation from "./welcomenav";
-import logo from '../../phil-mosley-wOK2f2stPDg-unsplash.jpg'
+import logo from '../../images/phil-mosley-wOK2f2stPDg-unsplash.jpg'
 
 
 type proptypes = {

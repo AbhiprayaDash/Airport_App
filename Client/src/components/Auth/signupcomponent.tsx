@@ -55,7 +55,6 @@ class SignUpComponent extends React.Component<propTypes,statetypes>{
     handlesubmit=async (event:any)=>{
         event.preventDefault();
         const reqbody = {name:this.state.name,email:this.state.email,password:this.state.password}
-        console.log(reqbody)
         try{
             await axios.post('http://localhost:9000/user/signup',reqbody);
             this.setState({signedup:true})
@@ -68,7 +67,7 @@ class SignUpComponent extends React.Component<propTypes,statetypes>{
     render()
     {
         const theme = createTheme();
-        if(this.state.signedup==true)
+        if(this.state.signedup===true)
         {
             return (<Redirect to={{pathname: "/login"}} />)
         }

@@ -1,18 +1,16 @@
 import React,{Fragment} from "react";
-import axios from "axios";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import NavigationComponent from '../Navigation/navcomponent'
 import WelcomenavComponent from "../Welcome/welcomenav";
+import {PostTransactionService} from './PostTransactionService'
+
 
 type stateTypes= {
     type:string,
@@ -54,31 +52,10 @@ class AddTransaction extends React.Component<propTypes,stateTypes>{
     handlesubmit=async (event:any)=>{
         console.log('submitted')
         event.preventDefault();
-        if(this.state.type==="IN")
-        {
-            const reqbody = {type:this.state.type,airport_name:this.state.airport_name,quantity:this.state.quantity}
-            console.log(reqbody)
-            try{
-                const response = await axios.post('http://localhost:9000/transaction',reqbody)
-                this.props.history.push("/dashboard")
-            }
-            catch(e){
-                console.log("Invalid Credentials")
-            }
-        }
-        else{
-            const reqbody = {type:this.state.type,airport_name:this.state.airport_name,aircraft_no:this.state.aircraft_no,quantity:this.state.quantity}
-            console.log(reqbody)
-            try{
-                await axios.post('http://localhost:9000/transaction',reqbody)
-                this.props.history.push("/dashboard")
-            }
-            catch(e){
-                console.log("Invalid Input Data")
-            }
-        }
-        
-            
+        var statedata:stateTypes = this.state;
+        var propdata:propTypes = this.props;
+        await PostTransactionService(statedata,propdata)      
+        console.log('post')    
     }
     render()
     {

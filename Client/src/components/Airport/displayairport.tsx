@@ -36,7 +36,6 @@ class DisplayAirports extends React.Component<proptypes,statetypes>{
     }
     render()
     {
-        console.log('mounted')
         return(
             <Fragment>
                 <Typography
@@ -50,6 +49,7 @@ class DisplayAirports extends React.Component<proptypes,statetypes>{
             Aiport Details
             </Typography>
             <table style={{fontFamily:'Arial, Helvetica, sans-serif',alignContent:'center',alignItems:'center',border:'1px solid #ddd',width:'100%'}} className="center">
+            <tbody>
                 <tr style={{backgroundColor:'#e5e5e5'}}>
                     <th style={{border: '1px solid #ddd',backgroundColor:'#34a0a4',color:'white'}}><h2>Airport Name  </h2></th>
                     <th style={{border: '1px solid #ddd',backgroundColor:'#34a0a4',color:'white'}}><h2>Airport Location</h2></th>
@@ -59,13 +59,14 @@ class DisplayAirports extends React.Component<proptypes,statetypes>{
                     this.state.response.sort(function(a:any,b:any){
                         return a.details.name.localeCompare(b.details.name);
                      }).map(function(value:typeProvider,index:number){
-                        return <tr>
-                        <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}}><p>{value.details.name}</p></td>
-                        <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}}><p>{value.details.location}</p></td>
-                        <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}}><p>{value.fuelavailable}</p></td>
+                        return <tr key={index}>
+                        <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}} ><p>{value.details.name}</p></td>
+                        <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}} ><p>{value.details.location}</p></td>
+                        <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}} ><p>{value.fuelavailable}</p></td>
                       </tr>
                     })
                     }
+                    </tbody>
                 </table>
                 </Fragment>
         )

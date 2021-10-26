@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import NavigationComponent from "../Navigation/navcomponent";
 import ImageComponent from '../Image/image'
-import logo from '../../tim-gouw-OwD1ON8O-O4-unsplash.jpg'
+import logo from '../../images/tim-gouw-OwD1ON8O-O4-unsplash.jpg'
 import { isAuthenticated } from "../Auth/authservice";
 
 type propTypes={

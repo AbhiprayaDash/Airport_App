@@ -7,10 +7,6 @@ type statetypes={
 }
 class ImageComponent extends React.Component<proptypes,statetypes>
 {
-    constructor(prop:proptypes)
-    {
-        super(prop)
-    }
     render()
     {
         const mystyle:CSSProperties = {
@@ -20,9 +16,9 @@ class ImageComponent extends React.Component<proptypes,statetypes>
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             position: "relative"
-          }as React.CSSProperties;;
+        } as React.CSSProperties;;
         return (
-            <img src={this.props.logo} style={mystyle}/>
+            <img src={this.props.logo} style={mystyle} alt="background"/>
         )
     }
 }
