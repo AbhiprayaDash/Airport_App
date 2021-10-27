@@ -16,6 +16,7 @@ import {mainListItems} from './listitems'
 import DisplayAircrafts from '../Airport/displayaircraft';
 import DisplayAirports from '../Airport/displayairport';
 import DisplayTransaction from '../Transaction/displaytransaction';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 
 const drawerWidth: number = 240;
 
@@ -105,6 +106,7 @@ const Dashboard = ()=> {
               noWrap
               sx={{ flexGrow: 1 }}
             >
+              <DashboardIcon/>
               Dashboard
             </Typography>
 

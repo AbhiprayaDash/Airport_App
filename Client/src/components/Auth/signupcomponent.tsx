@@ -12,16 +12,15 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import NavigationComponent from '../Navigation/navcomponent'
 import {validateSignupData} from './authservice'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {errormsg,successmsg} from '../Toast/toastservice'
+import {successmsg} from '../Toast/toastservice'
 
 type statetypes={
     name:string,
     password:string,
     email:string,
-    signedup:boolean,
-    errormsg:string
+    signedup:boolean
 }
 type propTypes={
     history:any
@@ -34,55 +33,35 @@ class SignUpComponent extends React.Component<propTypes,statetypes>{
             name:'',
             password:'',
             email:'',
-            signedup:false,
-            errormsg:''
+            signedup:false
         }
         this.handlename=this.handlename.bind(this);
         this.handlemail=this.handlemail.bind(this);
         this.handlepassword=this.handlepassword.bind(this);
         this.handlesubmit=this.handlesubmit.bind(this);
-        this.successmsg = this.successmsg.bind(this)
-        this.errormsg = this.errormsg.bind(this)
     }
     componentDidUpdate()
     {
       if(this.state.signedup===true)
       {
-        this.successmsg()
+        successmsg("Signed up successfully,Login to Continue")
         setTimeout(
           () => {
               console.log('signed up')
               this.props.history.push("/login")
             },
-        3000
+        2000
       );
       }
     }
-    successmsg()
-    {
-      toast.success("Signed up successfully,Login to Continue",{
-        position: toast.POSITION.TOP_LEFT,
-        theme: "colored"
-      })
-    }
-    errormsg()
-    {
-        toast.error("Invalid User name or password", {
-          position: toast.POSITION.TOP_CENTER,
-          theme: "colored"
-        });
-    }
     handlemail(event:any){
         this.setState({email: event.target.value});
-        this.setState({errormsg:''})
     }
     handlename(event:any){
         this.setState({name: event.target.value});
-        this.setState({errormsg:''})
     }
     handlepassword(event:any){
         this.setState({password: event.target.value});
-        this.setState({errormsg:''})
     }
     handlesubmit=async (event:any)=>{
         event.preventDefault();
@@ -159,7 +138,9 @@ class SignUpComponent extends React.Component<propTypes,statetypes>{
               onChange={this.handlepassword}
               autoComplete="current-password"
             />
-            <Box component="div" display="inline" style={{color:'#5f6368'}}>Use 8 or more characters,must have uppercase and lowercase letter,at least 2 numbers and no spaces</Box>
+            {
+            this.state.password!==""&&<Box component="div" display="inline" style={{color:'#5f6368'}}>Use 8 or more characters,must have uppercase and lowercase letter,at least 2 numbers and no spaces</Box>
+            }
             <Button
               type="submit"
               fullWidth

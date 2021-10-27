@@ -1,18 +1,11 @@
 export const postransaction = (model,AirportModel,AircraftModel) =>async(req,res)=>{
     console.log('post')
     const Airportresult = await AirportModel.findOne(
-        {'details.name':req.body.airport_name}
+        {'name':req.body.airport_name}
     )
-    if((Airportresult.fuelcapacity)<Number(req.body.quantity)+Airportresult.fuelavailable)
-    {
-        console.log(Airportresult.fuelcapacity)
-        console.log(Airportresult.fuelavailable)
-        console.log(req.body.quantity)
-        return res.status(401).json("Airport don't have enough capacity");
-    }
     if(!Airportresult)
     {
-        return res.status(401).json("Airport not found");
+        return res.send("NoAirport");
     }
     if(req.body.type=='OUT')
     {
@@ -21,22 +14,21 @@ export const postransaction = (model,AirportModel,AircraftModel) =>async(req,res
         )
         if(!AircraftResult)
         {
-            return res.status(401).json("Aircraft not found");
+            return res.send("NoAircraft");
         }
         try{
             console.log(Airportresult.fuelavailable)
             console.log(req.body.quantity)
-        if(Airportresult.fuelavailable-req.body.quantity<0)
-        {
-            return res.status(401).json("Fuel Not available");
-        }
-            
-        await AirportModel.update(
-            {_id:Airportresult._id},
-            { 
-                $inc:{fuelavailable:-req.body.quantity}
+            if(Airportresult.fuelavailable-req.body.quantity<0)
+            {
+                return res.send("NoFuel");
             }
-        )
+            await AirportModel.update(
+                {_id:Airportresult._id},
+                { 
+                $inc:{fuelavailable:-req.body.quantity}
+                }
+            )
         const result = await model.create({Type:req.body.type,airport:Airportresult._id,aircraft:AircraftResult._id,quantity:req.body.quantity})
         console.log(result)
         res.send(result)
@@ -48,12 +40,19 @@ export const postransaction = (model,AirportModel,AircraftModel) =>async(req,res
     }
     else{ 
         try{
-        await AirportModel.update(
-            {_id:Airportresult._id},
+            if((Airportresult.fuelcapacity)<Number(req.body.quantity)+Airportresult.fuelavailable)
+            {
+                console.log(Airportresult.fuelcapacity)
+                console.log(Airportresult.fuelavailable)
+                console.log(req.body.quantity)
+                return res.send("NoCapacity");
+            }
+            await AirportModel.update(
+                {_id:Airportresult._id},
             { 
                 $inc:{fuelavailable:req.body.quantity}
             }
-        )
+            )
         }
         catch(e)
         {

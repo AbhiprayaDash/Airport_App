@@ -8,11 +8,13 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import WelcomenavComponent from "../Welcome/welcomenav";
-import {PostTransactionService} from './PostTransactionService'
+import {PostTransactionService} from './transactionService'
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import NavigationComponent from "../Navigation/navcomponent";
 
 type stateTypes= {
     type:string,
@@ -57,14 +59,14 @@ class AddTransaction extends React.Component<propTypes,stateTypes>{
         var statedata:stateTypes = this.state;
         var propdata:propTypes = this.props;
         await PostTransactionService(statedata,propdata)      
-        console.log('post')    
     }
     render()
     {
         const theme = createTheme();
         return(
             <Fragment>
-            <WelcomenavComponent/>
+            <NavigationComponent/>
+            <ToastContainer limit={3} autoClose={1500}/>
             <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />

@@ -2,7 +2,6 @@ import { Route, Switch } from "react-router";
 import HomeComponent from './components/Home/homecomponent';
 import SignUpComponent from './components/Auth/signupcomponent';
 import LoginComponent from './components/Auth/logincomponent'
-import WelcomeComponent from '../src/components/Welcome/welcome';
 import {PrivateRoute} from './components/Route/PrivateRoute'
 import AirportController from "./components/Airport/airport";
 import AircraftController from "./components/Airport/aircraft";
@@ -19,7 +18,6 @@ function App() {
       <Route exact path="/signup" component={SignUpComponent}/>
       <PrivateRoute exact path="/dashboard" component={DashboardContent}/>
       <PrivateRoute exact path="/transaction" component={AddTransaction}/>
-      <PrivateRoute exact path="/welcome" component={WelcomeComponent}/>
       <PrivateRoute exact path="/airport" component={AirportController}/>
       <PrivateRoute exact path="/aircraft" component={AircraftController}/>
       <PrivateRoute exact path="/logout" component={LogoutComponent}/>

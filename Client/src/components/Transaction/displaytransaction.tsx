@@ -2,6 +2,12 @@ import React, { Fragment } from "react"
 import axios from 'axios'
 import Typography from '@mui/material/Typography';
 import moment from 'moment'
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import Paper from '@mui/material/Paper';
+import {StyledTableCell,StyledTableRow} from '../Airport/tablestyle'
 
 type durationType={
     date:Date
@@ -49,31 +55,48 @@ class DisplayTransaction extends React.Component<proptypes,statetypes>{
             >
             Transaction Details
             </Typography>
-            <table style={{fontFamily:'Arial, Helvetica, sans-serif',alignContent:'center',alignItems:'center',border:'1px solid #ddd',width:'100%'}} className="center">
-                <tbody>
-                <tr style={{backgroundColor:'#e5e5e5'}}>
-                    <th style={{border: '1px solid #ddd',backgroundColor:'#34a0a4',color:'white'}}><h2>Date/Time  </h2></th>
-                    <th style={{border: '1px solid #ddd',backgroundColor:'#34a0a4',color:'white'}}><h2>Type</h2></th>
-                    <th style={{border: '1px solid #ddd',backgroundColor:'#34a0a4',color:'white'}}><h2>Fuel</h2></th>
-                    <th style={{border: '1px solid #ddd',backgroundColor:'#34a0a4',color:'white'}}><h2>Aircraft</h2></th>
-                </tr>
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                   <TableHead>
+                    <StyledTableRow>
+                    <StyledTableCell>Date/Time</StyledTableCell>
+                    <StyledTableCell >Type</StyledTableCell>
+                    <StyledTableCell >Fuel</StyledTableCell>
+                    <StyledTableCell >Aircraft</StyledTableCell>
+                    </StyledTableRow>
+                   </TableHead>
+                   <TableBody>
                     {
                     this.state.response.sort(function(a:any,b:any){
                         var date1:any = moment(a.Duration.date).format('YYYYMMDD')
                         var date2:any = moment(b.Duration.date).format('YYYYMMDD')
-                        return date1-date2
+                        var time1:any = moment(a.Duration.date).format('HH')
+                        var time2:any = moment(b.Duration.date).format('HH')
+                        if(date1===date2)
+                        {
+                            return time2-time1
+                        }
+                        return date2-date1
                      }).map(function(value:typeProvider,index:number){
-                        return <tr key={index}>
-                        <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}} ><p>{moment(value.Duration.date).format('DD/MM/YYYY')} {moment(value.Duration.date).format('hh:mm:ss')} </p></td>
-                        <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}} ><p>{value.Type}</p></td>
-                        <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}} ><p>{value.quantity}</p></td>
-                        <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}} ><p>{value.aircraft&&value.aircraft.aircraft_no}</p></td>
-                      </tr>
+                        return(
+                            <StyledTableRow
+                              key={index}
+                              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                              <StyledTableCell component="th" scope="row">
+                              {moment(value.Duration.date).format('DD/MM/YYYY')} {moment(value.Duration.date).format('HH:mm:ss')}
+                              </StyledTableCell>
+                              <StyledTableCell >{value.Type}</StyledTableCell>
+                              <StyledTableCell >{value.quantity}</StyledTableCell>
+                              <StyledTableCell >{value.aircraft&&value.aircraft.aircraft_no}</StyledTableCell>
+                            </StyledTableRow>
+                            )
                     })
                     }
-                </tbody>
-                </table>
-                </Fragment>
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            </Fragment>
         )
     }
 }

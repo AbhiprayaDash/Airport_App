@@ -1,7 +1,7 @@
 import React,{Fragment} from 'react'
 import axios from 'axios'
-import WelcomenavComponent from '../Welcome/welcomenav'
 import moment from 'moment'
+import NavigationComponent from '../Navigation/navcomponent'
 
 
 type stateTypes = {
@@ -35,12 +35,12 @@ class ReportComponent extends React.Component<propTypes,stateTypes>{
         var airportdata:any=[]
         return(
             <Fragment>
-            <WelcomenavComponent/>
+            <NavigationComponent/>
         {
           this.state.airportresponse.map((value:any)=>{
             return (
                 <div>
-                <h1>{value.details.name}</h1>
+                <h1>{value.name}</h1>
                 <table style={{fontFamily:'Arial, Helvetica, sans-serif',alignContent:'center',alignItems:'center',border:'1px solid #ddd',width:'100%'}} className="center">
                 <tr style={{backgroundColor:'#e5e5e5'}}>
                     <th style={{border: '1px solid #ddd',backgroundColor:'#34a0a4',color:'white'}}><h2>Date/Time  </h2></th>
@@ -50,14 +50,20 @@ class ReportComponent extends React.Component<propTypes,stateTypes>{
                 </tr>
             {
                 airportdata =this.state.response.filter((data:any)=>data.airport._id===value._id ).sort(function(a:any,b:any){
-                        var date1:any = moment(a.Duration.date).format('YYYYMMDD')
-                        var date2:any = moment(b.Duration.date).format('YYYYMMDD')
-                        return date1-date2 
+                    var date1:any = moment(a.Duration.date).format('YYYYMMDD')
+                    var date2:any = moment(b.Duration.date).format('YYYYMMDD')
+                    var time1:any = moment(a.Duration.date).format('HH')
+                    var time2:any = moment(b.Duration.date).format('HH')
+                    if(date1===date2)
+                    {
+                        return time2-time1
+                    }
+                    return date2-date1
                 })
                 .map((val:any)=>{         
                     return(   
                     <tr key={'1'}>
-                        <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}}><p>{moment(val.Duration.date).format('DD/MM/YYYY')} {moment(val.Duration.date).format('hh:mm:ss')}</p></td>
+                        <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}}><p>{moment(val.Duration.date).format('DD/MM/YYYY')} {moment(val.Duration.date).format('HH:mm:ss')}</p></td>
                         <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}}><p>{val.Type}</p></td>
                         <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}}><p>{val.quantity}</p></td>
                         <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}}>

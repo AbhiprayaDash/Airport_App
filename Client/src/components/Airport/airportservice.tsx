@@ -1,54 +1,36 @@
 import axios from "axios";
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { errormsg, successmsg } from "../Toast/toastservice";
 
-const airporterrormsg=(msg:string)=>{
-    toast.error(msg, {
-      position: toast.POSITION.TOP_CENTER,
-      theme: "colored"
-    });
-  }
-const inputerrormsg=()=>{
-    toast.error("Fuel quantity should not be greater than 100000", {
-      position: toast.POSITION.TOP_CENTER,
-      theme: "colored"
-    });
-  }
-const errormsg=()=>{
-  {
-      toast.error("Capacity should be greater than available", {
-        position: toast.POSITION.TOP_CENTER,
-        theme: "colored"
-      });
-  }
-}
 export async function postAircraftData(reqbody:any):Promise<any>{
     try{
         if(Number(reqbody.fuelavailable)>Number(reqbody.fuelcapacity))
         {
-            throw "error";
+            throw new Error('error');
         }
         const response = await axios.post('http://localhost:9000/airport',reqbody)
         if(response.data==="Number exeeded")
         {   
-            throw "inputerror"
+            throw new Error('inputerror')
         }
         if(response.data==="Airport Exists")
         {
-            throw "exists"
+            throw new Error('exists')
         }
+        successmsg("Airport Added Successfully")
     }
-    catch(e){
-        if(e==="error")
+    catch(e:any){
+        console.log(e.message)
+        if(e.message==="error")
         {
-            errormsg()
+            errormsg("Capacity should be greater than available")
         }
-        else if(e==="inputerror"){
-            inputerrormsg()
+        else if(e.message==="inputerror"){
+            errormsg("Fuel quantity should not be greater than 100000")
         }
-        else if(e==="exists")
+        else if(e.message==="exists")
         {
-            airporterrormsg("Airport Already Exists")
+            errormsg("Airport Already Exists")
         }
     }
 }

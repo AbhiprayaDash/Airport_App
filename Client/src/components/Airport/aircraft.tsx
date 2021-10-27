@@ -4,16 +4,17 @@ import { Fragment } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import WelcomeNavigation from '../Welcome/welcomenav'
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+import { ToastContainer} from 'react-toastify';
 import Select from '@mui/material/Select';
+import { errormsg, successmsg } from '../Toast/toastservice';
+import LocalAirportSharpIcon from '@mui/icons-material/LocalAirportSharp';
+import NavigationComponent from '../Navigation/navcomponent';
 
 type statetypes={
     number:number,
@@ -21,10 +22,6 @@ type statetypes={
 }
 type propTypes={
     history:any
-}
-interface typeProvider{
-    aircraft_no:number,
-    airline:string
 }
 class AircraftController extends React.Component<propTypes,statetypes>{
     constructor(props:propTypes)
@@ -52,11 +49,15 @@ class AircraftController extends React.Component<propTypes,statetypes>{
             airline:this.state.airline
         }
         try{
-            await axios.post('http://localhost:9000/aircraft',reqbody)
-            this.props.history.push("/dashboard")
+            const result = await axios.post('http://localhost:9000/aircraft',reqbody)
+            if(result.data==="AircraftExist")
+            {
+                throw new Error("Aircraft exists");
+            }
+            successmsg("Aircraft Added Successfully")
         }
         catch(e){
-            console.log(e)
+            errormsg("Aircraft exists")
         }
     }
     render()
@@ -64,7 +65,8 @@ class AircraftController extends React.Component<propTypes,statetypes>{
         const theme = createTheme();
         return(
             <Fragment>
-                <WelcomeNavigation/>
+                <ToastContainer limit={3} autoClose={1500}/>
+            <NavigationComponent/>
         <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -80,7 +82,7 @@ class AircraftController extends React.Component<propTypes,statetypes>{
             Add Aircraft
           </Typography>
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
+            <LocalAirportSharpIcon />
           </Avatar>
           <Box component="form" onSubmit={this.handlesubmit} noValidate sx={{ mt: 1 }}>
             <FormControl fullWidth sx={{ mt: 3, mb: 2 }}>
@@ -117,15 +119,13 @@ class AircraftController extends React.Component<propTypes,statetypes>{
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Add Airport
+              Add Aircraft
             </Button>
           </Box>
         </Box>
       </Container>
     </ThemeProvider>
-    
-                
-            </Fragment>
+    </Fragment>
         )
     }
 }

@@ -12,14 +12,13 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import NavigationComponent from '../Navigation/navcomponent'
 import { postlogindata } from "./authservice";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {successmsg,errormsg} from '../Toast/toastservice'
 
 type statetypes={
     password:string,
     email:string,
-    errormsg:string,
     loggedin:boolean
 }
 type propTypes={
@@ -32,7 +31,6 @@ class LoginComponent extends React.Component<propTypes,statetypes>{
         this.state={
             password:'',
             email:'',
-            errormsg:'',
             loggedin:false
         }
         this.handlemail=this.handlemail.bind(this);
@@ -67,7 +65,6 @@ class LoginComponent extends React.Component<propTypes,statetypes>{
         }
         catch(e){
             errormsg("Invalid User name or password")
-            this.setState({errormsg:'Invalid Credentials'})
             console.log(e)
         }
     }

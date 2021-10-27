@@ -1,18 +1,46 @@
-import React from "react";
-import { Redirect } from "react-router";
-
-
+import React, { Fragment } from "react";
+import { ToastContainer } from "react-toastify";
+import {successmsg} from '../Toast/toastservice'
+import 'react-toastify/dist/ReactToastify.css';
 type stateTypes ={
-
+    loggedout:boolean
 }
 type propTypes = {
-
+    history:any
 }
 class LogoutComponent extends React.Component<propTypes,stateTypes>{
-    render(){
+    constructor(props:propTypes)
+    {
+        super(props)
+        this.state={
+            loggedout:false
+        }
+        this.LogoutApp=this.LogoutApp.bind(this)
+    }
+    componentDidUpdate(){
+        if(this.state.loggedout===true)
+        {
+        successmsg("Logged out successfully")
+        setTimeout(
+          () => {
+              console.log('logged out')
+              this.props.history.push("/")
+            },
+        2000
+      );
+    }
+    }
+    LogoutApp()
+    {
         localStorage.removeItem("user")
+        this.setState({loggedout:true})
+    }
+    render(){
+        this.state.loggedout===false&&this.LogoutApp()
         return(
-            <Redirect to={{pathname: "/"}} />
+            <Fragment>
+                <ToastContainer limit={3} autoClose={1500}/>
+            </Fragment>
         )
     }
 }
