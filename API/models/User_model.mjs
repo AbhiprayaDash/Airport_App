@@ -6,7 +6,8 @@ mongoose.connect('mongodb://localhost:27017/AirportData');
 const UserSchema = new Schema({
     name:{
         type:String,
-        required:true
+        required:true,
+        unique:false
     },
     password:{
         type:String,

@@ -11,6 +11,12 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import WelcomeNavigation from '../Welcome/welcomenav'
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { postAircraftData } from './airportservice';
 
 type statetypes={
     name:string,
@@ -21,12 +27,8 @@ type statetypes={
 type propTypes={
   history:any
 }
-type detailObjectType={
-    name:string,
-    location:string
-}
 interface typeProvider{
-    details:detailObjectType,
+    name:string,
     fuelcapacity:number,
     fuelavailable:number
 }
@@ -35,7 +37,7 @@ class AirportController extends React.Component<propTypes,statetypes>{
     {
         super(props);
         this.state={
-            name:'',
+            name:'Indira Gandhi International Airport,Delhi',
             location:'',
             fuelcapacity:0,
             fuelavailable:0,
@@ -44,6 +46,28 @@ class AirportController extends React.Component<propTypes,statetypes>{
         this.handlelocation=this.handlelocation.bind(this);
         this.handlefuelav=this.handlefuelav.bind(this);
         this.handlefuelcap=this.handlefuelcap.bind(this);
+        this.errormsg=this.errormsg.bind(this)
+        this.airporterrormsg=this.airporterrormsg.bind(this)
+        this.inputerrormsg = this.inputerrormsg.bind(this)
+    }
+    airporterrormsg(){
+      toast.error("Airport Already Exists", {
+        position: toast.POSITION.TOP_CENTER,
+        theme: "colored"
+      });
+    }
+    inputerrormsg(){
+      toast.error("Fuel quantity should not be greater than 100000", {
+        position: toast.POSITION.TOP_CENTER,
+        theme: "colored"
+      });
+    }
+    errormsg()
+    {
+        toast.error("Capacity should be greater than available", {
+          position: toast.POSITION.TOP_CENTER,
+          theme: "colored"
+        });
     }
     handlename(event:any){
         this.setState({name: event.target.value});
@@ -60,26 +84,18 @@ class AirportController extends React.Component<propTypes,statetypes>{
     handlesubmit=async (event:any)=>{
         event.preventDefault();
         const reqbody = {
-            details:{
-                name:this.state.name,
-                location:this.state.location
-            },
+            name:this.state.name,
             fuelavailable:this.state.fuelavailable,
             fuelcapacity:this.state.fuelcapacity
         }
-        try{
-            await axios.post('http://localhost:9000/airport',reqbody)
-            this.props.history.push("/dashboard")
-        }
-        catch(e){
-            console.log(e)
-        }
+        postAircraftData(reqbody)
     }
     render()
     {
         const theme = createTheme();
         return(
             <Fragment>
+              <ToastContainer limit={3} autoClose={1500}/>
                 <WelcomeNavigation/>
                 <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -99,31 +115,21 @@ class AirportController extends React.Component<propTypes,statetypes>{
             Add Airport
           </Typography>
           <Box component="form" onSubmit={this.handlesubmit} noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="name"
-              type="text"
-              value={this.state.name}
-              label="Name"
-              name="text"
-              onChange={this.handlename}
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="location"
-              value={this.state.location}
-              label="Location"
-              type="text"
-              onChange={this.handlelocation}
-              id="password"
-              autoComplete="current-password"
-            />
+            <FormControl fullWidth>
+            <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={this.state.name}
+                label="Age"
+                onChange={this.handlename}
+            >
+                <MenuItem value={"Indira Gandhi International Airport,Delhi"}>Indira Gandhi International Airport,Delhi</MenuItem>
+                <MenuItem value={"Rajiv Gandhi International Airport,Hyderabad"}>Rajiv Gandhi International Airport,Hyderabad</MenuItem>
+                <MenuItem value={"Chhatrapati Shivaji International Airport,Mumbai"}>Chhatrapati Shivaji International Airport,Mumbai</MenuItem>
+                <MenuItem value={"Chennai International Airport,Chennai"}>Chennai International Airport,Chennai</MenuItem>
+                <MenuItem value={"Kempegowda International Airport,Bangalore"}>Kempegowda International Airport,Bangalore</MenuItem>
+            </Select>
+          </FormControl>
             <TextField
               margin="normal"
               required

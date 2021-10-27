@@ -12,6 +12,10 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import NavigationComponent from '../Navigation/navcomponent'
 import { postlogindata } from "./authservice";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {successmsg,errormsg} from '../Toast/toastservice'
+
 type statetypes={
     password:string,
     email:string,
@@ -35,25 +39,34 @@ class LoginComponent extends React.Component<propTypes,statetypes>{
         this.handlepassword=this.handlepassword.bind(this);
         this.handlesubmit=this.handlesubmit.bind(this);
     }
+    componentDidUpdate(){
+      if(this.state.loggedin===true)
+      {
+        successmsg("Logged In successfully")
+        setTimeout(
+          () => {
+              console.log('signed up')
+              this.props.history.push("/dashboard")
+            },
+        2000
+      );
+      }
+    }
     handlemail(event:any){
         this.setState({email: event.target.value});
-        console.log(this.state.email)
-        this.setState({errormsg:''})
     }
     handlepassword(event:any){
         this.setState({password: event.target.value});
-        this.setState({errormsg:''})
     }
     handlesubmit=async (event:any)=>{
         event.preventDefault();
         const reqbody = {email:this.state.email,password:this.state.password}
         try{
             await postlogindata(reqbody)
-            console.log('after')
             this.setState({loggedin:true});
-            this.props.history.push("/welcome")
         }
         catch(e){
+            errormsg("Invalid User name or password")
             this.setState({errormsg:'Invalid Credentials'})
             console.log(e)
         }
@@ -81,9 +94,6 @@ class LoginComponent extends React.Component<propTypes,statetypes>{
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Typography component="h1" variant="h5">
-            {this.state.errormsg}
-          </Typography>
           <Box component="form" onSubmit={this.handlesubmit} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
@@ -109,6 +119,7 @@ class LoginComponent extends React.Component<propTypes,statetypes>{
               onChange={this.handlepassword}
               autoComplete="current-password"
             />
+
             <Button
               type="submit"
               fullWidth
@@ -124,6 +135,7 @@ class LoginComponent extends React.Component<propTypes,statetypes>{
                 </Link>
               </Grid>
             </Grid>
+            <ToastContainer limit={3} autoClose={1500}/>
           </Box>
         </Box>
       </Container>

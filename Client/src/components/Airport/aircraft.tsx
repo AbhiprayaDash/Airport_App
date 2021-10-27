@@ -11,6 +11,9 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import WelcomeNavigation from '../Welcome/welcomenav'
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 type statetypes={
     number:number,
@@ -28,8 +31,8 @@ class AircraftController extends React.Component<propTypes,statetypes>{
     {
         super(props);
         this.state ={
-            number:0,
-            airline:'',
+            number:162,
+            airline:'IndiGo',
         }
         this.handlenumber=this.handlenumber.bind(this);
         this.handleairline=this.handleairline.bind(this);
@@ -39,6 +42,7 @@ class AircraftController extends React.Component<propTypes,statetypes>{
     }
     handleairline(event:any){
         const val:string = event.target.value
+        console.log(val)
         this.setState({airline: val});
     }
     handlesubmit=async (event:any)=>{
@@ -79,31 +83,34 @@ class AircraftController extends React.Component<propTypes,statetypes>{
             <LockOutlinedIcon />
           </Avatar>
           <Box component="form" onSubmit={this.handlesubmit} noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              type="number"
-              value={this.state.number}
-              label="Aircraft Number"
-              name="text"
-              onChange={this.handlenumber}
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="Airlines"
-              value={this.state.airline}
-              label="Airlines"
-              type="text"
-              onChange={this.handleairline}
-              id="password"
-              autoComplete="current-password"
-            />
+            <FormControl fullWidth sx={{ mt: 3, mb: 2 }}>
+            <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={this.state.number}
+                label="Age"
+                onChange={this.handlenumber}
+            >
+                <MenuItem value={"162"}>162</MenuItem>
+                <MenuItem value={"15267"}>15267</MenuItem>
+                <MenuItem value={"4271"}>4271</MenuItem>
+                <MenuItem value={"9847"}>9847</MenuItem>
+                <MenuItem value={"5842"}>5842</MenuItem>
+                <MenuItem value={"3849"}>3849</MenuItem>
+            </Select>
+            <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={this.state.airline}
+                label="Age"
+                onChange={this.handleairline}
+            >
+                <MenuItem value={"Air India"}>Air India</MenuItem>
+                <MenuItem value={"IndiGo"}>IndiGo</MenuItem>
+                <MenuItem value={"SpiceJet"}>SpiceJet</MenuItem>
+                <MenuItem value={"Go Air"}>Go Air</MenuItem>
+            </Select>
+          </FormControl>
             <Button
               type="submit"
               fullWidth

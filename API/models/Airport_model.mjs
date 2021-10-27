@@ -4,24 +4,21 @@ const { Schema } = mongoose;
 mongoose.connect('mongodb://localhost:27017/AirportData');
 
 const AirportSchema = new Schema({
-    details:{
-        name:{
-            type:String,
-            required:true
-        },
-        location:{
-            type:String,
-            required:true
-        }
+    name:{
+        type:String,
+        required:true,
+        unique:true
     },
     fuelcapacity:{
         type:Number,
-        required:true
+        required:true,
+        max:100000
     },
     fuelavailable:{
         type:Number,
         required:true,
-        default:0
+        default:0,
+        max:100000
     },
 });
 

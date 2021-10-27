@@ -10,7 +10,9 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import WelcomenavComponent from "../Welcome/welcomenav";
 import {PostTransactionService} from './PostTransactionService'
-
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 type stateTypes= {
     type:string,
@@ -26,9 +28,9 @@ class AddTransaction extends React.Component<propTypes,stateTypes>{
     {
         super(props);
         this.state={
-            type:'',
-            airport_name:'',
-            aircraft_no:0,
+            type:'IN',
+            airport_name:'Indira Gandhi International Airport,Delhi',
+            aircraft_no:162,
             quantity:0
         }
         this.handletype=this.handletype.bind(this);
@@ -83,45 +85,50 @@ class AddTransaction extends React.Component<propTypes,stateTypes>{
           <Typography component="h1" variant="h5">
           </Typography>
           <Box component="form" onSubmit={this.handlesubmit} noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Type"
-              name="email"
-              value = {this.state.type}
-              onChange={this.handletype}
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="airport"
-              name="Airport name"
-              label="Airport name"
-              type="text"
-              value={this.state.airport_name}
-              onChange={this.handlename}
-              autoComplete="current-password"
-            />
+          <FormControl fullWidth >
+            <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={this.state.type}
+                label="Age"
+                onChange={this.handletype}
+            >
+                <MenuItem value={"IN"}>IN</MenuItem>
+                <MenuItem value={"OUT"}>OUT</MenuItem>
+            </Select>
+            <br/>
+            <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={this.state.airport_name}
+                label="Age"
+                onChange={this.handlename}
+            >
+                <MenuItem value={"Indira Gandhi International Airport,Delhi"}>Indira Gandhi International Airport,Delhi</MenuItem>
+                <MenuItem value={"Rajiv Gandhi International Airport,Hyderabad"}>Rajiv Gandhi International Airport,Hyderabad</MenuItem>
+                <MenuItem value={"Chhatrapati Shivaji International Airport,Mumbai"}>Chhatrapati Shivaji International Airport,Mumbai</MenuItem>
+                <MenuItem value={"Chennai International Airport,Chennai"}>Chennai International Airport,Chennai</MenuItem>
+                <MenuItem value={"Kempegowda International Airport,Bangalore"}>Kempegowda International Airport,Bangalore</MenuItem>
+            </Select>
+            <br/>
             {
             this.state.type==="OUT"&&
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="Aircraft No"
-              label="Aircraft No"
-              type="number"
-              id="password"
-              value={this.state.aircraft_no}
-              onChange={this.handleno}
-              autoComplete="current-password"
-            />
+            <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={this.state.aircraft_no}
+            label="Age"
+            onChange={this.handleno}
+        >
+            <MenuItem value={"162"}>162</MenuItem>
+            <MenuItem value={"15267"}>15267</MenuItem>
+            <MenuItem value={"4271"}>4271</MenuItem>
+            <MenuItem value={"9847"}>9847</MenuItem>
+            <MenuItem value={"5842"}>5842</MenuItem>
+            <MenuItem value={"3849"}>3849</MenuItem>
+        </Select>
             }
+            </FormControl>
             <TextField
               margin="normal"
               required

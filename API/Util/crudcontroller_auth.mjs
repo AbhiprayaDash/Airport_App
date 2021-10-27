@@ -26,8 +26,9 @@ export const loginController = model =>async(req,res)=>{
     });
 }
 export const SignupController = model =>async(req,res)=>{
-    var name = req.body.name
-    const result = await model.findOne({name})
+    var email = req.body.email
+    console.log(email)
+    const result = await model.findOne({email})
     if(result)
     {
         return res.status(401).json("users exist");

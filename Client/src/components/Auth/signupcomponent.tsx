@@ -1,5 +1,4 @@
 import React,{Fragment} from 'react'
-import axios from 'axios'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,8 +10,11 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Redirect } from "react-router";
 import NavigationComponent from '../Navigation/navcomponent'
+import {validateSignupData} from './authservice'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {errormsg,successmsg} from '../Toast/toastservice'
 
 type statetypes={
     name:string,
@@ -39,6 +41,36 @@ class SignUpComponent extends React.Component<propTypes,statetypes>{
         this.handlemail=this.handlemail.bind(this);
         this.handlepassword=this.handlepassword.bind(this);
         this.handlesubmit=this.handlesubmit.bind(this);
+        this.successmsg = this.successmsg.bind(this)
+        this.errormsg = this.errormsg.bind(this)
+    }
+    componentDidUpdate()
+    {
+      if(this.state.signedup===true)
+      {
+        this.successmsg()
+        setTimeout(
+          () => {
+              console.log('signed up')
+              this.props.history.push("/login")
+            },
+        3000
+      );
+      }
+    }
+    successmsg()
+    {
+      toast.success("Signed up successfully,Login to Continue",{
+        position: toast.POSITION.TOP_LEFT,
+        theme: "colored"
+      })
+    }
+    errormsg()
+    {
+        toast.error("Invalid User name or password", {
+          position: toast.POSITION.TOP_CENTER,
+          theme: "colored"
+        });
     }
     handlemail(event:any){
         this.setState({email: event.target.value});
@@ -56,23 +88,22 @@ class SignUpComponent extends React.Component<propTypes,statetypes>{
         event.preventDefault();
         const reqbody = {name:this.state.name,email:this.state.email,password:this.state.password}
         try{
-            await axios.post('http://localhost:9000/user/signup',reqbody);
+            await validateSignupData(reqbody)
             this.setState({signedup:true})
         }
         catch(e){
-            this.setState({errormsg:'Invalid Credentials'})
             console.log(e)
         }
     }
     render()
     {
         const theme = createTheme();
-        if(this.state.signedup===true)
-        {
-            return (<Redirect to={{pathname: "/login"}} />)
-        }
+        const signedup = this.state.signedup
         return(
-            <Fragment>
+          <Fragment>
+          <ToastContainer limit={3} autoClose={2000}/>
+          {
+            signedup===false && <div>
                 <NavigationComponent/>
             <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -90,9 +121,6 @@ class SignUpComponent extends React.Component<propTypes,statetypes>{
           </Avatar>
           <Typography component="h1" variant="h5">
             Register
-          </Typography>
-          <Typography component="h1" variant="h5">
-                {this.state.errormsg}
           </Typography>
           <Box component="form" onSubmit={this.handlesubmit} noValidate sx={{ mt: 1 }}>
           <TextField
@@ -131,6 +159,7 @@ class SignUpComponent extends React.Component<propTypes,statetypes>{
               onChange={this.handlepassword}
               autoComplete="current-password"
             />
+            <Box component="div" display="inline" style={{color:'#5f6368'}}>Use 8 or more characters,must have uppercase and lowercase letter,at least 2 numbers and no spaces</Box>
             <Button
               type="submit"
               fullWidth
@@ -141,18 +170,21 @@ class SignUpComponent extends React.Component<propTypes,statetypes>{
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="/signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                <Link href="/login" variant="body2">
+                  {"Do have an account? Sign in"}
                 </Link>
               </Grid>
             </Grid>
+            
           </Box>
         </Box>
       </Container>
     </ThemeProvider>
+    </div>
+    }
     </Fragment>
         )
-    }
+  }
 }
 export default SignUpComponent
 
