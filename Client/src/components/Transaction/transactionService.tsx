@@ -12,7 +12,6 @@ type propTypes={
 export const errorhandling=async (reqbody:any)=>{
     try{
         const result=await axios.post('http://localhost:9000/transaction',reqbody)
-        console.log(result)
         if(result.data==="NoAirport")
             throw new Error("AirportError");
         if(result.data==="NoAircraft")
@@ -23,14 +22,14 @@ export const errorhandling=async (reqbody:any)=>{
             throw new Error("CapacityError");
         successmsg("Transaction Added Successfully")
     }
-    catch(e){
-        if(e==="AirportError")
+    catch(e:any){
+        if(e.message==="AirportError")
             errormsg("No Airport Found")
-        if(e==="AircraftError")
+        if(e.message==="AircraftError")
             errormsg("No Aircraft Found")
-        if(e==="FuelError")
+        if(e.message==="FuelError")
             errormsg("Fuel Not available")
-        if(e==="CapacityError")
+        if(e.message==="CapacityError")
             errormsg("No Capacity")
         
     }

@@ -70,7 +70,7 @@ class ReportComponent extends React.Component<propTypes,stateTypes>{
                     </StyledTableRow>
                    </TableHead>
                    <TableBody>
-                   {
+                    {
                     airportdata =this.state.response.filter((data:any)=>data.airport._id===value._id ).sort(function(a:any,b:any){
                         var date1:any = moment(a.Duration.date).format('YYYYMMDD')
                         var date2:any = moment(b.Duration.date).format('YYYYMMDD')
@@ -83,41 +83,41 @@ class ReportComponent extends React.Component<propTypes,stateTypes>{
                         return date2-date1
                     })
                 .map((val:any)=>{ 
-                        return(
-                            <StyledTableRow
-                              key={val.quantity}
-                              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                            >
-                              <StyledTableCell component="th" scope="row">
-                              {moment(val.Duration.date).format('DD/MM/YYYY')} {moment(val.Duration.date).format('HH:mm:ss')}
-                              </StyledTableCell>
-                              <StyledTableCell >{val.Type}</StyledTableCell>
-                              <StyledTableCell >{val.quantity}</StyledTableCell>
-                              <StyledTableCell >{
-                                val.hasOwnProperty('aircraft')===true?<p>{val.aircraft.aircraft_no}</p>:<p></p>
-                              }
-                              </StyledTableCell>
-                            </StyledTableRow>
-                            )
+                    return(
+                        <StyledTableRow
+                            key={moment(val.Duration.date).format('HH:mm:ss')}
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                        <StyledTableCell component="th" scope="row">
+                            {moment(val.Duration.date).format('DD/MM/YYYY')} {moment(val.Duration.date).format('HH:mm:ss')}
+                        </StyledTableCell>
+                        <StyledTableCell >{val.Type}</StyledTableCell>
+                        <StyledTableCell >{val.quantity}</StyledTableCell>
+                        <StyledTableCell >{
+                            val.hasOwnProperty('aircraft')===true?<p>{val.aircraft.aircraft_no}</p>:<p></p>
+                            }
+                        </StyledTableCell>
+                        </StyledTableRow>
+                        )
                     })
                     }
                   </TableBody>
                 </Table>
-            </TableContainer>
-            <Typography
-                component="h4"
-                variant="h4"
-                color="inherit"
-                align="center"
-                noWrap
-                sx={{ flex: 1 }}
-                fontFamily="Roboto"
+                </TableContainer>
+                <Typography
+                    component="h4"
+                    variant="h4"
+                    color="inherit"
+                    align="center"
+                    noWrap
+                    sx={{ flex: 1 }}
+                    fontFamily="Roboto"
                 >
-                 Fuel Available: {value.fuelavailable}
+                Fuel Available: {value.fuelavailable}
                 </Typography>
                 <br/><br/><br/>
                 </div>
-                    )
+                )
             })
         }
         </Fragment>

@@ -54,7 +54,6 @@ class AddTransaction extends React.Component<propTypes,stateTypes>{
         this.setState({quantity:event.target.value});
     }
     handlesubmit=async (event:any)=>{
-        console.log('submitted')
         event.preventDefault();
         var statedata:stateTypes = this.state;
         var propdata:propTypes = this.props;
@@ -98,7 +97,9 @@ class AddTransaction extends React.Component<propTypes,stateTypes>{
                 <MenuItem value={"IN"}>IN</MenuItem>
                 <MenuItem value={"OUT"}>OUT</MenuItem>
             </Select>
+            </FormControl>
             <br/>
+            <FormControl fullWidth>
             <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -112,9 +113,11 @@ class AddTransaction extends React.Component<propTypes,stateTypes>{
                 <MenuItem value={"Chennai International Airport,Chennai"}>Chennai International Airport,Chennai</MenuItem>
                 <MenuItem value={"Kempegowda International Airport,Bangalore"}>Kempegowda International Airport,Bangalore</MenuItem>
             </Select>
+            </FormControl>
             <br/>
             {
             this.state.type==="OUT"&&
+            <FormControl fullWidth>
             <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
@@ -129,8 +132,8 @@ class AddTransaction extends React.Component<propTypes,stateTypes>{
             <MenuItem value={"5842"}>5842</MenuItem>
             <MenuItem value={"3849"}>3849</MenuItem>
         </Select>
+        </FormControl>
             }
-            </FormControl>
             <TextField
               margin="normal"
               required

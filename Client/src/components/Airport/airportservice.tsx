@@ -8,6 +8,7 @@ export async function postAircraftData(reqbody:any):Promise<any>{
         {
             throw new Error('error');
         }
+        console.log('console')
         const response = await axios.post('http://localhost:9000/airport',reqbody)
         if(response.data==="Number exeeded")
         {   

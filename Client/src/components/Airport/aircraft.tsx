@@ -100,6 +100,8 @@ class AircraftController extends React.Component<propTypes,statetypes>{
                 <MenuItem value={"5842"}>5842</MenuItem>
                 <MenuItem value={"3849"}>3849</MenuItem>
             </Select>
+            </FormControl>
+            <FormControl fullWidth sx={{ mt: 3, mb: 2 }}>
             <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
