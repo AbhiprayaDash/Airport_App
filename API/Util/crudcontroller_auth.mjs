@@ -1,14 +1,21 @@
 import jwt from 'jsonwebtoken'
+import bcrypt from 'bcryptjs'
 export const loginController = model =>async(req,res)=>{
     const result = await model.findOne({
         $and: [
             { email: req.body.email },
-            { password:req.body.password}
          ]
     })
     if(!result)
     {
+        console.log('result')
         return res.status(401).json("user not found");
+    }
+    const isMatch = await bcrypt.compare(req.body.password,result.password);//user.password is hashed password
+    console.log(isMatch)
+    if(isMatch===false)
+    {
+        return res.status(401).json({errors:[{msg:'Invalid Credentials'}]}); 
     }
     const payload = {
         user:{
@@ -27,14 +34,15 @@ export const loginController = model =>async(req,res)=>{
 }
 export const SignupController = model =>async(req,res)=>{
     var email = req.body.email
-    console.log(email)
     const result = await model.findOne({email})
     if(result)
     {
         return res.status(401).json("users exist");
     }
     try{
-        const data = await model.create({name:req.body.name,password:req.body.password,email:req.body.email});
+        const salt=await bcrypt.genSalt(10);
+        const hashedpassword = await bcrypt.hash(req.body.password,salt);
+        await model.create({name:req.body.name,password:hashedpassword,email:req.body.email});
         res.send('user created')
     }
     catch(e){

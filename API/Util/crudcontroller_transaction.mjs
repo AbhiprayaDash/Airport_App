@@ -1,5 +1,4 @@
 export const postransaction = (model,AirportModel,AircraftModel) =>async(req,res)=>{
-    console.log('post')
     const Airportresult = await AirportModel.findOne(
         {'name':req.body.airport_name}
     )
@@ -17,8 +16,6 @@ export const postransaction = (model,AirportModel,AircraftModel) =>async(req,res
             return res.send("NoAircraft");
         }
         try{
-            console.log(Airportresult.fuelavailable)
-            console.log(req.body.quantity)
             if(Airportresult.fuelavailable-req.body.quantity<0)
             {
                 return res.send("NoFuel");
@@ -30,7 +27,6 @@ export const postransaction = (model,AirportModel,AircraftModel) =>async(req,res
                 }
             )
         const result = await model.create({Type:req.body.type,airport:Airportresult._id,aircraft:AircraftResult._id,quantity:req.body.quantity})
-        console.log(result)
         res.send(result)
         }
         catch(e)
@@ -42,9 +38,6 @@ export const postransaction = (model,AirportModel,AircraftModel) =>async(req,res
         try{
             if((Airportresult.fuelcapacity)<Number(req.body.quantity)+Airportresult.fuelavailable)
             {
-                console.log(Airportresult.fuelcapacity)
-                console.log(Airportresult.fuelavailable)
-                console.log(req.body.quantity)
                 return res.send("NoCapacity");
             }
             await AirportModel.update(
@@ -59,14 +52,12 @@ export const postransaction = (model,AirportModel,AircraftModel) =>async(req,res
             res.send(e);
         }
         const result = await model.create({Type:req.body.type,airport:Airportresult._id,quantity:req.body.quantity})
-        console.log(result)
         res.send(result)
     }
 }
 
 export const getransaction = (model,AircraftModel)=> async(req,res)=>{
     const result=await model.find({Type:"IN"}).populate("airport")
-    console.log(result)
     const result2 = await model.find({Type:"OUT"}).populate("aircraft").populate("airport")
     const finalresult = result.concat(result2)
     res.send(finalresult)

@@ -1,9 +1,7 @@
 export const AddAirport = model=>async (req,res)=>{
     const airportname = req.body.name
-    console.log(airportname)
     try{
         const result = await model.findOne({name:airportname})
-        console.log(result)
         if(result)
         {
             console.log('existssad')
