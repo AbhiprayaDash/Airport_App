@@ -36,8 +36,8 @@ class DisplayAircrafts extends React.Component<proptypes,statetypes>{
     }
     render()
     {
-        return(
-            <Fragment>
+       return(
+        <Fragment>
             <Typography
                 component="h1"
                 variant="h3"
@@ -78,7 +78,7 @@ class DisplayAircrafts extends React.Component<proptypes,statetypes>{
                     </TableBody>
                 </Table>
             </TableContainer>
-            </Fragment>
+        </Fragment>
         )
     }
 }

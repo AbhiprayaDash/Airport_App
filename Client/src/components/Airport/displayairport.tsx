@@ -79,7 +79,7 @@ class DisplayAirports extends React.Component<proptypes,statetypes>{
                     </TableBody>
                 </Table>
             </TableContainer>
-            </Fragment>
+        </Fragment>
         )
     }
 }

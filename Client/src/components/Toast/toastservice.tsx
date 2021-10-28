@@ -11,5 +11,5 @@ export const successmsg = (msg:string) =>{
     toast.success(msg, {
         position: toast.POSITION.TOP_CENTER,
         theme: "colored"
-      });
+    });
 }

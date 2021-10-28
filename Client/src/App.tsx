@@ -10,6 +10,7 @@ import DashboardContent from "./components/Dashboard/dashboard"
 import AddTransaction from "./components/Transaction/addtransaction";
 import ReportComponent from "./components/Report/report";
 
+
 function App() {
   return (
     <Switch>
