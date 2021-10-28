@@ -17,7 +17,9 @@ export const AddAirport = model=>async (req,res)=>{
 }
 
 export const getAirport = model =>async(req,res)=>{
+    console.log('get')
     const result = await model.find({}).sort({name:1}).limit(5);
+    console.log(result)
     res.send(result);
 }
 

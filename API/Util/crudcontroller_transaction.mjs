@@ -56,10 +56,11 @@ export const postransaction = (model,AirportModel,AircraftModel) =>async(req,res
     }
 }
 
-export const getransaction = (model,AircraftModel)=> async(req,res)=>{
+export const getransaction = (model)=> async(req,res)=>{
     const result=await model.find({Type:"IN"}).populate("airport")
     const result2 = await model.find({Type:"OUT"}).populate("aircraft").populate("airport")
     const finalresult = result.concat(result2)
+    console.log(finalresult)
     res.send(finalresult)
 }
 export const TransactionUtilController = (model,AirportModel,AircraftModel)=>({

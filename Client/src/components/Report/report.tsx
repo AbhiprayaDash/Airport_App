@@ -9,7 +9,8 @@ import TableHead from '@mui/material/TableHead';
 import Paper from '@mui/material/Paper';
 import {StyledTableCell,StyledTableRow} from '../Airport/tablestyle'
 import Typography from '@mui/material/Typography';
-
+import Pagination from '../Pagination/pagination'
+import Reporttable from './reporttable'
 
 type stateTypes = {
     response:any,
@@ -29,9 +30,12 @@ class ReportComponent extends React.Component<propTypes,stateTypes>{
     }
     componentDidMount(){
         const loaddata= async ()=>{
+            console.log('entered')
             const result = await axios.get('http://localhost:9000/transaction')
+            console.log(result)
             this.setState({response:result.data})
             const airportresult = await axios.get('http://localhost:9000/airport')
+            console.log(airportresult)
             this.setState({airportresponse:airportresult.data});
         }
         loaddata()
@@ -59,51 +63,9 @@ class ReportComponent extends React.Component<propTypes,stateTypes>{
                 >
                  {value.name}
                 </Typography>
-                <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                   <TableHead>
-                    <StyledTableRow>
-                    <StyledTableCell>Date/Time</StyledTableCell>
-                    <StyledTableCell >Type</StyledTableCell>
-                    <StyledTableCell>Fuel</StyledTableCell>
-                    <StyledTableCell>Aircraft</StyledTableCell>
-                    </StyledTableRow>
-                   </TableHead>
-                   <TableBody>
                     {
-                    airportdata =this.state.response.filter((data:any)=>data.airport._id===value._id ).sort(function(a:any,b:any){
-                        var date1:any = moment(a.Duration.date).format('YYYYMMDD')
-                        var date2:any = moment(b.Duration.date).format('YYYYMMDD')
-                        var time1:any = moment(a.Duration.date).format('HH')
-                        var time2:any = moment(b.Duration.date).format('HH')
-                        if(date1===date2)
-                        {
-                            return time2-time1
-                        }
-                        return date2-date1
-                    })
-                .map((val:any)=>{ 
-                    return(
-                        <StyledTableRow
-                            key={moment(val.Duration.date).format('HH:mm:ss')}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                        >
-                        <StyledTableCell component="th" scope="row">
-                            {moment(val.Duration.date).format('DD/MM/YYYY')} {moment(val.Duration.date).format('HH:mm:ss')}
-                        </StyledTableCell>
-                        <StyledTableCell >{val.Type}</StyledTableCell>
-                        <StyledTableCell >{val.quantity}</StyledTableCell>
-                        <StyledTableCell >{
-                            val.hasOwnProperty('aircraft')===true?<p>{val.aircraft.aircraft_no}</p>:<p></p>
-                            }
-                        </StyledTableCell>
-                        </StyledTableRow>
-                        )
-                    })
+                    <Pagination RenderedComponent={Reporttable} data={this.state.response.filter((data:any)=>data.airport._id===value._id )} title={"report"} pageLimit={5} dataLimit={4} />
                     }
-                  </TableBody>
-                </Table>
-                </TableContainer>
                 <Typography
                     component="h4"
                     variant="h4"

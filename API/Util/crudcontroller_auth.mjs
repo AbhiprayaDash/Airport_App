@@ -8,11 +8,9 @@ export const loginController = model =>async(req,res)=>{
     })
     if(!result)
     {
-        console.log('result')
         return res.status(401).json("user not found");
     }
     const isMatch = await bcrypt.compare(req.body.password,result.password);//user.password is hashed password
-    console.log(isMatch)
     if(isMatch===false)
     {
         return res.status(401).json({errors:[{msg:'Invalid Credentials'}]}); 
