@@ -10,7 +10,7 @@ type propTypes={
 class HomeComponent extends React.Component<propTypes>{
     componentDidMount(){
         if(isAuthenticated())
-            this.props.history.push("/welcome")
+            this.props.history.push("/dashboard")
     }
     render()
     {

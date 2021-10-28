@@ -50,6 +50,7 @@ class DisplayTransaction extends React.Component<proptypes,statetypes>{
                 variant="h3"
                 color="inherit"
                 align="left"
+                fontFamily="Roboto"
                 noWrap
                 sx={{ flex: 1 }}
             >

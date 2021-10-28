@@ -9,7 +9,7 @@ export const StyledTableCell:any = styled(TableCell)(({ theme }) => ({
       fontSize: 20,
     },
     [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
+      fontSize: 16,
     },
   }));
 

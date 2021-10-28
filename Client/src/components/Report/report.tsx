@@ -2,6 +2,13 @@ import React,{Fragment} from 'react'
 import axios from 'axios'
 import moment from 'moment'
 import NavigationComponent from '../Navigation/navcomponent'
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import Paper from '@mui/material/Paper';
+import {StyledTableCell,StyledTableRow} from '../Airport/tablestyle'
+import Typography from '@mui/material/Typography';
 
 
 type stateTypes = {
@@ -33,57 +40,88 @@ class ReportComponent extends React.Component<propTypes,stateTypes>{
     render()
     {   
         var airportdata:any=[]
-        return(
-            <Fragment>
-            <NavigationComponent/>
+      return(
+        <Fragment>
+        <NavigationComponent/>
+        <br/><br/><br/>
         {
           this.state.airportresponse.map((value:any)=>{
             return (
                 <div>
-                <h1>{value.name}</h1>
-                <table style={{fontFamily:'Arial, Helvetica, sans-serif',alignContent:'center',alignItems:'center',border:'1px solid #ddd',width:'100%'}} className="center">
-                <tr style={{backgroundColor:'#e5e5e5'}}>
-                    <th style={{border: '1px solid #ddd',backgroundColor:'#34a0a4',color:'white'}}><h2>Date/Time  </h2></th>
-                    <th style={{border: '1px solid #ddd',backgroundColor:'#34a0a4',color:'white'}}><h2>Type</h2></th>
-                    <th style={{border: '1px solid #ddd',backgroundColor:'#34a0a4',color:'white'}}><h2>Fuel</h2></th>
-                    <th style={{border: '1px solid #ddd',backgroundColor:'#34a0a4',color:'white'}}><h2>Aircraft</h2></th>
-                </tr>
-            {
-                airportdata =this.state.response.filter((data:any)=>data.airport._id===value._id ).sort(function(a:any,b:any){
-                    var date1:any = moment(a.Duration.date).format('YYYYMMDD')
-                    var date2:any = moment(b.Duration.date).format('YYYYMMDD')
-                    var time1:any = moment(a.Duration.date).format('HH')
-                    var time2:any = moment(b.Duration.date).format('HH')
-                    if(date1===date2)
-                    {
-                        return time2-time1
-                    }
-                    return date2-date1
-                })
-                .map((val:any)=>{         
-                    return(   
-                    <tr key={'1'}>
-                        <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}}><p>{moment(val.Duration.date).format('DD/MM/YYYY')} {moment(val.Duration.date).format('HH:mm:ss')}</p></td>
-                        <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}}><p>{val.Type}</p></td>
-                        <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}}><p>{val.quantity}</p></td>
-                        <td style={{border: '1px solid #ddd',backgroundColor:'#edf6f9',color:'black'}}>
+                <Typography
+                component="h2"
+                variant="h3"
+                color="inherit"
+                align="left"
+                noWrap
+                sx={{ flex: 1 }}
+                fontFamily="Roboto"
+                >
+                 {value.name}
+                </Typography>
+                <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                   <TableHead>
+                    <StyledTableRow>
+                    <StyledTableCell>Date/Time</StyledTableCell>
+                    <StyledTableCell >Type</StyledTableCell>
+                    <StyledTableCell>Fuel</StyledTableCell>
+                    <StyledTableCell>Aircraft</StyledTableCell>
+                    </StyledTableRow>
+                   </TableHead>
+                   <TableBody>
+                   {
+                    airportdata =this.state.response.filter((data:any)=>data.airport._id===value._id ).sort(function(a:any,b:any){
+                        var date1:any = moment(a.Duration.date).format('YYYYMMDD')
+                        var date2:any = moment(b.Duration.date).format('YYYYMMDD')
+                        var time1:any = moment(a.Duration.date).format('HH')
+                        var time2:any = moment(b.Duration.date).format('HH')
+                        if(date1===date2)
                         {
-                            val.hasOwnProperty('aircraft')===true?<p>{val.aircraft.aircraft_no}</p>:<p></p>
+                            return time2-time1
                         }
-                        </td>
-                      </tr>
-
-                    )
-                })
-            }
-                </table>
-                 <h1 style={{marginLeft:'800px'}}>Fuel Available: {value.fuelavailable}</h1>
+                        return date2-date1
+                    })
+                .map((val:any)=>{ 
+                        return(
+                            <StyledTableRow
+                              key={val.quantity}
+                              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                              <StyledTableCell component="th" scope="row">
+                              {moment(val.Duration.date).format('DD/MM/YYYY')} {moment(val.Duration.date).format('HH:mm:ss')}
+                              </StyledTableCell>
+                              <StyledTableCell >{val.Type}</StyledTableCell>
+                              <StyledTableCell >{val.quantity}</StyledTableCell>
+                              <StyledTableCell >{
+                                val.hasOwnProperty('aircraft')===true?<p>{val.aircraft.aircraft_no}</p>:<p></p>
+                              }
+                              </StyledTableCell>
+                            </StyledTableRow>
+                            )
+                    })
+                    }
+                  </TableBody>
+                </Table>
+            </TableContainer>
+            <Typography
+                component="h4"
+                variant="h4"
+                color="inherit"
+                align="center"
+                noWrap
+                sx={{ flex: 1 }}
+                fontFamily="Roboto"
+                >
+                 Fuel Available: {value.fuelavailable}
+                </Typography>
+                <br/><br/><br/>
                 </div>
                     )
             })
         }
         </Fragment>
-        )
+      )
     }
 }       
         
