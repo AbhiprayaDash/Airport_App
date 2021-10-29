@@ -43,6 +43,14 @@ export const mainListItems = (
     </ListItem>
     <ListItem button>
       <ListItemIcon>
+        <DescriptionIcon />
+      </ListItemIcon>
+      <NavLink to="/chart" style={{ textDecoration: 'none',color:'black'}}>
+      <ListItemText primary="Chart Report" />
+      </NavLink>
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
         <LogoutIcon />
       </ListItemIcon>
       <NavLink to="/logout" style={{ textDecoration: 'none',color:'black'}}>
