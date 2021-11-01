@@ -1,5 +1,4 @@
 import React,{Fragment} from "react"
-import axios from 'axios'
 import Typography from '@mui/material/Typography';
 import {loadAircraftData} from './aircraftservice'
 import Pagination from '../Pagination/pagination'

@@ -27,7 +27,7 @@ class Aircrafttable extends React.Component<proptypes,statetypes>{
     }
     componentDidUpdate()
     {
-        if(this.state.response!=this.props.data)
+        if(this.state.response!==this.props.data)
         {
             this.setState({response:this.props.data})
         }

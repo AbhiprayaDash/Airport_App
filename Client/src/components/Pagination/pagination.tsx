@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react'
-import TransactionTable from '../Transaction/transactiontable'
 import '../../css/pagination.css' 
 type propTypes={
     data:any,

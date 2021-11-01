@@ -1,13 +1,6 @@
 import React, { Fragment } from "react"
 import axios from 'axios'
 import Typography from '@mui/material/Typography';
-import moment from 'moment'
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import Paper from '@mui/material/Paper';
-import {StyledTableCell,StyledTableRow} from '../Airport/tablestyle'
 import Pagination from "../Pagination/pagination"
 import TransactionTable from "./transactiontable";
 type statetypes={

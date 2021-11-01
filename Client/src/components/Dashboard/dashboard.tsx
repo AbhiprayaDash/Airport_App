@@ -17,7 +17,6 @@ import DisplayAircrafts from '../Airport/displayaircraft';
 import DisplayAirports from '../Airport/displayairport';
 import DisplayTransaction from '../Transaction/displaytransaction';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import { loadAircraftData } from '../Airport/aircraftservice';
 
 const drawerWidth: number = 240;
 

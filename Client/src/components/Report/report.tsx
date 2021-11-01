@@ -1,13 +1,6 @@
 import React,{Fragment} from 'react'
 import axios from 'axios'
-import moment from 'moment'
 import NavigationComponent from '../Navigation/navcomponent'
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import Paper from '@mui/material/Paper';
-import {StyledTableCell,StyledTableRow} from '../Airport/tablestyle'
 import Typography from '@mui/material/Typography';
 import Pagination from '../Pagination/pagination'
 import Reporttable from './reporttable'
@@ -30,12 +23,9 @@ class ReportComponent extends React.Component<propTypes,stateTypes>{
     }
     componentDidMount(){
         const loaddata= async ()=>{
-            console.log('entered')
             const result = await axios.get('http://localhost:9000/transaction')
-            console.log(result)
             this.setState({response:result.data})
             const airportresult = await axios.get('http://localhost:9000/airport')
-            console.log(airportresult)
             this.setState({airportresponse:airportresult.data});
         }
         loaddata()

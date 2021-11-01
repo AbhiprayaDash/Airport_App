@@ -1,6 +1,6 @@
 import {StyledTableCell,StyledTableRow} from '../Airport/tablestyle'
 import moment from 'moment'
-import React, { Fragment } from 'react'
+import React from 'react'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
@@ -25,7 +25,7 @@ class Reporttable extends React.Component<proptypes,statetypes>{
     }
     componentDidUpdate()
     {
-        if(this.state.response!=this.props.data)
+        if(this.state.response!==this.props.data)
         {
             this.setState({response:this.props.data})
         }

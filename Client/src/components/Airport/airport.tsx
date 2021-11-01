@@ -16,6 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { postAircraftData } from './airportservice';
 import AirplanemodeActiveSharpIcon from '@mui/icons-material/AirplanemodeActiveSharp';
 import NavigationComponent from '../Navigation/navcomponent';
+import { errormsg } from '../Toast/toastservice';
 
 type statetypes={
     name:string,
@@ -60,6 +61,8 @@ class AirportController extends React.Component<propTypes,statetypes>{
             fuelavailable:this.state.fuelavailable,
             fuelcapacity:this.state.fuelcapacity
         }
+        if(this.state.fuelavailable<0||this.state.fuelcapacity<0)
+            return errormsg('Fuel cannot be negative')
         postAircraftData(reqbody)
     }
     render()

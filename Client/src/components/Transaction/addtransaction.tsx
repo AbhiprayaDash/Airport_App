@@ -15,6 +15,7 @@ import Select from '@mui/material/Select';
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NavigationComponent from "../Navigation/navcomponent";
+import { errormsg } from "../Toast/toastservice";
 
 type stateTypes= {
     type:string,
@@ -57,6 +58,8 @@ class AddTransaction extends React.Component<propTypes,stateTypes>{
         event.preventDefault();
         var statedata:stateTypes = this.state;
         var propdata:propTypes = this.props;
+        if(this.state.quantity<0)
+          return errormsg('Quantity cannot be negative')
         await PostTransactionService(statedata,propdata)      
     }
     render()

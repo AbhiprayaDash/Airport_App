@@ -1,5 +1,5 @@
 import React,{Fragment} from "react";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area, BarChart, Bar } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 'recharts';
 import axios from 'axios'
 import moment from 'moment'
 import NavigationComponent from "../Navigation/navcomponent";
