@@ -24,6 +24,7 @@ class ReportComponent extends React.Component<propTypes,stateTypes>{
     componentDidMount(){
         const loaddata= async ()=>{
             const result = await axios.get('http://localhost:9000/transaction')
+            console.log(result)
             this.setState({response:result.data})
             const airportresult = await axios.get('http://localhost:9000/airport')
             this.setState({airportresponse:airportresult.data});
@@ -53,9 +54,9 @@ class ReportComponent extends React.Component<propTypes,stateTypes>{
                 >
                  {value.name}
                 </Typography>
-                    {
+                {
                     <Pagination RenderedComponent={Reporttable} data={this.state.response.filter((data:any)=>data.airport._id===value._id )} title={"report"} pageLimit={5} dataLimit={4} />
-                    }
+                }
                 <Typography
                     component="h4"
                     variant="h4"

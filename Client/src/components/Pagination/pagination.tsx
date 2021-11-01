@@ -30,23 +30,18 @@ class Pagination extends React.Component<propTypes,stateTypes>{
     }
     goToPreviousPage() {
         this.setState({currentpage:this.state.currentpage-1})
-    }
-   
+    }  
     changePage(event:any) {
         // not yet implemented
         const pageNumber = Number(event.target.textContent);
         this.setState({currentpage:pageNumber})
     }
-   
     getPaginatedData = () => {
         const startIndex = this.state.currentpage * this.props.dataLimit - this.props.dataLimit;
         const endIndex = startIndex + this.props.dataLimit;
         const arr= this.props.data.slice(startIndex, endIndex);
-        console.log(arr.length)
-        console.log(arr)
         return arr
     };
-   
     getPaginationGroup = () => {
         // not yet implemented
         let start = Math.floor((this.state.currentpage - 1) / this.props.pageLimit) *this.props.pageLimit;
@@ -55,10 +50,10 @@ class Pagination extends React.Component<propTypes,stateTypes>{
             return []
         }
         var array= Array.from({length:Math.min(this.state.pages,this.props.pageLimit)}, (_, i) => start+i + 1)
-        console.log(array)
         return array
     };
     render(){
+      console.log('table')
         return(
             <Fragment>
                 <this.props.RenderedComponent data={this.getPaginatedData()}/>

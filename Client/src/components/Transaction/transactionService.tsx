@@ -12,6 +12,7 @@ type propTypes={
 export const errorhandling=async (reqbody:any)=>{
     try{
         const result=await axios.post('http://localhost:9000/transaction',reqbody)
+        console.log(result)
         if(result.data==="NoAirport")
             throw new Error("AirportError");
         if(result.data==="NoAircraft")
@@ -31,7 +32,6 @@ export const errorhandling=async (reqbody:any)=>{
             errormsg("Fuel Not available")
         if(e.message==="CapacityError")
             errormsg("No Capacity")
-        
     }
 }
 export async function PostTransactionService(state:stateTypes,props:propTypes):Promise<any>{

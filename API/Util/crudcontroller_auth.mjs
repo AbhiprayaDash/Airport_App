@@ -35,7 +35,7 @@ export const SignupController = model =>async(req,res)=>{
     const result = await model.findOne({email})
     if(result)
     {
-        return res.status(401).json("users exist");
+        return res.send("users exist");
     }
     try{
         const salt=await bcrypt.genSalt(10);
@@ -44,7 +44,7 @@ export const SignupController = model =>async(req,res)=>{
         res.send('user created')
     }
     catch(e){
-        return res.status(404).json({msg:'Email ID Taken'});
+        return res.status(404).json({msg:'Error'});
     }
 }
 

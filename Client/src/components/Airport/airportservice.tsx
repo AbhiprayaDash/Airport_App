@@ -8,7 +8,6 @@ export async function postAircraftData(reqbody:any):Promise<any>{
         {
             throw new Error('error');
         }
-        console.log('console')
         const response = await axios.post('http://localhost:9000/airport',reqbody)
         if(response.data==="Number exeeded")
         {   
@@ -18,18 +17,20 @@ export async function postAircraftData(reqbody:any):Promise<any>{
         {
             throw new Error('exists')
         }
+        if(response.data==="Input Required")
+            throw new Error("InputError")
         successmsg("Airport Added Successfully")
     }
     catch(e:any){
-        console.log(e.message)
+
         if(e.message==="error")
         {
             errormsg("Capacity should be greater than available")
         }
-        else if(e.message==="inputerror"){
+        if(e.message==="inputerror"){
             errormsg("Fuel quantity should not be greater than 100000")
         }
-        else if(e.message==="exists")
+        if(e.message==="exists")
         {
             errormsg("Airport Already Exists")
         }

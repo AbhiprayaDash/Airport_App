@@ -14,7 +14,7 @@ import NavigationComponent from '../Navigation/navcomponent'
 import {validateSignupData} from './authservice'
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {successmsg} from '../Toast/toastservice'
+import {errormsg, successmsg} from '../Toast/toastservice'
 
 type statetypes={
     name:string,
@@ -66,6 +66,8 @@ class SignUpComponent extends React.Component<propTypes,statetypes>{
     handlesubmit=async (event:any)=>{
         event.preventDefault();
         const reqbody = {name:this.state.name,email:this.state.email,password:this.state.password}
+        if(reqbody.name===""||reqbody.email===""||reqbody.password==="")
+          return errormsg("Input is required")
         try{
             await validateSignupData(reqbody)
             this.setState({signedup:true})
@@ -109,6 +111,7 @@ class SignUpComponent extends React.Component<propTypes,statetypes>{
                         id="email"
                         label="Name"
                         name="name"
+                        type="email"
                         value = {this.state.name}
                         onChange={this.handlename}
                         autoComplete="email"

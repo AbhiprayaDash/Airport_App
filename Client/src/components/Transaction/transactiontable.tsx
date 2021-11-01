@@ -7,10 +7,10 @@ import Paper from '@mui/material/Paper';
 import moment from 'moment'
 import {StyledTableCell,StyledTableRow} from '../Airport/tablestyle';
 
-
 type durationType={
     date:Date
 }
+
 interface typeProvider{
     Duration:durationType,
     Type:string,
@@ -18,12 +18,15 @@ interface typeProvider{
     aircraft:any,
     quantity:number
 }
+
 type propTypes={
     data:any
 }
+
 type stateTypes={
     response:any
 }
+
 class TransactionTable extends React.Component<propTypes,stateTypes>
 {
     constructor(props:propTypes)
@@ -55,17 +58,8 @@ class TransactionTable extends React.Component<propTypes,stateTypes>
                    </TableHead>
                    <TableBody>
                     {
-                    this.state.response.sort(function(a:any,b:any){
-                        var date1:any = moment(a.Duration.date).format('YYYYMMDD')
-                        var date2:any = moment(b.Duration.date).format('YYYYMMDD')
-                        var time1:any = moment(a.Duration.date).format('HH')
-                        var time2:any = moment(b.Duration.date).format('HH')
-                        if(date1===date2)
-                        {
-                            return time2-time1
-                        }
-                        return date2-date1
-                     }).map(function(value:typeProvider,index:number){
+                    this.state.response
+                    .map(function(value:typeProvider,index:number){
                         return(
                             <StyledTableRow
                               key={index}

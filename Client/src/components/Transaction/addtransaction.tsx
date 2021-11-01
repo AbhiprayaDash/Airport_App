@@ -34,7 +34,7 @@ class AddTransaction extends React.Component<propTypes,stateTypes>{
             type:'IN',
             airport_name:'Indira Gandhi International Airport,Delhi',
             aircraft_no:162,
-            quantity:0
+            quantity:-1
         }
         this.handletype=this.handletype.bind(this);
         this.handlename=this.handlename.bind(this);
@@ -60,6 +60,8 @@ class AddTransaction extends React.Component<propTypes,stateTypes>{
         var propdata:propTypes = this.props;
         if(this.state.quantity<0)
           return errormsg('Quantity cannot be negative')
+        if(String(this.state.quantity)==="")
+          return errormsg("Input is Required")
         await PostTransactionService(statedata,propdata)      
     }
     render()

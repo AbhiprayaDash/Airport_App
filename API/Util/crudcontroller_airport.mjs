@@ -4,7 +4,6 @@ export const AddAirport = model=>async (req,res)=>{
         const result = await model.findOne({name:airportname})
         if(result)
         {
-            console.log('existssad')
             return res.send('Airport Exists')
         }
         await model.create({name:req.body.name,fuelcapacity:req.body.fuelcapacity,fuelavailable:req.body.fuelavailable})

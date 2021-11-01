@@ -59,6 +59,11 @@ class LoginComponent extends React.Component<propTypes,statetypes>{
     handlesubmit=async (event:any)=>{
         event.preventDefault();
         const reqbody = {email:this.state.email,password:this.state.password}
+        if(reqbody.email===""||reqbody.password==="")
+        {
+          console.log('entered')
+            return errormsg("Input is required")
+        }
         try{
             await postlogindata(reqbody)
             this.setState({loggedin:true});
@@ -97,6 +102,7 @@ class LoginComponent extends React.Component<propTypes,statetypes>{
                         required
                         fullWidth
                         id="email"
+                        type="email"
                         label="Email Address"
                         name="email"
                         value = {this.state.email}

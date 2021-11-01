@@ -44,9 +44,7 @@ class Aircrafttable extends React.Component<proptypes,statetypes>{
                    </TableHead>
                    <TableBody>
                     {
-                    this.state.response.sort(function(a:any,b:any){
-                        return (a.aircraft_no-b.aircraft_no);
-                     }).map(function(value:typeProvider,index:number){
+                    this.state.response.map(function(value:typeProvider,index:number){
                         return(
                             <StyledTableRow
                               key={index}

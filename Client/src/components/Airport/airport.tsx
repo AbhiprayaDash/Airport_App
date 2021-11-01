@@ -61,6 +61,11 @@ class AirportController extends React.Component<propTypes,statetypes>{
             fuelavailable:this.state.fuelavailable,
             fuelcapacity:this.state.fuelcapacity
         }
+        console.log(reqbody.fuelavailable)
+        if(reqbody.name===""||String(reqbody.fuelavailable)===""||String(reqbody.fuelcapacity)==="")
+        {
+          errormsg("Input is required")
+        }
         if(this.state.fuelavailable<0||this.state.fuelcapacity<0)
             return errormsg('Fuel cannot be negative')
         postAircraftData(reqbody)

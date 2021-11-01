@@ -23,7 +23,13 @@ export async function validateSignupData(reqbody:any):Promise<any>{
         errormsg("Enter a proper password")
         throw new Error("Password is not valid")
     }
-    await axios.post('http://localhost:9000/user/signup',reqbody);
+    const response:any=await axios.post('http://localhost:9000/user/signup',reqbody);
+    console.log(response.data)
+    if(response.data==="users exist")
+    { 
+        errormsg("User already Exist")
+        throw new Error("users exist")
+    }
 }
 
 export function isAuthenticated():Object{

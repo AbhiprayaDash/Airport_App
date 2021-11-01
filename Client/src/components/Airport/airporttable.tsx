@@ -34,6 +34,7 @@ class Airporttable extends React.Component<proptypes,statetypes>{
         }
     }
     render(){
+        
         return(
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -45,9 +46,7 @@ class Airporttable extends React.Component<proptypes,statetypes>{
                    </TableHead>
                    <TableBody>
                     {
-                    this.state.response.sort(function(a:any,b:any){
-                        return a.name.localeCompare(b.name);
-                     }).map(function(value:typeProvider,index:number){
+                    this.state.response.map(function(value:typeProvider,index:number){
                         return(
                             <StyledTableRow
                               key={index}
