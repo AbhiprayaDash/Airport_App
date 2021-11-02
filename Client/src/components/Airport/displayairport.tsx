@@ -6,6 +6,7 @@ import Airporttable from './airporttable'
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import '../../css/displayairport.css'
+import {SortAirport} from './SortService'
 
 interface typeProvider{
     name:string,
@@ -33,43 +34,9 @@ class DisplayAirports extends React.Component<proptypes,statetypes>{
     }
     handlefiltername:any =async(event:any)=>{
         const value=event.target.value
-        console.log(value)
-        if(value==="nameasc")
-        {
-            const result = await axios.get('http://localhost:9000/airport/filter/name?sort=asc')
-            console.log(result.data)
-            this.setState({response:result.data})
-        }
-        else if(value==="namedesc")
-        {
-            const result = await axios.get('http://localhost:9000/airport/filter/name?sort=desc')
-            console.log(result.data)
-            this.setState({response:result.data})
-        }
-        else if(value==="fuelavailableasc")
-        {
-            const result = await axios.get('http://localhost:9000/airport/filter/fuelavailable?sort=asc')
-            console.log(result.data)
-            this.setState({response:result.data})
-        }
-        else if(value==="fuelavailabledesc")
-        {
-            const result = await axios.get('http://localhost:9000/airport/filter/fuelavailable?sort=desc')
-            console.log(result.data)
-            this.setState({response:result.data})
-        }
-        else if(value==="fuelcapacityasc")
-        {
-            const result = await axios.get('http://localhost:9000/airport/filter/fuelcapacity?sort=asc')
-            console.log(result.data)
-            this.setState({response:result.data})
-        }
-        else if(value==="fuelcapacitydesc")
-        {
-            const result = await axios.get('http://localhost:9000/airport/filter/fuelcapacity?sort=desc')
-            console.log(result.data)
-            this.setState({response:result.data})
-        }
+        this.setState({filtername:value})
+        const result:any = await SortAirport(value)
+        this.setState({response:result.data})
     }
     componentDidMount()
     {
@@ -101,6 +68,8 @@ class DisplayAirports extends React.Component<proptypes,statetypes>{
             <InputLabel id="demo-simple-select-label" style={{fontSize:'16px'}}>Sort By</InputLabel><br/><br/>
                 <select id="country" name="country" onChange={this.handlefiltername} value={this.state.filtername}>
                     <option value="default">Default</option>
+                    <option value="recent">Recent</option>
+                    <option value="older">Older</option>
                     <option value="nameasc">Sort By name Asc</option>
                     <option value="namedesc">Sort By name Desc</option>
                     <option value="fuelcapacityasc">Sort by FuelCapacity Asc</option>

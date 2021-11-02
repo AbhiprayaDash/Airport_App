@@ -1,5 +1,5 @@
 import  Router  from "express";
-import { TransactionFilter } from '../controller/FilterController.mjs';
+import { TransactionSort } from '../controller/SortController.mjs';
 const router = Router();
 
 router.
@@ -7,11 +7,11 @@ router.
      .get(function(req,res){
       if(req.query.sort==="desc")
       {
-         TransactionFilter.FilterbyDateDesc(req,res)
+         TransactionSort.SortbyDateDesc(req,res)
       }
       else if(req.query.sort==="asc")
       {
-         TransactionFilter.FilterbyDateAsc(req,res)
+         TransactionSort.SortbyDateAsc(req,res)
       }
      })
 router.
@@ -21,13 +21,23 @@ router.
       if(req.query.sort==="desc")
       {
          console.log('desc')
-         TransactionFilter.FilterbyQuantityDesc(req,res)
+         TransactionSort.SortbyQuantityDesc(req,res)
       }
       else if(req.query.sort==="asc")
       {
          console.log('asc')
-         TransactionFilter.FilterbyQuantityAsc(req,res)
+         TransactionSort.SortbyQuantityAsc(req,res)
       }
+     })
+router.
+     route('/recent')
+     .get(function(req,res){
+        TransactionSort.SortByRecent(req,res)
+     })
+router.
+     route('/older')
+     .get(function(req,res){
+        TransactionSort.SortByOlder(req,res)
      })
 
 export default router

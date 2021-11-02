@@ -1,5 +1,5 @@
 import  Router  from "express";
-import { AirportFilter } from "../controller/FilterController.mjs";
+import { AirportSort } from "../controller/SortController.mjs";
 const router = Router();
 
 router.
@@ -7,11 +7,11 @@ router.
      .get(function(req,res){
          if(req.query.sort==="desc")
          {
-            AirportFilter.filterFuelCapacityDesc(req,res)
+            AirportSort.SortFuelCapacityDesc(req,res)
          }
          else if(req.query.sort==="asc")
          {
-            AirportFilter.filterFuelCapacityAsc(req,res)
+            AirportSort.SortFuelCapacityAsc(req,res)
          }
     })
 router.
@@ -19,11 +19,11 @@ router.
      .get(function(req,res){
         if(req.query.sort==="desc")
         {
-            AirportFilter.filterFuelAvailableDesc(req,res)
+            AirportSort.SortFuelAvailableDesc(req,res)
         }
         else if(req.query.sort==="asc")
         {
-            AirportFilter.filterFuelAvailableAsc(req,res)
+            AirportSort.SortFuelAvailableAsc(req,res)
         }
     })
 router.
@@ -31,11 +31,22 @@ router.
      .get(function(req,res){
         if(req.query.sort==="desc")
         {
-            AirportFilter.filterBynameDesc(req,res)
+            AirportSort.SortBynameDesc(req,res)
         }
         else if(req.query.sort==="asc")
         {
-            AirportFilter.filterBynameAsc(req,res)
+            AirportSort.SortBynameAsc(req,res)
         }
+    })
+
+router.
+    route('/recent')
+    .get(function(req,res){
+       AirportSort.SortByRecent(req,res)
+    })
+router.
+    route('/older')
+    .get(function(req,res){
+       AirportSort.SortByOlder(req,res)
     })
 export default router

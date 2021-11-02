@@ -6,6 +6,7 @@ import Aircrafttable from './aircrafttable'
 import axios from "axios";
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
+import {SortAircraft} from './SortService'
 
 type statetypes={
     response:any,
@@ -25,31 +26,9 @@ class DisplayAircrafts extends React.Component<proptypes,statetypes>{
     }
     handlefiltername:any =async(event:any)=>{
         const value=event.target.value
-        console.log(value)
-        if(value==="numberasc")
-        {
-            const result = await axios.get('http://localhost:9000/aircraft/filter/aircraft_no?sort=asc')
-            console.log(result.data)
-            this.setState({response:result.data})
-        }
-        else if(value==="numberdesc")
-        {
-            const result = await axios.get('http://localhost:9000/aircraft/filter/aircraft_no?sort=desc')
-            console.log(result.data)
-            this.setState({response:result.data})
-        }
-        else if(value==="airlineasc")
-        {
-            const result = await axios.get('http://localhost:9000/aircraft/filter/airline?sort=asc')
-            console.log(result.data)
-            this.setState({response:result.data})
-        }
-        else if(value==="airlinedesc")
-        {
-            const result = await axios.get('http://localhost:9000/aircraft/filter/airline?sort=desc')
-            console.log(result.data)
-            this.setState({response:result.data})
-        }
+        this.setState({filtername:value})
+        const result:any=await SortAircraft(value)
+        this.setState({response:result.data})        
     }
     componentDidMount()
     {
@@ -79,6 +58,8 @@ class DisplayAircrafts extends React.Component<proptypes,statetypes>{
             <InputLabel id="demo-simple-select-label" style={{fontSize:'16px'}}>Sort By</InputLabel><br/><br/>
                 <select id="country" name="country" onChange={this.handlefiltername} value={this.state.filtername}>
                     <option value="default">Default</option>
+                    <option value="recent">Recent</option>
+                    <option value="older">Older</option>
                     <option value="numberasc">Sort By aircraft number Asc</option>
                     <option value="numberdesc">Sort By aircraft number Desc</option>
                     <option value="airlineasc">Sort By Airline Asc</option>

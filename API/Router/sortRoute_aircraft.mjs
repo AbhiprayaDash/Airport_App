@@ -1,18 +1,17 @@
 import  Router  from "express";
-import { AircraftController } from "../controller/FilterController.mjs";
+import { AircraftSort } from "../controller/SortController.mjs";
 const router = Router();
 
 router.
     route('/aircraft_no')
      .get(function(req,res){
-         console.log(req.query)
          if(req.query.sort==="desc")
          {
-            AircraftController.FilterbynoDesc(req,res)
+            AircraftSort.SortbynoDesc(req,res)
          }
          else if(req.query.sort==="asc")
          {
-            AircraftController.FilterbynoAsc(req,res)
+            AircraftSort.SortbynoAsc(req,res)
          }
     })
 router.
@@ -22,11 +21,22 @@ router.
          console.log(req.query.sort)
         if(req.query.sort==="desc")
         {
-            AircraftController.FilterByAirlineDesc(req,res)
+            AircraftSort.SortByAirlineDesc(req,res)
         }
         else if(req.query.sort==="asc")
         {
-            AircraftController.FilterByAirlineAsc(req,res)
+            AircraftSort.SortByAirlineAsc(req,res)
         }
 })
+
+router.
+     route('/recent')
+     .get(function(req,res){
+        AircraftSort.SortByRecent(req,res)
+     })
+router.
+     route('/older')
+     .get(function(req,res){
+        AircraftSort.SortByOlder(req,res)
+     })
 export default router

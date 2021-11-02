@@ -1,49 +1,47 @@
-export const FilterbyDateAsc = model=>async (req,res)=>{
+export const Transactiontype = model =>async (req,res)=>{
     try{
-        console.log('entered')
-        const result =await model.find({}).sort({"Duration.date":1})
-        res.send(result);
+        const response =await model.find({Type:req.body.type})
+        res.send(response)
     }
     catch(e)
     {
         res.send(e)
     }
 }
-
-export const FilterbyDateDesc = model=>async (req,res)=>{
+export const FilterByAirport = model =>async(req,res)=>{
     try{
-        const result =await model.find({}).sort({"Duration.date":-1})
-        res.send(result);
+        console.log(req.body.name)
+        console.log('response')
+        const response = await model.find({}).populate({
+            path: 'airport',
+            match: { 'name': req.body.name }
+        })
+        const result = response.filter(res=>res.airport!==null)
+        console.log(result)
+        res.send(result)
     }
     catch(e)
     {
         res.send(e)
     }
 }
-export const FilterbyQuantityAsc = model=>async (req,res)=>{
+export const FilterByAircraft = model =>async(req,res)=>{
     try{
-        const result =await model.find({}).sort({"quantity":1})
-        res.send(result);
+        const response = await model.find({Type:"OUT"}).populate({
+            path: 'aircraft',
+            match: { 'aircraft_no': req.body.aircraft }
+        })
+        const result = response.filter(res=>res.aircraft!==null)
+        console.log(result)
+        res.send(result)
     }
     catch(e)
     {
         res.send(e)
     }
 }
-export const FilterbyQuantityDesc = model=>async (req,res)=>{
-    try{
-        const result =await model.find({}).sort({"quantity":-1})
-        res.send(result);
-    }
-    catch(e)
-    {
-        res.send(e)
-    }
-}
-
-export const FilterTransaction = (model) =>({
-    FilterbyDateAsc:FilterbyDateAsc(model),
-    FilterbyDateDesc:FilterbyDateDesc(model),
-    FilterbyQuantityAsc:FilterbyQuantityAsc(model),
-    FilterbyQuantityDesc:FilterbyQuantityDesc(model)
+export const FilterTransaction = model =>({
+    Transactiontype:Transactiontype(model),
+    FilterByAirport:FilterByAirport(model),
+    FilterByAircraft:FilterByAircraft(model)
 })
