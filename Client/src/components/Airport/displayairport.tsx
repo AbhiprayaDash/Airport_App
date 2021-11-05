@@ -4,7 +4,6 @@ import Typography from '@mui/material/Typography';
 import Pagination from '../Pagination/pagination'
 import Airporttable from './airporttable'
 import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
 import '../../css/displayairport.css'
 import {SortAirport} from './SortService'
 
@@ -16,7 +15,8 @@ interface typeProvider{
 type statetypes={
     response:any,
     filtername:any,
-    dataupdate:boolean
+    dataupdate:boolean,
+    sortname:string
 }
 type proptypes={
     
@@ -28,9 +28,15 @@ class DisplayAirports extends React.Component<proptypes,statetypes>{
         this.state={
             response:[],
             filtername:'',
+            sortname:'',
             dataupdate:false
         }
+        this.handlesort = this.handlesort.bind(this)
         this.handlefiltername = this.handlefiltername.bind(this)
+    }
+    handlesort:any= async(event:any)=>{
+        const value = event.target.value
+        this.setState({sortname:value})
     }
     handlefiltername:any =async(event:any)=>{
         const value=event.target.value
@@ -65,9 +71,8 @@ class DisplayAirports extends React.Component<proptypes,statetypes>{
             </Typography>
 
             <FormControl style={{width:"50%",alignItems:'center',alignContent:'center'}}>
-            <InputLabel id="demo-simple-select-label" style={{fontSize:'16px'}}>Sort By</InputLabel><br/><br/>
                 <select id="country" name="country" onChange={this.handlefiltername} value={this.state.filtername}>
-                    <option value="default">Default</option>
+                    <option value="recent">Sort By</option>
                     <option value="recent">Recent</option>
                     <option value="older">Older</option>
                     <option value="nameasc">Sort By name Asc</option>
@@ -78,9 +83,8 @@ class DisplayAirports extends React.Component<proptypes,statetypes>{
                     <option value="fuelavailabledesc">Sort by FuelAvailable Desc</option>
                 </select>
             </FormControl>
-            
             {
-            this.state.response.length>0&&<Pagination RenderedComponent={Airporttable} data={this.state.response} title={"airport"} pageLimit={5} dataLimit={3} />
+            this.state.response.length>0&&<Pagination RenderedComponent={Airporttable} data={this.state.response} title={"airport"} pageLimit={5} dataLimit={5} />
             }
         </Fragment>
         )

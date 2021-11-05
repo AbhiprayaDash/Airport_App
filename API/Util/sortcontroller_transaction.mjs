@@ -1,7 +1,7 @@
 export const SortBynameDesc=model=> async(req,res)=>{
     try{
         const result = await model.find().sort({"name":-1})
-        return res.send(result)
+        return res.status(200).send(result);
     }
     catch(e)
     {
@@ -10,9 +10,8 @@ export const SortBynameDesc=model=> async(req,res)=>{
 }
 export const SortBynameAsc=model=> async(req,res)=>{
     try{
-        console.log('name entered')
         const result = await model.find().sort({"name":1})
-        return res.send(result)
+        return res.status(200).send(result);
     }
     catch(e)
     {
@@ -22,7 +21,7 @@ export const SortBynameAsc=model=> async(req,res)=>{
 export const SortFuelAvailableDesc=model=> async(req,res)=>{
     try{
         const result = await model.find({}).sort({fuelavailable:-1})
-        return res.send(result)
+        return res.status(200).send(result);
     }
     catch(e)
     {
@@ -33,7 +32,7 @@ export const SortFuelAvailableDesc=model=> async(req,res)=>{
 export const SortFuelAvailableAsc=model=> async(req,res)=>{
     try{
         const result = await model.find().sort({"fuelavailable":1})
-        return res.send(result)
+        return res.status(200).send(result);
     }
     catch(e)
     {
@@ -45,7 +44,7 @@ export const SortFuelCapacityDesc=model=> async(req,res)=>{
     try{
         console.log('entered')
         const result = await model.find().sort({fuelcapacity:-1})
-        return res.send(result)
+        return res.status(200).send(result);
     }
     catch(e)
     {
@@ -57,7 +56,7 @@ export const SortFuelCapacityAsc=model=> async(req,res)=>{
     try{
         console.log('entered')
         const result = await model.find().sort({fuelcapacity:1})
-        return res.send(result)
+        return res.status(200).send(result);
     }
     catch(e)
     {
@@ -68,21 +67,21 @@ export const SortFuelCapacityAsc=model=> async(req,res)=>{
 export const SortByRecent =model =>async(req,res)=>{
     try{
         const result = await model.find({}).sort({"_id":-1})
-        res.send(result)
+        return res.status(200).send(result);
     }
     catch(e)
     {
-        res.send(e)
+        return res.status(404).json({msg:'error'})
     }
 }
 export const SortByOlder = model =>async(req,res)=>{
     try{
         const result = await model.find({}).sort({"_id":1})
-        res.send(result)
+        return res.status(200).send(result);
     }
     catch(e)
     {
-        res.send(e)
+        return res.status(404).json({msg:'error'})
     }
 }
 

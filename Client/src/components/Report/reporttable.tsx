@@ -1,15 +1,16 @@
 import {StyledTableCell,StyledTableRow} from '../Airport/tablestyle'
 import moment from 'moment'
-import React from 'react'
+import React,{Fragment} from 'react'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import Paper from '@mui/material/Paper';
-
+import FormControl from '@mui/material/FormControl';
 
 type statetypes={
     response:any,
+    sortname:any
 }
 type proptypes={
     data:any
@@ -20,8 +21,12 @@ class Reporttable extends React.Component<proptypes,statetypes>{
         super(props)
         var responsedata= this.props.data
         this.state={
-            response:responsedata
+            response:responsedata,
+            sortname:'Sort By'
         }
+    }
+    handlesortname = async (event:any)=>{
+        
     }
     componentDidUpdate()
     {
@@ -32,6 +37,7 @@ class Reporttable extends React.Component<proptypes,statetypes>{
     }
     render(){
         return(
+            <Fragment>
             <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                <TableHead>
@@ -77,7 +83,8 @@ class Reporttable extends React.Component<proptypes,statetypes>{
               </TableBody>
             </Table>
             </TableContainer>
-            )
+            </Fragment>
+        )
     }
 }
 export default Reporttable

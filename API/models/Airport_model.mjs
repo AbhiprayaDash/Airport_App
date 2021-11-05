@@ -12,6 +12,7 @@ const AirportSchema = new Schema({
     fuelcapacity:{
         type:Number,
         required:true,
+        min:1000,
         max:100000
     },
     fuelavailable:{

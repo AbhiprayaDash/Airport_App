@@ -4,22 +4,25 @@ export const AddAirport = model=>async (req,res)=>{
         const result = await model.findOne({name:airportname})
         if(result)
         {
-            return res.send('Airport Exists')
+            return res.status(400).send('Airport Exists')
         }
         await model.create({name:req.body.name,fuelcapacity:req.body.fuelcapacity,fuelavailable:req.body.fuelavailable})
     }
     catch(e){
-        console.log('exceeded')
-        return res.send('Number exeeded');
+        return res.status(400).send('Number exeeded');
     }  
-    res.send('airport added');
+    res.status(200).send('airport added');
 }
 
 export const getAirport = model =>async(req,res)=>{
-    console.log('get')
-    const result = await model.find({}).sort({name:1}).limit(5);
-    console.log(result)
-    res.send(result);
+    try{
+        const result = await model.find({})
+        return res.status(200).send(result);
+    }
+    catch(e)
+    {
+        return res.status(400).send(e)
+    }
 }
 
 export const AirportControllerutil = model =>({

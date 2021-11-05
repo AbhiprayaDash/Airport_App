@@ -8,13 +8,12 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
 import { ToastContainer} from 'react-toastify';
-import Select from '@mui/material/Select';
 import { errormsg, successmsg } from '../Toast/toastservice';
 import LocalAirportSharpIcon from '@mui/icons-material/LocalAirportSharp';
 import NavigationComponent from '../Navigation/navcomponent';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
 
 type statetypes={
     number:number,
@@ -23,6 +22,23 @@ type statetypes={
 type propTypes={
     history:any
 }
+
+const aircrafts=[
+    {label:"162"},
+    {label:"15267"},
+    {label:"4271"},
+    {label:"9847"},
+    {label:"5842"},
+    {label:"3849"},
+    {label:"124"},
+    {label:"284"}
+]
+const airline =[
+    {label:"Air India"},
+    {label:"IndiGo"},
+    {label:"SpiceJet"},
+    {label:"Go Air"}
+]
 class AircraftController extends React.Component<propTypes,statetypes>{
     constructor(props:propTypes)
     {
@@ -34,13 +50,22 @@ class AircraftController extends React.Component<propTypes,statetypes>{
         this.handlenumber=this.handlenumber.bind(this);
         this.handleairline=this.handleairline.bind(this);
     }
-    handlenumber(event:any){
-        this.setState({number: event.target.value});
+    handlenumber(event:any,values:any){
+      if(values!==null&&values!==undefined)
+      {
+        console.log(values.label)
+        this.setState({
+          number: values.label
+        })
+      }
     }
-    handleairline(event:any){
-        const val:string = event.target.value
-        console.log(val)
-        this.setState({airline: val});
+    handleairline(event:any,values:any){
+      if(values!==null&&values!==undefined)
+      {
+        this.setState({
+          airline: values.label
+        })
+      }
     }
     handlesubmit=async (event:any)=>{
         event.preventDefault();
@@ -67,17 +92,17 @@ class AircraftController extends React.Component<propTypes,statetypes>{
             <Fragment>
                 <ToastContainer limit={3} autoClose={1500}/>
             <NavigationComponent/>
-        <ThemeProvider theme={theme}>
-        <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
+            <ThemeProvider theme={theme}>
+            <Container component="main" maxWidth="xs">
+            <CssBaseline />
+            <Box
+            sx={{
+                marginTop: 8,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+            }}
+            >
             <Typography component="h1" variant="h5">
             Add Aircraft
           </Typography>
@@ -85,36 +110,28 @@ class AircraftController extends React.Component<propTypes,statetypes>{
             <LocalAirportSharpIcon />
           </Avatar>
           <Box component="form" onSubmit={this.handlesubmit} noValidate sx={{ mt: 1 }}>
-            <FormControl fullWidth sx={{ mt: 3, mb: 2 }}>
-            <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={this.state.number}
-                label="Age"
+            <Autocomplete
+                id="disable-close-on-select"
+                disableCloseOnSelect
+                options={aircrafts}
+                sx={{ width: 400 }}
                 onChange={this.handlenumber}
-            >
-                <MenuItem value={"162"}>162</MenuItem>
-                <MenuItem value={"15267"}>15267</MenuItem>
-                <MenuItem value={"4271"}>4271</MenuItem>
-                <MenuItem value={"9847"}>9847</MenuItem>
-                <MenuItem value={"5842"}>5842</MenuItem>
-                <MenuItem value={"3849"}>3849</MenuItem>
-            </Select>
-            </FormControl>
-            <FormControl fullWidth sx={{ mt: 3, mb: 2 }}>
-            <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={this.state.airline}
-                label="Age"
+                renderInput={(params:any) => 
+            <TextField {...params} label="Aircraft number" 
+                value={this.state.number}
+             />}
+            />
+          <Autocomplete
+                id="disable-close-on-select"
+                disableCloseOnSelect
+                options={airline}
+                sx={{ width: 400 }}
                 onChange={this.handleairline}
-            >
-                <MenuItem value={"Air India"}>Air India</MenuItem>
-                <MenuItem value={"IndiGo"}>IndiGo</MenuItem>
-                <MenuItem value={"SpiceJet"}>SpiceJet</MenuItem>
-                <MenuItem value={"Go Air"}>Go Air</MenuItem>
-            </Select>
-          </FormControl>
+                renderInput={(params:any) => 
+            <TextField {...params}
+                value={this.state.airline} label="Airline" fullWidth
+             />}
+            />
             <Button
               type="submit"
               fullWidth

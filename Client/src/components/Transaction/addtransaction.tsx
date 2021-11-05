@@ -16,6 +16,7 @@ import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NavigationComponent from "../Navigation/navcomponent";
 import { errormsg } from "../Toast/toastservice";
+import { Autocomplete } from "@mui/material";
 
 type stateTypes= {
     type:string,
@@ -26,6 +27,30 @@ type stateTypes= {
 type propTypes={
     history:any
 }
+
+var Airports=[
+  {label:"Bilaspur Airport,Bilaspur"},
+  {label:"Swami Vivekananda International Airport,Raipur"},
+  {label:"Sardar Vallabhbhai Patel International Airport,Ahmedabad"},
+  {label:"Ambala Air Force Station,Ambala"},
+  {label:"Shimla Airport,Shimla"},
+  {label:"Kempegowda International Airport,Bangalore"},
+  {label:"Chhatrapati Shivaji Maharaj International Airport,Mumbai"},
+  {label:"Indira Gandhi International Airport,Delhi"},
+  {label:"Chennai International Airport,Chennai"},
+]
+
+const aircrafts=[
+  {label:"162"},
+  {label:"15267"},
+  {label:"4271"},
+  {label:"9847"},
+  {label:"5842"},
+  {label:"3849"},
+  {label:"124"},
+  {label:"284"}
+]
+
 class AddTransaction extends React.Component<propTypes,stateTypes>{
     constructor(props:propTypes)
     {
@@ -34,7 +59,7 @@ class AddTransaction extends React.Component<propTypes,stateTypes>{
             type:'IN',
             airport_name:'Indira Gandhi International Airport,Delhi',
             aircraft_no:162,
-            quantity:-1
+            quantity:0
         }
         this.handletype=this.handletype.bind(this);
         this.handlename=this.handlename.bind(this);
@@ -45,11 +70,21 @@ class AddTransaction extends React.Component<propTypes,stateTypes>{
     handletype(event:any){
         this.setState({type: event.target.value});
     }
-    handlename(event:any){
-        this.setState({airport_name: event.target.value});
+    handlename=(event:any,values:any)=>{
+      if(values!==null&&values!==undefined)
+      {
+        this.setState({
+          airport_name: values.label
+        })
+      }
     }
-    handleno(event:any){
-        this.setState({aircraft_no:event.target.value});
+    handleno(event:any,values:any){
+      if(values!==null&&values!==undefined)
+      {
+        this.setState({
+          aircraft_no: values.label
+        })
+      }
     }
     handlequantity(event:any){
         this.setState({quantity:event.target.value});
@@ -103,41 +138,30 @@ class AddTransaction extends React.Component<propTypes,stateTypes>{
                 <MenuItem value={"OUT"}>OUT</MenuItem>
             </Select>
             </FormControl>
-            <br/>
-            <FormControl fullWidth>
-            <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={this.state.airport_name}
-                label="Age"
-                onChange={this.handlename}
-            >
-                <MenuItem value={"Indira Gandhi International Airport,Delhi"}>Indira Gandhi International Airport,Delhi</MenuItem>
-                <MenuItem value={"Rajiv Gandhi International Airport,Hyderabad"}>Rajiv Gandhi International Airport,Hyderabad</MenuItem>
-                <MenuItem value={"Chhatrapati Shivaji International Airport,Mumbai"}>Chhatrapati Shivaji International Airport,Mumbai</MenuItem>
-                <MenuItem value={"Chennai International Airport,Chennai"}>Chennai International Airport,Chennai</MenuItem>
-                <MenuItem value={"Kempegowda International Airport,Bangalore"}>Kempegowda International Airport,Bangalore</MenuItem>
-            </Select>
-            </FormControl>
-            <br/>
+            <Autocomplete
+              id="disable-close-on-select"
+              disableCloseOnSelect
+              options={Airports}
+              sx={{ width: 400 }}
+              onChange={this.handlename}
+              renderInput={(params:any) => 
+              <TextField {...params} label="Airports" 
+              value={this.state.airport_name}
+              />}
+              />
             {
             this.state.type==="OUT"&&
-            <FormControl fullWidth>
-            <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={this.state.aircraft_no}
-            label="Age"
-            onChange={this.handleno}
-        >
-            <MenuItem value={"162"}>162</MenuItem>
-            <MenuItem value={"15267"}>15267</MenuItem>
-            <MenuItem value={"4271"}>4271</MenuItem>
-            <MenuItem value={"9847"}>9847</MenuItem>
-            <MenuItem value={"5842"}>5842</MenuItem>
-            <MenuItem value={"3849"}>3849</MenuItem>
-        </Select>
-        </FormControl>
+                  <Autocomplete
+                    id="disable-close-on-select"
+                    disableCloseOnSelect
+                    options={aircrafts}
+                    sx={{ width: 400 }}
+                    onChange={this.handleno}
+                    renderInput={(params:any) => 
+                  <TextField {...params} label="Aircraft number" 
+                      value={this.state.aircraft_no}
+                    />}
+                  />
             }
             <TextField
               margin="normal"

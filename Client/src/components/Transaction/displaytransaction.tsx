@@ -4,11 +4,12 @@ import Typography from '@mui/material/Typography';
 import Pagination from "../Pagination/pagination"
 import TransactionTable from "./transactiontable";
 import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
 import {SortTransaction} from '../Airport/SortService'
+import {FilterTransaction} from '../Airport/FilterService'
 type statetypes={
     response:any,
-    filtername:string
+    filtername:string,
+    sortname:string
 }
 type proptypes={
     
@@ -19,13 +20,29 @@ class DisplayTransaction extends React.Component<proptypes,statetypes>{
         super(props)
         this.state={
             response:[],
-            filtername:''
+            filtername:'Filter By',
+            sortname:''
         }
-        this.handlefiltername = this.handlefiltername.bind(this)
     }
-    handlefiltername:any =async(event:any)=>{
+    handlefilter:any = async(event:any)=>{
         const value=event.target.value
         this.setState({filtername:value})
+        var result:any
+        if(value==="IN")
+        {
+            const reqbody={type:"IN"}
+            result =await FilterTransaction(reqbody,value)
+        }
+        else if(value==="OUT")
+        {
+            const reqbody={type:"OUT"}
+            result= await FilterTransaction(reqbody,value)
+        }
+        this.setState({response:result.data})
+    }
+    handlesort:any = async(event:any)=>{
+        const value=event.target.value
+        this.setState({sortname:value})
         const result:any =await SortTransaction(value)
         this.setState({response:result.data})
     }
@@ -53,9 +70,8 @@ class DisplayTransaction extends React.Component<proptypes,statetypes>{
             Transaction Details
             </Typography>
             <FormControl style={{width:"50%",alignItems:'center',alignContent:'center'}}>
-            <InputLabel id="demo-simple-select-label" style={{fontSize:'16px'}}>Sort By</InputLabel><br/><br/>
-                <select id="country" name="country" onChange={this.handlefiltername} value={this.state.filtername}>
-                    <option value="default">Default</option>
+                <select id="country" name="country" onChange={this.handlesort} value={this.state.sortname}>
+                    <option value="recent">Sort By</option>
                     <option value="recent">Recent</option>
                     <option value="older">Older</option>
                     <option value="dateasc">Sort By Date Asc</option>
@@ -65,10 +81,9 @@ class DisplayTransaction extends React.Component<proptypes,statetypes>{
                 </select>
             </FormControl>
             <FormControl>
-            <InputLabel id="demo-simple-select-label" style={{fontSize:'16px'}}>Filter By</InputLabel><br/><br/>
-                <select id="country" name="country" onChange={this.handlefiltername} value={this.state.filtername}>
-                    <option value="default">Default</option>
-                    <option value="type">Type</option>
+                <select id="country" name="country" onChange={this.handlefilter} value={this.state.filtername}>
+                    <option value="IN">IN</option>
+                    <option value="OUT">OUT</option>
                 </select>
             </FormControl>
             {

@@ -4,7 +4,7 @@ export const postransaction = (model,AirportModel,AircraftModel) =>async(req,res
     )
     if(!Airportresult)
     {
-        return res.send("NoAirport");
+        return res.status(400).send("NoAirport");
     }
     if(req.body.type=='OUT')
     {
@@ -13,12 +13,12 @@ export const postransaction = (model,AirportModel,AircraftModel) =>async(req,res
         )
         if(!AircraftResult)
         {
-            return res.send("NoAircraft");
+            return res.status(400).send("NoAircraft");
         }
         try{
             if(Airportresult.fuelavailable-req.body.quantity<0)
             {
-                return res.send("NoFuel");
+                return res.status(400).send("NoFuel");
             }
             await AirportModel.update(
                 {_id:Airportresult._id},
@@ -27,18 +27,18 @@ export const postransaction = (model,AirportModel,AircraftModel) =>async(req,res
                 }
             )
         const result = await model.create({Type:req.body.type,airport:Airportresult._id,aircraft:AircraftResult._id,quantity:req.body.quantity})
-        res.send(result)
+        return res.status(200).send(result)
         }
         catch(e)
         {
-            res.send(e);
+            return res.status(400).send(e);
         }
     }
     else{ 
         try{
             if((Airportresult.fuelcapacity)<Number(req.body.quantity)+Airportresult.fuelavailable)
             {
-                return res.send("NoCapacity");
+                return res.status(400).send("NoCapacity");
             }
             await AirportModel.update(
                 {_id:Airportresult._id},
@@ -46,13 +46,13 @@ export const postransaction = (model,AirportModel,AircraftModel) =>async(req,res
                 $inc:{fuelavailable:req.body.quantity}
             }
             )
+            const result = await model.create({Type:req.body.type,airport:Airportresult._id,quantity:req.body.quantity})
+            return res.status(200).send(result)
         }
         catch(e)
         {
-            res.send(e);
+            return res.status(400).send(e);
         }
-        const result = await model.create({Type:req.body.type,airport:Airportresult._id,quantity:req.body.quantity})
-        res.send(result)
     }
 }
 
@@ -61,7 +61,7 @@ export const getransaction = (model)=> async(req,res)=>{
     const result2 = await model.find({Type:"OUT"}).populate("aircraft").populate("airport").sort({"_id":-1})
     const finalresult = result.concat(result2)
     console.log(finalresult)
-    res.send(finalresult)
+    res.status(200).send(finalresult)
 }
 export const TransactionUtilController = (model,AirportModel,AircraftModel)=>({
     postransaction:postransaction(model,AirportModel,AircraftModel),

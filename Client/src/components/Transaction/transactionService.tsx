@@ -35,7 +35,6 @@ export const errorhandling=async (reqbody:any)=>{
     }
 }
 export async function PostTransactionService(state:stateTypes,props:propTypes):Promise<any>{
-    console.log(state.airport_name)
     if(state.type==="IN")
     {
         const reqbody = {type:state.type,airport_name:state.airport_name,quantity:state.quantity}

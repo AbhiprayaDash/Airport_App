@@ -4,6 +4,10 @@ import NavigationComponent from '../Navigation/navcomponent'
 import Typography from '@mui/material/Typography';
 import Pagination from '../Pagination/pagination'
 import Reporttable from './reporttable'
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 type stateTypes = {
     response:any,
@@ -42,20 +46,19 @@ class ReportComponent extends React.Component<propTypes,stateTypes>{
         {
           this.state.airportresponse.map((value:any)=>{
             return (
-                <div>
-                <Typography
-                component="h2"
-                variant="h3"
-                color="inherit"
-                align="left"
-                noWrap
-                sx={{ flex: 1 }}
-                fontFamily="Roboto"
+                <Fragment>
+                <Accordion>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
                 >
-                 {value.name}
-                </Typography>
+                <Typography>{value.name}</Typography>
+                </AccordionSummary>
                 {
+                    <AccordionDetails>
                     <Pagination RenderedComponent={Reporttable} data={this.state.response.filter((data:any)=>data.airport._id===value._id )} title={"report"} pageLimit={5} dataLimit={4} />
+                    </AccordionDetails>
                 }
                 <Typography
                     component="h4"
@@ -68,8 +71,9 @@ class ReportComponent extends React.Component<propTypes,stateTypes>{
                 >
                 Fuel Available: {value.fuelavailable}
                 </Typography>
-                <br/><br/><br/>
-                </div>
+                </Accordion>
+                <br/>
+                </Fragment>
                 )
             })
         }

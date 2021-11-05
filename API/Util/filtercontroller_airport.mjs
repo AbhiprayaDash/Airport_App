@@ -1,11 +1,11 @@
 export const FilterName = model =>async(req,res)=>{
     try{
         const result = await model.find({name:req.body.name})
-        res.send(result)
+        return res.status(200).send(result)
     }
     catch(e)
     {
-        res.send(e)
+        return res.status(400).send(e)
     }
 }
 

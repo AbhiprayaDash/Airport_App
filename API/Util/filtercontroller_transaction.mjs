@@ -1,28 +1,24 @@
 export const Transactiontype = model =>async (req,res)=>{
     try{
         const response =await model.find({Type:req.body.type})
-        res.send(response)
+        return res.status(200).send(response)
     }
     catch(e)
     {
-        res.send(e)
+        return res.status(400).send(e)
     }
 }
 export const FilterByAirport = model =>async(req,res)=>{
     try{
-        console.log(req.body.name)
-        console.log('response')
         const response = await model.find({}).populate({
             path: 'airport',
             match: { 'name': req.body.name }
         })
-        const result = response.filter(res=>res.airport!==null)
-        console.log(result)
-        res.send(result)
+        return res.status(200).send(result)
     }
     catch(e)
     {
-        res.send(e)
+        return res.status(400).send(e)
     }
 }
 export const FilterByAircraft = model =>async(req,res)=>{
@@ -32,12 +28,11 @@ export const FilterByAircraft = model =>async(req,res)=>{
             match: { 'aircraft_no': req.body.aircraft }
         })
         const result = response.filter(res=>res.aircraft!==null)
-        console.log(result)
-        res.send(result)
+        return res.status(200).send(result)
     }
     catch(e)
     {
-        res.send(e)
+        return res.status(400).send(e)
     }
 }
 export const FilterTransaction = model =>({

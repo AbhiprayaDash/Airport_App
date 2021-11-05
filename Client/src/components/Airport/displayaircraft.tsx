@@ -3,9 +3,7 @@ import Typography from '@mui/material/Typography';
 import {loadAircraftData} from './aircraftservice'
 import Pagination from '../Pagination/pagination'
 import Aircrafttable from './aircrafttable'
-import axios from "axios";
 import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
 import {SortAircraft} from './SortService'
 
 type statetypes={
@@ -20,7 +18,7 @@ class DisplayAircrafts extends React.Component<proptypes,statetypes>{
         super(props)
         this.state={
             response:[],
-            filtername:''
+            filtername:'Sort By'
         }
         this.handlefiltername = this.handlefiltername.bind(this)
     }
@@ -55,9 +53,8 @@ class DisplayAircrafts extends React.Component<proptypes,statetypes>{
             Aircraft Details
             </Typography>
             <FormControl style={{width:"50%",alignItems:'center',alignContent:'center'}}>
-            <InputLabel id="demo-simple-select-label" style={{fontSize:'16px'}}>Sort By</InputLabel><br/><br/>
                 <select id="country" name="country" onChange={this.handlefiltername} value={this.state.filtername}>
-                    <option value="default">Default</option>
+                    <option value="recent">Sort By</option>
                     <option value="recent">Recent</option>
                     <option value="older">Older</option>
                     <option value="numberasc">Sort By aircraft number Asc</option>

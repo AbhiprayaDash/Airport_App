@@ -1,0 +1,442 @@
+openapi: 3.0.0
+info:
+  title: Airport Fuel Inventory API
+  description: Optional multiline or single-line description in HTML.
+  version: 0.1.0
+servers:
+  - url: http://localhost:9000
+    description: Main (production) server
+paths:
+  /:
+    get:
+      summary: get home page
+      description: Home page
+      responses: 
+        '200':
+          description: Successful response
+  /user/signin:
+    post:
+      summary: post login data.
+      description: Post Login Data email and password
+      parameters: 
+       - name: Email
+         in: query
+         description: Email Id of user
+         required: true
+         type: string
+       - name: Password
+         in: query
+         description: Password of user
+         required: true
+         type: string
+      responses:
+        '200':    # status code
+          description: sucessfully logged in 
+  /user/signup:
+    post:
+      summary: post Signup data.
+      description: Post Signup Data username,email and password
+      parameters: 
+       - name: Name
+         in: query
+         description: Email Id of user
+         required: true
+         type: string
+       - name: Email
+         in: query
+         description: Email Id of user
+         required: true
+         type: string
+       - name: Password
+         in: query
+         description: Password of user
+         required: true
+         type: string
+      responses:
+        '200':    # status code
+          description: sucessfully Signed up    
+  /airport:
+    post:
+      summary: post Airport data data.
+      description: Post Airport data like name,fuelcapacity and fuelcavailable
+      parameters:
+       - name: Name
+         in: query
+         description: Name of airport
+         required: true
+         type: string
+       - name: Fuel Capacity
+         in: query
+         description: Fuel Capacity of Airport
+         required: true
+         type: number
+       - name: Fuel Available
+         in: query
+         description: Fuel Available of Airport
+         required: true
+         type: number
+      responses:
+        '200':    # status code
+          description: sucessfully added airport details
+    get:
+      summary: get Airport data data.
+      description: get Airport data like name,fuelcapacity and fuelcavailable
+      responses:
+        '200':    # status code
+          description: A JSON array of Airport data
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string 
+  /aircraft:
+    post:
+      summary: post Aircraft data.
+      description: Post Aircraft Data like aircraft_no and Airline
+      parameters:
+       - name: Aircraft Number
+         in: query
+         description: Aircraft number
+         required: true
+         type: number
+       - name: Airline
+         in: query
+         description: Name of Airline
+         required: true
+         type: string
+      responses:
+        '200':    # status code
+          description: sucessfully added aircraft details
+    get:
+      summary: get Aircraft data.
+      description: get Aircraft Data like aircraft_no and Airline
+      responses:
+        '200':    # status code
+          description: A JSON array of Aircraft data
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+  /transaction:
+    post:
+      summary: post Transaction data.
+      description: Post Aircraft Data like Transaction type,airport,aircraft,quantity
+      parameters:
+       - name: Type
+         in: query
+         description: Type of Transaction
+         required: true
+         type: string
+       - name: Airport name
+         in: query
+         description: Airport name
+         required: true
+         type: string
+       - name: Aircraft number
+         in: query
+         description: Aircraft number
+         required: true
+         type: number
+       - name: Quantity
+         in: query
+         description: Quantity
+         required: true
+         type: number
+      responses:
+        '200':    # status code
+          description: sucessfully added Transaction details
+    get:
+      summary: get Transaction data.
+      description: Post Aircraft Data like Transaction type,airport,aircraft,quantity
+      responses:
+        '200':    # status code
+          description: A JSON array of Transaction data
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string         
+  /transaction/filter/type:
+    post:
+      summary: post type of transaction
+      description: Post type of transaction on the basis of what we want to filter
+      parameters: 
+       - name: transaction
+         in: query
+         description: Type of transaction
+         required: true
+         type: string
+      responses:
+        '200':  #status code
+          description: Successfully posted transaction filter
+  /airport/sort/name:
+    get:
+      summary: get airport data sorted in order of their name
+      description: get airport data sorted in order of their name in asc or desc order
+      parameters: 
+       - name: Order
+         in: query
+         description: Asc/Desc
+         required: true
+         type: string
+      responses: 
+        '200':
+          description: A JSON array of sorted Airport data
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string  
+  /airport/sort/fuelcapacity:
+    get:
+      summary: get airport data sorted in order of their fuelcapacity
+      description: get airport data sorted in order of their fuelcapacity in asc or desc order
+      parameters: 
+       - name: Order
+         in: query
+         description: Asc/Desc
+         required: true
+         type: string
+      responses: 
+        '200':
+          description: A JSON array of sorted Airport data
+              content:
+                application/json:
+                  schema: 
+                    type: array
+                    items: 
+                      type: string  
+  /airport/sort/fuelavailable:
+    get:
+      summary: get airport data sorted in order of their fuelavailable
+      description: get airport data sorted in order of their fuelavailable in asc or desc order
+      parameters: 
+       - name: Order
+         in: query
+         description: Asc/Desc
+         required: true
+         type: string
+      responses: 
+        '200':
+          description: A JSON array of sorted Airport data
+              content:
+                application/json:
+                  schema: 
+                    type: array
+                    items: 
+                      type: string  
+  /airport/sort/recent:
+    get:
+      summary: get airport data sorted in order of their time
+      description: get airport data sorted in order of their time in asc or desc order
+      parameters: 
+       - name: Order
+         in: query
+         description: Asc/Desc
+         required: true
+         type: string
+      responses: 
+        '200':
+          description: A JSON array of sorted Airport data
+              content:
+                application/json:
+                  schema: 
+                    type: array
+                    items: 
+                      type: string 
+  /airport/sort/older:
+    get:
+      summary: get airport data sorted in order of their time
+      description: get airport data sorted in order of their time in asc or desc order
+      parameters: 
+       - name: Order
+         in: query
+         description: Asc/Desc
+         required: true
+         type: string
+      responses: 
+        '200':
+          description: A JSON array of sorted Airport data
+              content:
+                application/json:
+                  schema: 
+                    type: array
+                    items: 
+                      type: string 
+  /airport/sort/older:
+    get:
+      summary: get airport data sorted in order of their time
+      description: get airport data sorted in order of their time in asc or desc order
+      parameters: 
+       - name: Order
+         in: query
+         description: Asc/Desc
+         required: true
+         type: string
+      responses: 
+        '200':
+          description: A JSON array of sorted Airport data
+              content:
+                application/json:
+                  schema: 
+                    type: array
+                    items: 
+                      type: string 
+  /aircraft/sort/aircraft_no:
+    get:
+      summary: get aircraft data sorted in order of aircraft number
+      description: get aircraft data sorted in order of aircraft number in asc or desc order
+      parameters: 
+       - name: Order
+         in: query
+         description: Asc/Desc
+         required: true
+         type: string
+      responses: 
+        '200':
+          description: A JSON array of sorted Aircraft data
+              content:
+                application/json:
+                  schema: 
+                    type: array
+                    items: 
+                      type: string 
+  /aircraft/sort/airline:
+    get:
+      summary: get aircraft data sorted in order of airline
+      description: get airport data sorted in order of airline in asc or desc order
+      parameters: 
+       - name: Order
+         in: query
+         description: Asc/Desc
+         required: true
+         type: string
+      responses: 
+        '200':
+            description: A JSON array of sorted Aircraft data
+                content:
+                  application/json:
+                    schema: 
+                      type: array
+                      items: 
+                        type: string 
+  /aircraft/sort/older:
+    get:
+      summary: get aircraft data sorted in order of their time
+      description: get aircraft data sorted in order of their time in asc or desc order
+      parameters: 
+       - name: Order
+         in: query
+         description: Asc/Desc
+         required: true
+         type: string
+      responses: 
+        '200':
+          description: A JSON array of sorted Aircraft data
+              content:
+                application/json:
+                  schema: 
+                    type: array
+                    items: 
+                      type: string 
+  /aircraft/sort/older:
+    get:
+      summary: get aircraft data sorted in order of their time
+      description: get aircraft data sorted in order of their time in asc or desc order
+      parameters: 
+       - name: Order
+         in: query
+         description: Asc/Desc
+         required: true
+         type: string
+      responses: 
+        '200':
+            description: A JSON array of sorted Aircraft data
+                content:
+                  application/json:
+                    schema: 
+                      type: array
+                      items: 
+                        type: string
+                  
+  /transaction/sort/date:
+    get:
+      summary: get transaction data sorted in order of their time
+      description: get trasaction data sorted in order of their time in desc order
+      parameters: 
+       - name: Order
+         in: query
+         description: Asc/Desc
+         required: true
+         type: string
+      responses: 
+        '200':
+            description: A JSON array of sorted Transaction data
+                content:
+                  application/json:
+                    schema: 
+                      type: array
+                      items: 
+                        type: string
+  /transaction/sort/quantity:
+    get:
+      summary: get transaction data sorted in order of their quantity
+      description: get transaction data sorted in order of their quantity in asc or desc order
+      parameters: 
+       - name: Order
+         in: query
+         description: Asc/Desc
+         required: true
+         type: string
+      responses: 
+        '200':
+            description: A JSON array of sorted Transaction data
+                content:
+                  application/json:
+                    schema: 
+                      type: array
+                      items: 
+                        type: string
+  /transaction/sort/older:
+    get:
+      summary: get transaction data sorted in order of their time
+      description: get transaction data sorted in order of their time in asc or desc order
+      parameters: 
+       - name: Order
+         in: query
+         description: Asc/Desc
+         required: true
+         type: string
+      responses: 
+        '200':
+            description: A JSON array of sorted Transaction data
+                content:
+                  application/json:
+                    schema: 
+                      type: array
+                      items: 
+                        type: string
+  /aircraft/sort/older:
+    get:
+      summary: get aircraft data sorted in order of their time
+      description: get aircraft data sorted in order of their time in asc or desc order
+      parameters: 
+       - name: Order
+         in: query
+         description: Asc/Desc
+         required: true
+         type: string
+      responses: 
+        '200':
+            description: A JSON array of sorted Aircraft data
+                content:
+                  application/json:
+                    schema: 
+                      type: array
+                      items: 
+                        type: string
