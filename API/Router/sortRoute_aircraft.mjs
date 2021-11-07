@@ -17,8 +17,6 @@ router.
 router.
     route('/airline')
      .get(function(req,res){
-         console.log('saddsa')
-         console.log(req.query.sort)
         if(req.query.sort==="desc")
         {
             AircraftSort.SortByAirlineDesc(req,res)

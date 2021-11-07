@@ -36,6 +36,7 @@ class Reporttable extends React.Component<proptypes,statetypes>{
         }
     }
     render(){
+        var output="Not Aircraft"
         return(
             <Fragment>
             <TableContainer component={Paper}>
@@ -62,6 +63,7 @@ class Reporttable extends React.Component<proptypes,statetypes>{
                     return date2-date1
                 })
             .map((val:any)=>{ 
+                console.log(val)
                 return(
                     <StyledTableRow
                         key={moment(val.Duration.date).format('HH:mm:ss')}
@@ -73,7 +75,7 @@ class Reporttable extends React.Component<proptypes,statetypes>{
                     <StyledTableCell >{val.Type}</StyledTableCell>
                     <StyledTableCell >{val.quantity}</StyledTableCell>
                     <StyledTableCell >{
-                        val.hasOwnProperty('aircraft')===true?<p>{val.aircraft.aircraft_no}</p>:<p></p>
+                        val.hasOwnProperty('aircraft')===true?<p>{val.aircraft.aircraft_no}</p>:<p>{output}</p>
                         }
                     </StyledTableCell>
                     </StyledTableRow>

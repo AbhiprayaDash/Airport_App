@@ -8,6 +8,9 @@ import AirportRoute from './Router/airport_route.mjs';
 import TransactionRoute from './Router/transaction_route.mjs'
 import swaggerUI from 'swagger-ui-express';
 import YAML from 'yamljs';
+import dotenv from 'dotenv'
+import { mongoconnection } from './config/mongoconnection.mjs';
+dotenv.config()
 const swaggerDocument = YAML.load('./swagger.yaml');
 swaggerUI.setup(swaggerDocument);
 
@@ -41,6 +44,7 @@ app.use('/transaction',TransactionRoute)
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
-app.listen(port, () => {
+app.listen(port, async () => {
+  await mongoconnection()
   console.log(`Example app listening at http://localhost:${port}`)
 })

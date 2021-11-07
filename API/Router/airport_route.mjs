@@ -7,32 +7,6 @@ import FilterRouterAirPort from './filterroute_airport.mjs';
 const router = Router();
 
 router.
-         /**
-       * @swagger
-       * /airport/:
-       *   post:
-       *     description: Post Aircraft Data
-       * parameters:
-       *      - name: name
-       *        description: Airport Name
-       *        in: formData
-       *        required: true
-       *        type: string
-       *      - name-fuelavailable
-       *        description: Fuel Available in the Airport
-       *        in: formData
-       *        required: true
-       *        type: number
-       *      - name:fuelcapacity
-       *        description: Fuel Capacity of the Airport
-       *        in: formData
-       *        required:true
-       *    
-       *     responses:
-       *       200:
-       *         description: Success
-       * 
-       */
      route('/')
      .post(function(req,res){
         AirportController.AddAirport(req,res);

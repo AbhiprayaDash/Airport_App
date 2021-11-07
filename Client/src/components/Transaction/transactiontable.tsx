@@ -70,7 +70,7 @@ class TransactionTable extends React.Component<propTypes,stateTypes>
                               </StyledTableCell>
                               <StyledTableCell >{value.Type}</StyledTableCell>
                               <StyledTableCell >{value.quantity}</StyledTableCell>
-                              <StyledTableCell >{value.aircraft&&value.aircraft.aircraft_no}</StyledTableCell>
+                              <StyledTableCell >{value.hasOwnProperty('aircraft')?<p>{value.aircraft.aircraft_no}</p>:<p>No Aircraft</p>}</StyledTableCell>
                             </StyledTableRow>
                             )
                     })

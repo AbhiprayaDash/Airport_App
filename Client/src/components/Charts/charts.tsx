@@ -1,15 +1,16 @@
 import React,{Fragment} from "react";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 'recharts';
+import { Line } from 'react-chartjs-2'
 import axios from 'axios'
 import moment from 'moment'
 import NavigationComponent from "../Navigation/navcomponent";
 type stateTypes = {
-    response:any,
-    airportresponse:any
+    response:Array<any>,
+    airportresponse:Array<any>
 }
 type propTypes = {
 
 }
+const colorHex = ["#937B63", "#1e88e5", "#64ffda", "#aa00ff", "#cddc39", "#7e57c2", "#81c784", "#0091ea", "#f06292", "#5e35b1", "#eeff41"]
 class Chart extends React.Component<propTypes,stateTypes>{
     constructor(props:propTypes)
     {
@@ -21,49 +22,77 @@ class Chart extends React.Component<propTypes,stateTypes>{
     }
     componentDidMount(){
             const loaddata= async ()=>{
-                const result = await axios.get('http://localhost:9000/transaction')
+                const result:any = await axios.get('http://localhost:9000/transaction')
                 this.setState({response:result.data})
-                const airportresult = await axios.get('http://localhost:9000/airport')
+                const airportresult:any = await axios.get('http://localhost:9000/airport')
                 this.setState({airportresponse:airportresult.data});
             }
             loaddata()
             
     }
+    lineGraphData =()=>{
+        const data = this.state.airportresponse?.sort(function (a, b) {
+            var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+            var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+            if (nameA < nameB) {
+                return -1;
+            }
+            if (nameA > nameB) {
+                return 1;
+            }
+            // names must be equal
+            return 0;
+        }).map((airport, airportIndex) => {
+            let tempQuantity = airport.fuelavailable
+            return (
+                {
+                    label: `${airport.name}`,
+                    data: this.state.response
+                        .map((transaction, transactionIndex) => {
+                            if ((String(transaction.airport._id) === String(airport._id)) && (transaction.Type === "IN")) {
+                                tempQuantity = (Number(tempQuantity) - Number(transaction.quantity))
+
+                            } if ((String(transaction.airport_id) === String(airport._id)) && (transaction.Type === "OUT")) {
+                                tempQuantity = (Number(tempQuantity) + Number(transaction.quantity))
+                            }
+                            return tempQuantity
+
+                        }).slice(0,10)
+                    ,
+                    fill: false,
+                    backgroundColor: colorHex[airportIndex],
+                    borderColor: colorHex[airportIndex],
+                    // yAxisID: 'y-axis-1',
+                })
+    })
+    return data
+}
+
     render()
     {
-        const data:any=[]
-        this.state.airportresponse.map((value:any)=>{
-            this.state.response.filter((data:any)=>data.airport._id===value._id ).sort(function(a:any,b:any){
-                var date1:any = moment(a.Duration.date).format('YYYYMMDD')
-                var date2:any = moment(b.Duration.date).format('YYYYMMDD')
-                var time1:any = moment(a.Duration.date).format('HH')
-                var time2:any = moment(b.Duration.date).format('HH')
-                if(date1===date2)
-                {
-                    return time2-time1
-                }
-                return date2-date1
-            })
-            .map((val:any)=>{ 
-                val.Duration.date=moment(val.Duration.date).format('DD/MM/YYYY')
-                data.push(val)
-            })
-        })
+        var transactiondata:Array<any> = this.state.response
+        var label:Array<string>=transactiondata.map((transaction) => new Date(transaction.Duration.date)
+        .toLocaleString("en-US", { timeZone: 'Asia/Kolkata', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' })
+        .toString())
+        .slice(0, 25)
+        console.log(this.lineGraphData())
         return(
             <Fragment>
             <NavigationComponent/>
-            <ResponsiveContainer width="100%" aspect={3}>
-                <LineChart data={data} width={500} height={300} margin={{ top: 5, right: 300, left: 20, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="Duration.date" interval={'preserveStartEnd'}  />
-                <YAxis dataKey="quantity" interval={'preserveStartEnd'}  />
-                <Tooltip contentStyle={{ backgroundColor: 'yellow' }} />
-                <Legend />
-                <Line type="monotone" dataKey="quantity" stroke="red" activeDot={{ r: 8 }} />
-                <Line type="monotone" dataKey="airport.name" stroke="green" activeDot={{ r: 8 }} />
-                </LineChart>
-            </ResponsiveContainer>
-            </Fragment>
+            <div className="shadow-lg p-3 mb-5 bg-body rounded" style={{ margin: "20px" , minWidth: "fit-content"}}>
+            <div className='header'>
+                <div className='links'>
+
+                </div>
+            </div >
+            <div className="chart-container" >
+            <Line data={{
+                    labels: label,
+                    datasets: this.lineGraphData(),
+                }} />
+            </div>
+        </div>
+        </Fragment>
         )  
     }
 }

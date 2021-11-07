@@ -22,6 +22,8 @@ var _yamljs = _interopRequireDefault(require("yamljs"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+require('dotenv').config();
+
 const swaggerDocument = _yamljs.default.load('./swagger.yaml');
 
 _swaggerUiExpress.default.setup(swaggerDocument);

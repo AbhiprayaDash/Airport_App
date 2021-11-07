@@ -17,7 +17,6 @@ router.
 router.
      route('/quantity')
      .get(function(req,res){
-        console.log('entered')
       if(req.query.sort==="desc")
       {
          console.log('desc')
