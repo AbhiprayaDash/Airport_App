@@ -4,7 +4,7 @@ export const postransaction = (model,AirportModel,AircraftModel) =>async(req,res
     )
     if(!Airportresult)
     {
-        return res.status(400).send("NoAirport");
+        return res.status(400).send("NoAirportAvailable");
     }
     if(req.body.type=='OUT')
     {
@@ -13,12 +13,12 @@ export const postransaction = (model,AirportModel,AircraftModel) =>async(req,res
         )
         if(!AircraftResult)
         {
-            return res.status(400).send("NoAircraft");
+            return res.status(400).send("NoAircraftAvailable");
         }
         try{
             if(Airportresult.fuelavailable-req.body.quantity<0)
             {
-                return res.status(400).send("NoFuel");
+                return res.status(400).send("NoFuelAvailable");
             }
             await AirportModel.update(
                 {_id:Airportresult._id},
@@ -36,9 +36,11 @@ export const postransaction = (model,AirportModel,AircraftModel) =>async(req,res
     }
     else{ 
         try{
+            console.log('e')
             if((Airportresult.fuelcapacity)<Number(req.body.quantity)+Airportresult.fuelavailable)
             {
-                return res.status(400).send("NoCapacity");
+                res.statusCode=400
+                return res.send("NoCapacity");
             }
             await AirportModel.update(
                 {_id:Airportresult._id},

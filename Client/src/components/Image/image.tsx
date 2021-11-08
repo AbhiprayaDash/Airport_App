@@ -1,6 +1,9 @@
-import React,{ CSSProperties } from "react";
+import React from "react";
+import LoginFormComponent from "../Auth/loginform";
+import NavigationComponent from "../Navigation/navcomponent";
 type proptypes={
     logo:any
+    history:any
 }
 type statetypes={
 
@@ -9,16 +12,16 @@ class ImageComponent extends React.Component<proptypes,statetypes>
 {
     render()
     {
-        const mystyle:CSSProperties = {
-            height: "913px",
-            width:"1845px",
-            backgroundPosition: "center",
+        return (
+            <body style={{ backgroundImage: `url(${this.props.logo})`,backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
-            position: "relative"
-        } as React.CSSProperties;;
-        return (
-            <img src={this.props.logo} style={mystyle} alt="background"/>
+            position: "relative",height:'990px' }}>
+                <NavigationComponent/>
+                <div style={{paddingTop:'50px'}}>
+                    <LoginFormComponent history={this.props.history}/>
+                </div>
+                </body>
         )
     }
 }

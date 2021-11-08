@@ -20,9 +20,13 @@ var _swaggerUiExpress = _interopRequireDefault(require("swagger-ui-express"));
 
 var _yamljs = _interopRequireDefault(require("yamljs"));
 
+var _dotenv = _interopRequireDefault(require("dotenv"));
+
+var _mongoconnection = require("./config/mongoconnection.mjs");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-require('dotenv').config();
+_dotenv.default.config();
 
 const swaggerDocument = _yamljs.default.load('./swagger.yaml');
 
@@ -57,6 +61,7 @@ app.use('/transaction', _transaction_route.default);
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
-app.listen(port, () => {
+app.listen(port, async () => {
+  await (0, _mongoconnection.mongoconnection)();
   console.log(`Example app listening at http://localhost:${port}`);
 });

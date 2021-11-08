@@ -1,7 +1,6 @@
 import React,{Fragment} from "react";
 import { Line } from 'react-chartjs-2'
 import axios from 'axios'
-import moment from 'moment'
 import NavigationComponent from "../Navigation/navcomponent";
 type stateTypes = {
     response:Array<any>,
@@ -48,7 +47,7 @@ class Chart extends React.Component<propTypes,stateTypes>{
                 {
                     label: `${airport.name}`,
                     data: this.state.response
-                        .map((transaction, transactionIndex) => {
+                        .map((transaction) => {
                             if ((String(transaction.airport._id) === String(airport._id)) && (transaction.Type === "IN")) {
                                 tempQuantity = (Number(tempQuantity) - Number(transaction.quantity))
 
@@ -75,7 +74,6 @@ class Chart extends React.Component<propTypes,stateTypes>{
         .toLocaleString("en-US", { timeZone: 'Asia/Kolkata', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' })
         .toString())
         .slice(0, 25)
-        console.log(this.lineGraphData())
         return(
             <Fragment>
             <NavigationComponent/>

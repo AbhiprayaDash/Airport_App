@@ -28,10 +28,11 @@ class ReportComponent extends React.Component<propTypes,stateTypes>{
     componentDidMount(){
         const loaddata= async ()=>{
             const result = await axios.get('http://localhost:9000/transaction')
-            console.log(result)
             this.setState({response:result.data})
             const airportresult = await axios.get('http://localhost:9000/airport')
             this.setState({airportresponse:airportresult.data});
+            console.log('result data')
+            console.log(airportresult)
         }
         loaddata()
     }

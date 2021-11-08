@@ -7,11 +7,6 @@ import FormControl from '@mui/material/FormControl';
 import '../../css/displayairport.css'
 import {SortAirport} from './SortService'
 
-interface typeProvider{
-    name:string,
-    fuelcapacity:number,
-    fuelavailable:number
-}
 type statetypes={
     response:any,
     filtername:any,
@@ -27,16 +22,10 @@ class DisplayAirports extends React.Component<proptypes,statetypes>{
         super(props)
         this.state={
             response:[],
-            filtername:'',
+            filtername:'Sort By',
             sortname:'',
             dataupdate:false
         }
-        this.handlesort = this.handlesort.bind(this)
-        this.handlefiltername = this.handlefiltername.bind(this)
-    }
-    handlesort:any= async(event:any)=>{
-        const value = event.target.value
-        this.setState({sortname:value})
     }
     handlefiltername:any =async(event:any)=>{
         const value=event.target.value
@@ -54,8 +43,6 @@ class DisplayAirports extends React.Component<proptypes,statetypes>{
     }
     render()
     {
-        console.log('response is')
-        console.log(this.state.response)
         return(
             <Fragment>
             <Typography
@@ -72,7 +59,6 @@ class DisplayAirports extends React.Component<proptypes,statetypes>{
 
             <FormControl style={{width:"50%",alignItems:'center',alignContent:'center'}}>
                 <select id="country" name="country" onChange={this.handlefiltername} value={this.state.filtername}>
-                    <option value="recent">Sort By</option>
                     <option value="recent">Recent</option>
                     <option value="older">Older</option>
                     <option value="nameasc">Sort By name Asc</option>

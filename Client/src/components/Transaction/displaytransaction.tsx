@@ -71,7 +71,6 @@ class DisplayTransaction extends React.Component<proptypes,statetypes>{
             </Typography>
             <FormControl style={{width:"50%",alignItems:'center',alignContent:'center'}}>
                 <select id="country" name="country" onChange={this.handlesort} value={this.state.sortname}>
-                    <option value="recent">Sort By</option>
                     <option value="recent">Recent</option>
                     <option value="older">Older</option>
                     <option value="dateasc">Sort By Date Asc</option>
@@ -87,7 +86,7 @@ class DisplayTransaction extends React.Component<proptypes,statetypes>{
                 </select>
             </FormControl>
             {
-            this.state.response.length>0&&<Pagination RenderedComponent={TransactionTable} data={this.state.response} title={"transaction"} pageLimit={5} dataLimit={3} />
+                this.state.response.length>0&&<Pagination RenderedComponent={TransactionTable} data={this.state.response} title={"transaction"} pageLimit={5} dataLimit={3} />
             }
             </Fragment>
         )

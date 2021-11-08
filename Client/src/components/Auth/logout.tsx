@@ -23,7 +23,6 @@ class LogoutComponent extends React.Component<propTypes,stateTypes>{
         successmsg("Logged out successfully")
         setTimeout(
           () => {
-              console.log('logged out')
               this.props.history.push("/")
             },
         2000

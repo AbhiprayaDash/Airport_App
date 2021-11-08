@@ -53,7 +53,6 @@ class Pagination extends React.Component<propTypes,stateTypes>{
         return array
     };
     render(){
-      console.log('table')
         return(
             <Fragment>
                 <this.props.RenderedComponent data={this.getPaginatedData()}/>

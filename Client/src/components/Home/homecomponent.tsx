@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import NavigationComponent from "../Navigation/navcomponent";
 import ImageComponent from '../Image/image'
 import logo from '../../images/tim-gouw-OwD1ON8O-O4-unsplash.jpg'
 import { isAuthenticated } from "../Auth/authservice";
@@ -16,8 +15,7 @@ class HomeComponent extends React.Component<propTypes>{
     {
         return(
             <Fragment>
-                <NavigationComponent/>
-                <ImageComponent logo = {logo}/>
+                <ImageComponent history={this.props.history} logo = {logo}/>
             </Fragment>
         )
     }

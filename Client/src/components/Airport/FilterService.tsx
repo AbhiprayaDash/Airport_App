@@ -3,7 +3,6 @@ export const FilterTransaction = async (reqbody:any,value:string)=>{
     var result:any
         if(value==="IN"||value==="OUT")
         {
-            console.log('entered into')
             result = await axios.post('http://localhost:9000/transaction/filter/type',reqbody)
         }
         else if(value==="airportname")

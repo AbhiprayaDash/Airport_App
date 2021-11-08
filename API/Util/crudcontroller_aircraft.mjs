@@ -6,7 +6,7 @@ export const AddAircraft = model=>async (req,res)=>{
     catch(e)
     {
         console.log('exists')
-        return res.status(400).send('AircraftExist')
+        return res.status(400).send('Aircraft Exists')
     }
 
 }

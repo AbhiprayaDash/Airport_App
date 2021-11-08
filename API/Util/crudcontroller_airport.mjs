@@ -9,7 +9,7 @@ export const AddAirport = model=>async (req,res)=>{
         await model.create({name:req.body.name,fuelcapacity:req.body.fuelcapacity,fuelavailable:req.body.fuelavailable})
     }
     catch(e){
-        return res.status(400).send('Number exeeded');
+        return res.status(400).send('Capacity should not be greater than 100000');
     }  
     res.status(200).send('airport added');
 }

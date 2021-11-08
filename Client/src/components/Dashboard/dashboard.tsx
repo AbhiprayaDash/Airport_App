@@ -161,7 +161,6 @@ const Dashboard = ()=> {
                 <DisplayTransaction/>
               </Grid>
           </Grid>
-
         </Box>
       </Box>
     </ThemeProvider>
