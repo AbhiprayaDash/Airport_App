@@ -18,7 +18,6 @@ type statetypes={
     airline:string
 }
 type propTypes={
-    history:any
 }
 
 const aircrafts=[
@@ -49,6 +48,7 @@ class AircraftForm extends React.Component<propTypes,statetypes>{
         this.handleairline=this.handleairline.bind(this);
     }
     handlenumber(event:any,values:any){
+      console.log(values)
       if(values!==null&&values!==undefined)
       {
         console.log(values.label)
@@ -58,6 +58,7 @@ class AircraftForm extends React.Component<propTypes,statetypes>{
       }
     }
     handleairline(event:any,values:any){
+        console.log(values)
       if(values!==null&&values!==undefined)
       {
         this.setState({
@@ -71,6 +72,7 @@ class AircraftForm extends React.Component<propTypes,statetypes>{
             aircraft_no:this.state.number,
             airline:this.state.airline
         }
+        console.log(reqbody)
         try{
              await axios.post('http://localhost:9000/aircraft',reqbody)
             successmsg("Aircraft Added Successfully")

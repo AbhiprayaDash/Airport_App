@@ -5,10 +5,7 @@ type proptypes={
     logo:any
     history:any
 }
-type statetypes={
-
-}
-class ImageComponent extends React.Component<proptypes,statetypes>
+class ImageComponent extends React.Component<proptypes>
 {
     render()
     {

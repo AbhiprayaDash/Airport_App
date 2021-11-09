@@ -5,6 +5,7 @@ import cors from "cors";
 import AuthRoute from './Router/auth_route.mjs'
 import AircraftRoute from './Router/aircraft_route.mjs'
 import AirportRoute from './Router/airport_route.mjs';
+import AirportFetch from './Router/airportfetch_route.mjs'
 import TransactionRoute from './Router/transaction_route.mjs'
 import swaggerUI from 'swagger-ui-express';
 import YAML from 'yamljs';
@@ -27,20 +28,11 @@ app.use(InputCheck);
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 //Routes
 
-/**
- * @swagger
- * /books:
- *   get:
- *     description: Get all books
- *     responses:
- *       200:
- *         description: Success
- * 
- */
 app.use('/user',AuthRoute);
 app.use('/aircraft',AircraftRoute);
 app.use('/airport',AirportRoute);
 app.use('/transaction',TransactionRoute)
+app.use('/airportlist',AirportFetch)
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })

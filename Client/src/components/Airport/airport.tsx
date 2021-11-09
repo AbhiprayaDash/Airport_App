@@ -4,16 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import NavigationComponent from '../Navigation/navcomponent';
 import AirportForm from './airportform';
 
-type statetypes={
-    name:any,
-    location:string,
-    fuelcapacity:number,
-    fuelavailable:number,
-    airports:any
-}
-type propTypes={
-}
-class AirportController extends React.Component<propTypes,statetypes>{
+class AirportController extends React.Component{
     render()
     {
         return(

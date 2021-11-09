@@ -1,43 +1,34 @@
-import React,{Fragment} from "react"
+import { FC, Fragment, ReactElement, useState } from "react"
 import Typography from '@mui/material/Typography';
-import {loadAircraftData} from './aircraftservice'
+import {fetchAircaft} from '../../Redux/Aircraft'
 import Pagination from '../Pagination/pagination'
 import Aircrafttable from './aircrafttable'
 import FormControl from '@mui/material/FormControl';
-import {SortAircraft} from './SortService'
+import {SortAircraft} from '../../Redux/Aircraft'
+import { useEffect } from "react";
+import {useAppSelector,useAppDispatch} from '../../hooks';
+const DisplayAircrafts:FC =() => {
 
-type statetypes={
-    response:any,
-    filtername:string
-}
-type proptypes={
-}
-class DisplayAircrafts extends React.Component<proptypes,statetypes>{
-
-    constructor(props:proptypes){
-        super(props)
-        this.state={
-            response:[],
-            filtername:'Sort By'
-        }
-    }
-    handlefiltername:any =async(event:any)=>{
+    const [filtername, setfiltername] = useState('Sort By');
+    const response:any = useAppSelector((state:any) => state.Aircraft.response);
+    const dispatch = useAppDispatch();
+    console.log(response);
+    const handlefiltername:any =async(event:any)=>{
         const value=event.target.value
-        this.setState({filtername:value})
-        const result:any=await SortAircraft(value)
-        this.setState({response:result.data})        
+        setfiltername(value)
+        const sortfunc = SortAircraft(value)
+        await sortfunc(dispatch)      
     }
-    componentDidMount()
-    {
+    useEffect(()=>{
+        console.log('inside use effect')
         const loaddata=async()=>{
-            const data = await loadAircraftData()
-            this.setState({response:data})
+            console.log('inside')
+            const fetchfunc=fetchAircaft()
+            await fetchfunc(dispatch)
         }   
         loaddata()
-    }
-    render()
-    {
-       return(
+    },[])
+    return(
         <Fragment>
             <Typography
                 component="h1"
@@ -51,7 +42,7 @@ class DisplayAircrafts extends React.Component<proptypes,statetypes>{
             Aircraft Details
             </Typography>
             <FormControl style={{width:"50%",alignItems:'center',alignContent:'center'}}>
-                <select id="country" name="country" onChange={this.handlefiltername} value={this.state.filtername}>
+                <select id="country" name="country" onChange={handlefiltername} value={filtername}>
                     <option value="recent">Recent</option>
                     <option value="older">Older</option>
                     <option value="numberasc">Sort By aircraft number Asc</option>
@@ -61,11 +52,10 @@ class DisplayAircrafts extends React.Component<proptypes,statetypes>{
                 </select>
             </FormControl>
             {
-            this.state.response.length>0&&<Pagination RenderedComponent={Aircrafttable} data={this.state.response} title={"aircraft"}  pageLimit={5} dataLimit={2} />
+            response.length>0&&<Pagination RenderedComponent={Aircrafttable} data={response} title={"aircraft"}  pageLimit={5} dataLimit={2} />
             }
         </Fragment>
-        )
-    }
+    )
 }
 export default DisplayAircrafts
 

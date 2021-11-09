@@ -58,13 +58,8 @@ class TransactionForm extends React.Component<propTypes,stateTypes>{
             aircraft_no:162,
             quantity:0
         }
-        this.handletype=this.handletype.bind(this);
-        this.handlename=this.handlename.bind(this);
-        this.handleno=this.handleno.bind(this);
-        this.handlequantity = this.handlequantity.bind(this)
-        this.handlesubmit = this.handlesubmit.bind(this)
     }
-    handletype(event:any){
+    handletype=(event:any)=>{
         this.setState({type: event.target.value});
     }
     handlename=(event:any,values:any)=>{
@@ -75,7 +70,7 @@ class TransactionForm extends React.Component<propTypes,stateTypes>{
         })
       }
     }
-    handleno(event:any,values:any){
+    handleno=(event:any,values:any)=>{
       if(values!==null&&values!==undefined)
       {
         this.setState({
@@ -83,7 +78,7 @@ class TransactionForm extends React.Component<propTypes,stateTypes>{
         })
       }
     }
-    handlequantity(event:any){
+    handlequantity=(event:any)=>{
         this.setState({quantity:event.target.value});
     }
     handlesubmit=async (event:any)=>{

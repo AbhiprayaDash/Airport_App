@@ -14,6 +14,8 @@ var _aircraft_route = _interopRequireDefault(require("./Router/aircraft_route.mj
 
 var _airport_route = _interopRequireDefault(require("./Router/airport_route.mjs"));
 
+var _airportfetch_route = _interopRequireDefault(require("./Router/airportfetch_route.mjs"));
+
 var _transaction_route = _interopRequireDefault(require("./Router/transaction_route.mjs"));
 
 var _swaggerUiExpress = _interopRequireDefault(require("swagger-ui-express"));
@@ -43,21 +45,11 @@ app.use((0, _cors.default)());
 app.use(_InputCheck.default);
 app.use('/api-docs', _swaggerUiExpress.default.serve, _swaggerUiExpress.default.setup(swaggerDocument)); //Routes
 
-/**
- * @swagger
- * /books:
- *   get:
- *     description: Get all books
- *     responses:
- *       200:
- *         description: Success
- * 
- */
-
 app.use('/user', _auth_route.default);
 app.use('/aircraft', _aircraft_route.default);
 app.use('/airport', _airport_route.default);
 app.use('/transaction', _transaction_route.default);
+app.use('/airportlist', _airportfetch_route.default);
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });

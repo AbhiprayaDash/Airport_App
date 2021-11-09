@@ -12,27 +12,16 @@ import { postAirportData } from './airportservice';
 import AirplanemodeActiveSharpIcon from '@mui/icons-material/AirplanemodeActiveSharp';
 import { errormsg } from '../Toast/toastservice';
 import Autocomplete from '@mui/material/Autocomplete';
-
+import axios from 'axios';
 type statetypes={
     name:any,
     location:string,
     fuelcapacity:number,
     fuelavailable:number,
-    airports:any
+    AirportList:any
 }
 type proptypes={
 }
-var Airports=[
-  "Bilaspur Airport,Bilaspur",
-  "Swami Vivekananda International Airport,Raipur",
-  "Sardar Vallabhbhai Patel International Airport,Ahmedabad",
-  "Ambala Air Force Station,Ambala",
-  "Shimla Airport,Shimla",
-  "Kempegowda International Airport,Bangalore",
-  "Chhatrapati Shivaji Maharaj International Airport,Mumbai",
-  "Indira Gandhi International Airport,Delhi",
-  "Chennai International Airport,Chennai",
-]
 class AirportForm extends React.Component<proptypes,statetypes>{
     constructor(props:proptypes)
     {
@@ -42,15 +31,33 @@ class AirportForm extends React.Component<proptypes,statetypes>{
             location:'',
             fuelcapacity:0,
             fuelavailable:0,
-            airports:[]
+            AirportList:[]
         }
     }
-    handlename=(event:any,values:any)=>{
-        if(values!==null&&values!==undefined)
+    componentDidMount()
+    {
+        const loaddata = async ()=>{
+            try{
+                const result:any = await axios.get('http://localhost:9000/airportlist/')
+                console.log(result.data[0])
+                this.setState({AirportList:result.data[0].airportList})
+                console.log(this.state.AirportList)
+            }
+            catch(e:any)
+            {
+                console.log(e)
+            }
+        }
+        loaddata()
+    }
+    handlename=(values:any)=>{
+        values.stopPropagation();
+        console.log(values)
+        if(values.target.value!==null&&values.target.value!==undefined)
         {
-          console.log(values)
+          console.log(values.target.value)
           this.setState({
-            name: values
+            name: values.target.value
           })
         }
       }
@@ -70,14 +77,16 @@ class AirportForm extends React.Component<proptypes,statetypes>{
             fuelavailable:Number(this.state.fuelavailable),
             fuelcapacity:Number(this.state.fuelcapacity)
         }
-        const index = Airports.indexOf(reqbody.name)
-        if(index>=Airports.length)
+        console.log(reqbody)
+        const index = this.state.AirportList.indexOf(reqbody.name)
+        if(index>=this.state.AirportList.length)
             return errormsg("Airport is not available")
-        await postAirportData(reqbody,this.state,Airports,index)
+        await postAirportData(reqbody,this.state,this.state.AirportList,index)
     }
     render()
     {
         const theme = createTheme();
+        console.log(this.state.AirportList)
         return(
                 <ThemeProvider theme={theme}>
           <Container component="main" maxWidth="xs">
@@ -100,14 +109,13 @@ class AirportForm extends React.Component<proptypes,statetypes>{
             <Autocomplete
               id="disable-close-on-select"
               disableCloseOnSelect
-              options={Airports}
+              options={this.state.AirportList}
               sx={{ width: 400 }}
               onChange={this.handlename}
               value={this.state.name}
               renderInput={(params:any) => 
               <TextField {...params} label="Airports" 
               value={this.state.name}
-              onChange={this.handlename}
               />}
               />
               <TextField
