@@ -18,9 +18,7 @@ const  DisplayAirports:FC=()=>{
         await sortfunc(dispatch) 
     }
     useEffect(()=>{
-        console.log('inside use effect')
         const loaddata=async()=>{
-        console.log('inside')
         const fetchfunc=fetchAirport()
         await fetchfunc(dispatch)
         } 

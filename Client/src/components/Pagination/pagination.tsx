@@ -19,19 +19,14 @@ class Pagination extends React.Component<propTypes,stateTypes>{
             pages:Math.ceil(this.props.data.length / this.props.dataLimit),
             currentpage:1
         }
-        this.goToNextPage = this.goToNextPage.bind(this)
-        this.goToPreviousPage = this.goToPreviousPage.bind(this)
-        this.changePage = this.changePage.bind(this)
-        this.getPaginatedData = this.getPaginatedData.bind(this)
-        this.getPaginationGroup = this.getPaginationGroup.bind(this)
     }
-    goToNextPage() {
+    goToNextPage=()=>{
         this.setState({currentpage:this.state.currentpage+1})
     }
-    goToPreviousPage() {
+    goToPreviousPage=()=>{
         this.setState({currentpage:this.state.currentpage-1})
     }  
-    changePage(event:any) {
+    changePage=(event:any)=>{
         // not yet implemented
         const pageNumber = Number(event.target.textContent);
         this.setState({currentpage:pageNumber})

@@ -1,11 +1,7 @@
-import { configureStore,applyMiddleware } from '@reduxjs/toolkit'
-import thunkMiddleware from 'redux-thunk'
-import { composeWithDevTools } from 'redux-devtools-extension'
+import { configureStore} from '@reduxjs/toolkit'
 import AircraftReducer from './Redux/AircraftSlice'
 import AirportReducer from './Redux/AirportSlice'
-import TransactionReducer from './Redux/TransactionSlice'
-const composedEnhancer = composeWithDevTools(applyMiddleware(thunkMiddleware))
-
+import TransactionReducer from './Redux/TransactionSlice';
 export const store= configureStore({
   reducer:{
     Aircraft:AircraftReducer,

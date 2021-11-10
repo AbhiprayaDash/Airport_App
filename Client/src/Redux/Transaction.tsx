@@ -1,15 +1,12 @@
 import axios from "axios" 
 import {savetransaction} from './TransactionSlice'
 export const FetchTransaction=()=> {
-    console.log('the inside thunk transaction function')
     return async (dispatch:any) => {
-        console.log('inside transaction')
       try {
           // make an async call in the thunk
-          console.log('fetching')
           const response = await axios.get('http://localhost:9000/transaction')
-          // dispatch an action when we get the response back
           console.log(response)
+          // dispatch an action when we get the response back
           dispatch(savetransaction(response.data))
       } catch (err) {
           console.log(err)
@@ -18,10 +15,9 @@ export const FetchTransaction=()=> {
 }
 
 export const SortTransaction =(value:any)=>{
-    console.log('the inside thunk sort transaction function')
     return async (dispatch:any) => {
-        console.log('inside sort')
         var result:any; 
+    try{
         if(value==="dateasc")
         {
             result = await axios.get('http://localhost:9000/transaction/sort/date?sort=asc')
@@ -48,4 +44,8 @@ export const SortTransaction =(value:any)=>{
         }
         dispatch(savetransaction(result.data));
     }
+    catch(e)
+    {
+        console.log(e)
+    }}
 }

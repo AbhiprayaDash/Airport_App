@@ -1,4 +1,4 @@
-import { FC, Fragment, ReactElement, useState } from "react"
+import { FC, Fragment,  useState } from "react"
 import Typography from '@mui/material/Typography';
 import {fetchAircaft} from '../../Redux/Aircraft'
 import Pagination from '../Pagination/pagination'
@@ -20,9 +20,7 @@ const DisplayAircrafts:FC =() => {
         await sortfunc(dispatch)      
     }
     useEffect(()=>{
-        console.log('inside use effect')
         const loaddata=async()=>{
-            console.log('inside')
             const fetchfunc=fetchAircaft()
             await fetchfunc(dispatch)
         }   

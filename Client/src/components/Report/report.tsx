@@ -1,5 +1,4 @@
-import React,{Fragment} from 'react'
-import axios from 'axios'
+import {FC, Fragment, useEffect} from 'react'
 import NavigationComponent from '../Navigation/navcomponent'
 import Typography from '@mui/material/Typography';
 import Pagination from '../Pagination/pagination'
@@ -8,44 +7,28 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
-type stateTypes = {
-    response:any,
-    airportresponse:any
-}
-type propTypes = {
-
-}
-class ReportComponent extends React.Component<propTypes,stateTypes>{
-    constructor(props:propTypes)
-    {
-        super(props)
-        this.state = {
-            response:[],
-            airportresponse:[]
-        }
-    }
-    componentDidMount(){
-        const loaddata= async ()=>{
-            const result = await axios.get('http://localhost:9000/transaction')
-            this.setState({response:result.data})
-            const airportresult = await axios.get('http://localhost:9000/airport')
-            this.setState({airportresponse:airportresult.data});
-            console.log('result data')
-            console.log(airportresult)
-        }
+import {FetchTransaction} from '../../Redux/Transaction'
+import {fetchAirport} from '../../Redux/Airport';
+import { useAppDispatch,useAppSelector } from '../../hooks';
+const ReportComponent:FC=() =>{
+    const response = useAppSelector((state:any)=>state.Transaction.response)
+    const airportresponse = useAppSelector((state:any)=>state.Airport.response)
+    const dispatch = useAppDispatch()
+    useEffect(()=>{
+        const loaddata=async()=>{
+        const fetchfunc=FetchTransaction()
+        await fetchfunc(dispatch)
+        const fetchfuncAirport = fetchAirport()
+        await fetchfuncAirport(dispatch)
+        } 
         loaddata()
-    }
-
-    render()
-    {   
-        var airportdata:any=[]
+        },[]); 
       return(
         <Fragment>
         <NavigationComponent/>
         <br/><br/><br/>
         {
-          this.state.airportresponse.map((value:any)=>{
+          airportresponse.map((value:any)=>{
             return (
                 <Fragment>
                 <Accordion>
@@ -58,7 +41,7 @@ class ReportComponent extends React.Component<propTypes,stateTypes>{
                 </AccordionSummary>
                 {
                     <AccordionDetails>
-                    <Pagination RenderedComponent={Reporttable} data={this.state.response.filter((data:any)=>data.airport._id===value._id )} title={"report"} pageLimit={5} dataLimit={4} />
+                    <Pagination RenderedComponent={Reporttable} data={response.filter((data:any)=>data.airport._id===value._id )} title={"report"} pageLimit={5} dataLimit={4} />
                     </AccordionDetails>
                 }
                 <Typography
@@ -80,7 +63,6 @@ class ReportComponent extends React.Component<propTypes,stateTypes>{
         }
         </Fragment>
       )
-    }
-}       
+}     
         
 export default ReportComponent

@@ -1,5 +1,4 @@
-import React, { Fragment,FC, useState, useEffect } from "react"
-import axios from 'axios'
+import { Fragment,FC, useState, useEffect } from "react"
 import Typography from '@mui/material/Typography';
 import Pagination from "../Pagination/pagination"
 import TransactionTable from "./transactiontable";
@@ -15,7 +14,6 @@ const DisplayTransaction:FC=() =>{
     const [filtername,setfiltername]= useState('Filter By');
     const [sortname,setsortname]= useState('');
     const response = useSelector((state:any)=>state.Transaction.response)
-    console.log(response)
     const dispatch = useAppDispatch()
     const handlefilter:any = async(event:any)=>{
         const value=event.target.value
