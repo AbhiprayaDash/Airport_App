@@ -19,28 +19,33 @@ const DisplayTransaction:FC=() =>{
         const value=event.target.value
         setfiltername(value)
         var result:any
+        if(value==="All")
+        {
+            setfiltername(value)
+            const fetchfunc = FetchTransaction()
+            await fetchfunc(dispatch)
+        }
         if(value==="IN")
         {
             const reqbody={type:"IN"}
             result =await FilterTransaction(reqbody,value)
+            dispatch(savetransaction(result.data))
         }
         else if(value==="OUT")
         {
             const reqbody={type:"OUT"}
             result= await FilterTransaction(reqbody,value)
+            dispatch(savetransaction(result.data))
         }
-        dispatch(savetransaction(result.data))
     }
     const handlesort:any = async(event:any)=>{
         const value=event.target.value
         setsortname(value)
-        const sortfunc =SortTransaction(value)
-        await sortfunc(dispatch)
+        const sortfunc =SortTransaction()
+        await sortfunc(dispatch,value)
     }
     useEffect(()=>{
-        console.log('inside use effect')
         const loaddata=async()=>{
-            console.log('inside transaction useffect')
             const fetchfunc=FetchTransaction()
             await fetchfunc(dispatch)
         }   
@@ -71,6 +76,7 @@ const DisplayTransaction:FC=() =>{
             </FormControl>
             <FormControl>
                 <select id="country" name="country" onChange={handlefilter} value={filtername}>
+                    <option value="All">All</option>
                     <option value="IN">IN</option>
                     <option value="OUT">OUT</option>
                 </select>

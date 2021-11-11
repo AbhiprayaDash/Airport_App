@@ -20,8 +20,11 @@ export async function postAirportData(reqbody:any,state:any,Airports:any,index:n
             return errormsg("Capacity should be greater than available")
         }
         await axios.post('http://localhost:9000/airport',reqbody)
-        const req:any={index:index}
-        await axios.delete('http://localhost:900/airportlist',req)
+        const request:any=
+        {
+            indexvalue:index
+        }
+        await axios.delete('http://localhost:9000/airportlist', { data: request, headers: { "Authorization": "***" } });
         successmsg("Airport Added Successfully")
     }
     catch(e:any){

@@ -15,21 +15,12 @@ import axios from 'axios';
 
 type statetypes={
     number:number,
-    airline:string
+    airline:string,
+    AircraftList:Array<number>
 }
 type propTypes={
 }
 
-const aircrafts=[
-    {label:"162"},
-    {label:"15267"},
-    {label:"4271"},
-    {label:"9847"},
-    {label:"5842"},
-    {label:"3849"},
-    {label:"124"},
-    {label:"284"}
-]
 const airline =[
     {label:"Air India"},
     {label:"IndiGo"},
@@ -43,26 +34,37 @@ class AircraftForm extends React.Component<propTypes,statetypes>{
         this.state ={
             number:162,
             airline:'IndiGo',
+            AircraftList:[]
         }
-        this.handlenumber=this.handlenumber.bind(this);
-        this.handleairline=this.handleairline.bind(this);
     }
-    handlenumber(event:any,values:any){
-      console.log(values)
-      if(values!==null&&values!==undefined)
+    componentDidMount()
+    {
+        const loaddata = async ()=>{
+            try{
+                const result:any = await axios.get('http://localhost:9000/aircraftlist/')
+                this.setState({AircraftList:result.data[0].aircraftlist})
+                this.setState({number:result.data[0].aircraftlist[0]})
+            }
+            catch(e:any)
+            {
+                console.log(e)
+            }
+        }
+        loaddata()
+    }
+    handlenumber=(event:any,value:any)=>{
+      if(value!==null&&value!==undefined)
       {
-        console.log(values.label)
         this.setState({
-          number: values.label
+          number: value
         })
       }
     }
-    handleairline(event:any,values:any){
-        console.log(values)
-      if(values!==null&&values!==undefined)
+    handleairline = (event:any,value:any)=>{
+      if(value!==null&&value!==undefined)
       {
         this.setState({
-          airline: values.label
+          airline: value.label
         })
       }
     }
@@ -72,10 +74,14 @@ class AircraftForm extends React.Component<propTypes,statetypes>{
             aircraft_no:this.state.number,
             airline:this.state.airline
         }
-        console.log(reqbody)
         try{
-             await axios.post('http://localhost:9000/aircraft',reqbody)
+            await axios.post('http://localhost:9000/aircraft',reqbody)
+            var indexvalue = this.state.AircraftList.indexOf(Number(reqbody.aircraft_no))
+            await axios.delete('http://localhost:9000/aircraftlist', { data: {indexvalue}, headers: { "Authorization": "***" } });
             successmsg("Aircraft Added Successfully")
+            const result:any = await axios.get('http://localhost:9000/aircraftlist/')
+            this.setState({AircraftList:result.data[0].aircraftlist})
+            this.setState({number:result.data[0].aircraftlist[0]})
         }
         catch(e:any){
             errormsg(e.response.data)
@@ -106,9 +112,10 @@ class AircraftForm extends React.Component<propTypes,statetypes>{
             <Autocomplete
                 id="disable-close-on-select"
                 disableCloseOnSelect
-                options={aircrafts}
+                options={this.state.AircraftList}
                 sx={{ width: 400 }}
-                onChange={this.handlenumber}
+                value={this.state.number}
+                onInputChange={this.handlenumber}
                 renderInput={(params:any) => 
             <TextField {...params} label="Aircraft number" 
                 value={this.state.number}

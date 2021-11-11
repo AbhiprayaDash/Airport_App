@@ -1,4 +1,4 @@
-import React,{Fragment,FC, useEffect} from "react";
+import {Fragment,FC, useEffect} from "react";
 import { Line } from 'react-chartjs-2'
 import NavigationComponent from "../Navigation/navcomponent";
 import { useAppDispatch, useAppSelector } from "../../hooks";

@@ -62,7 +62,6 @@ export const getransaction = (model)=> async(req,res)=>{
     const result=await model.find({Type:"IN"}).populate("airport").sort({"_id":-1})
     const result2 = await model.find({Type:"OUT"}).populate("aircraft").populate("airport").sort({"_id":-1})
     const finalresult = result.concat(result2)
-    console.log(finalresult)
     res.status(200).send(finalresult)
 }
 export const TransactionUtilController = (model,AirportModel,AircraftModel)=>({

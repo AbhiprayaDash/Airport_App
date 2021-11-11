@@ -39,9 +39,8 @@ class AirportForm extends React.Component<proptypes,statetypes>{
         const loaddata = async ()=>{
             try{
                 const result:any = await axios.get('http://localhost:9000/airportlist/')
-                console.log(result.data[0])
                 this.setState({AirportList:result.data[0].airportList})
-                console.log(this.state.AirportList)
+                this.setState({name:result.data[0].airportList[0]})
             }
             catch(e:any)
             {
@@ -50,14 +49,13 @@ class AirportForm extends React.Component<proptypes,statetypes>{
         }
         loaddata()
     }
-    handlename=(values:any)=>{
-        values.stopPropagation();
-        console.log(values)
-        if(values.target.value!==null&&values.target.value!==undefined)
+    handlename=(event:any,value:any)=>{
+      console.log(value)
+        if(value!==null&&value!==undefined)
         {
-          console.log(values.target.value)
+          console.log(value)
           this.setState({
-            name: values.target.value
+            name: value
           })
         }
       }
@@ -81,12 +79,20 @@ class AirportForm extends React.Component<proptypes,statetypes>{
         const index = this.state.AirportList.indexOf(reqbody.name)
         if(index>=this.state.AirportList.length)
             return errormsg("Airport is not available")
-        await postAirportData(reqbody,this.state,this.state.AirportList,index)
+        try{
+          await postAirportData(reqbody,this.state,this.state.AirportList,index)
+          const result:any = await axios.get('http://localhost:9000/airportlist/')
+          this.setState({AirportList:result.data[0].airportList})
+          this.setState({name:result.data[0].airportList[0]})
+        }
+        catch(e)
+        {
+          console.log(e)
+        }
     }
     render()
     {
         const theme = createTheme();
-        console.log(this.state.AirportList)
         return(
                 <ThemeProvider theme={theme}>
           <Container component="main" maxWidth="xs">
@@ -111,8 +117,8 @@ class AirportForm extends React.Component<proptypes,statetypes>{
               disableCloseOnSelect
               options={this.state.AirportList}
               sx={{ width: 400 }}
-              onChange={this.handlename}
               value={this.state.name}
+              onInputChange={this.handlename}
               renderInput={(params:any) => 
               <TextField {...params} label="Airports" 
               value={this.state.name}

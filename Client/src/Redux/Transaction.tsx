@@ -5,7 +5,6 @@ export const FetchTransaction=()=> {
       try {
           // make an async call in the thunk
           const response = await axios.get('http://localhost:9000/transaction')
-          console.log(response)
           // dispatch an action when we get the response back
           dispatch(savetransaction(response.data))
       } catch (err) {
@@ -14,8 +13,8 @@ export const FetchTransaction=()=> {
     }
 }
 
-export const SortTransaction =(value:any)=>{
-    return async (dispatch:any) => {
+export const SortTransaction =()=>{
+    return async (dispatch:any,value:any) => {
         var result:any; 
     try{
         if(value==="dateasc")

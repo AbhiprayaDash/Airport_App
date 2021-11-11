@@ -13,8 +13,8 @@ export const fetchAircaft =()=> {
     }
 }
 
-export const SortAircraft =(value:any)=>{
-    return async (dispatch:any) => {
+export const SortAircraft =()=>{
+    return async (dispatch:any,value:any) => {
         var result:any; 
         if(value==="numberasc")
         {
@@ -40,6 +40,12 @@ export const SortAircraft =(value:any)=>{
         {
             result = await axios.get('http://localhost:9000/aircraft/sort/older')
         }
+        dispatch(saveAircrafts(result.data));
+    }
+}
+export const FilterAircraft =()=>{
+    return async (dispatch:any,airline:any) => {
+        const result = await axios.post('http://localhost:9000/aircraft/filter/airline',{airline})
         dispatch(saveAircrafts(result.data));
     }
 }

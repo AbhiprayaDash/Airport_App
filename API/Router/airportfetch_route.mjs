@@ -5,7 +5,6 @@ const router=Router()
 router.
     route('/')
     .get(async function (req,res){
-        console.log('hitted')
         try{
             const result = await AirportList.find()
             return res.status(200).send(result)
@@ -16,7 +15,6 @@ router.
         }
     })
     .post(async function (req,res){
-        console.log('hit')
         const airport=req.body.airportname;
         try{
             var fetcheddata=await AirportList.find()
@@ -40,9 +38,9 @@ router.
     .delete(async function(req,res){
         try{
             const result = await AirportList.find()
-            const resarray = result.splice(req.body.index,1)
-            await AirportList.updateOne({_id:result._id},
-                {airportList:resarray})
+            const resultarray=result[0].airportList.splice(req.body.indexvalue,1)
+            await AirportList.updateOne({_id:result[0]._id},
+                {airportList:result[0].airportList})
             return res.status(200).send('successful')
         }
         catch(e)

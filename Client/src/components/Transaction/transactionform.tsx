@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC, useEffect } from "react";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,85 +15,74 @@ import Select from '@mui/material/Select';
 import 'react-toastify/dist/ReactToastify.css';
 import { errormsg } from "../Toast/toastservice";
 import { Autocomplete } from "@mui/material";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useState } from "react";
+import { fetchAirport } from "../../Redux/Airport";
+import { fetchAircaft } from "../../Redux/Aircraft";
 
 
-var Airports=[
-    {label:"Bilaspur Airport,Bilaspur"},
-    {label:"Swami Vivekananda International Airport,Raipur"},
-    {label:"Sardar Vallabhbhai Patel International Airport,Ahmedabad"},
-    {label:"Ambala Air Force Station,Ambala"},
-    {label:"Shimla Airport,Shimla"},
-    {label:"Kempegowda International Airport,Bangalore"},
-    {label:"Chhatrapati Shivaji Maharaj International Airport,Mumbai"},
-    {label:"Indira Gandhi International Airport,Delhi"},
-    {label:"Chennai International Airport,Chennai"},
-]
-  
-  const aircrafts=[
-    {label:"162"},
-    {label:"15267"},
-    {label:"4271"},
-    {label:"9847"},
-    {label:"5842"},
-    {label:"3849"},
-    {label:"124"},
-    {label:"284"}
-  ]
 type stateTypes= {
     type:string,
     airport_name:string,
     aircraft_no:Number,
     quantity:Number
 }
-type propTypes={
-
-}
-class TransactionForm extends React.Component<propTypes,stateTypes>{
-    constructor(props:propTypes)
-    {
-        super(props);
-        this.state={
-            type:'IN',
-            airport_name:'Indira Gandhi International Airport,Delhi',
-            aircraft_no:162,
-            quantity:0
-        }
+const TransactionForm:FC =() =>{
+    var Airportresult=useAppSelector((state)=>state.Airport.response);
+    var Aircraftresult=useAppSelector((state)=>state.Aircraft.response); 
+    const AirportList=Airportresult.map((airport)=>airport.name)
+    const AircraftList=Aircraftresult.map((aircraft)=>aircraft.aircraft_no)
+    const [type,setType]=useState('IN')
+    const [airport_name,setAirportname] = useState('')
+    const [aircraft_no,setAircraftno] = useState(0)
+    const [quantity,setquantity] = useState(0)
+    const theme = createTheme();
+    const dispatch = useAppDispatch();
+    useEffect(()=>{
+      const loaddata=async()=>{
+          const fetchfunc=fetchAirport()
+          await fetchfunc(dispatch)
+          const fetchfuncAircraft = fetchAircaft()
+          await fetchfuncAircraft(dispatch)
+      } 
+      loaddata()
+      },[])
+    const handletype=(event:any)=>{
+        setType(event.target.value);
     }
-    handletype=(event:any)=>{
-        this.setState({type: event.target.value});
-    }
-    handlename=(event:any,values:any)=>{
-      if(values!==null&&values!==undefined)
+    const handlename=(event:any,value:any)=>{
+      if(value!==null&&value!==undefined)
       {
-        this.setState({
-          airport_name: values.label
-        })
+        setAirportname(value)
       }
     }
-    handleno=(event:any,values:any)=>{
-      if(values!==null&&values!==undefined)
+    const handleno=(event:any,value:any)=>{
+      if(value!==null&&value!==undefined)
       {
-        this.setState({
-          aircraft_no: values.label
-        })
+        setAircraftno(value)
       }
     }
-    handlequantity=(event:any)=>{
-        this.setState({quantity:event.target.value});
+    const handlequantity=(event:any)=>{
+        setquantity(event.target.value);
     }
-    handlesubmit=async (event:any)=>{
+    const handlesubmit=async (event:any)=>{
         event.preventDefault();
-        var statedata:stateTypes = this.state;
-        if(this.state.quantity<0)
+        const state={
+          type,
+          airport_name,
+          aircraft_no,
+          quantity
+        }
+        var statedata:stateTypes = state;
+        if(quantity<0)
           return errormsg('Quantity cannot be negative')
-        if(String(this.state.quantity)==="")
+        if(quantity<=500)
+          return errormsg('Quantity must be greater than 500')
+        if(String(quantity)==="")
           return errormsg("Input is Required")
         await PostTransactionService(statedata)      
     }
-    render()
-    {
-        const theme = createTheme();
-        return(
+    return(
             <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -113,14 +102,14 @@ class TransactionForm extends React.Component<propTypes,stateTypes>{
           </Typography>
           <Typography component="h1" variant="h5">
           </Typography>
-          <Box component="form" onSubmit={this.handlesubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handlesubmit} noValidate sx={{ mt: 1 }}>
           <FormControl fullWidth >
             <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={this.state.type}
+                value={type}
                 label="Age"
-                onChange={this.handletype}
+                onChange={handletype}
             >
                 <MenuItem value={"IN"}>IN</MenuItem>
                 <MenuItem value={"OUT"}>OUT</MenuItem>
@@ -129,25 +118,26 @@ class TransactionForm extends React.Component<propTypes,stateTypes>{
             <Autocomplete
               id="disable-close-on-select"
               disableCloseOnSelect
-              options={Airports}
+              options={AirportList}
               sx={{ width: 400 }}
-              onChange={this.handlename}
+              value={airport_name}
+              onInputChange={handlename}
               renderInput={(params:any) => 
               <TextField {...params} label="Airports" 
-              value={this.state.airport_name}
+              value={airport_name}
               />}
               />
             {
-            this.state.type==="OUT"&&
+            type==="OUT"&&
                   <Autocomplete
                     id="disable-close-on-select"
                     disableCloseOnSelect
-                    options={aircrafts}
+                    options={AircraftList}
                     sx={{ width: 400 }}
-                    onChange={this.handleno}
+                    onChange={handleno}
                     renderInput={(params:any) => 
                   <TextField {...params} label="Aircraft number" 
-                      value={this.state.aircraft_no}
+                      value={aircraft_no}
                     />}
                   />
             }
@@ -159,8 +149,8 @@ class TransactionForm extends React.Component<propTypes,stateTypes>{
               label="Quantity"
               type="number"
               id="password"
-              value={this.state.quantity}
-              onChange={this.handlequantity}
+              value={quantity}
+              onChange={handlequantity}
               autoComplete="current-password"
             />
             <Button
@@ -176,6 +166,5 @@ class TransactionForm extends React.Component<propTypes,stateTypes>{
       </Container>
     </ThemeProvider>
         )
-    }
 }
 export default TransactionForm

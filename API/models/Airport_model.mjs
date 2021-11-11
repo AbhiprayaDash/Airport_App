@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
-mongoose.connect('mongodb://localhost:27017/AirportData');
 
 const AirportSchema = new Schema({
     name:{

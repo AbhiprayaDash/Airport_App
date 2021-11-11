@@ -11,7 +11,7 @@ module.exports =function(req,res,next){
     }
     //verify token
     try{
-        const decoded=jwt.verify(token,'shhhhh');
+        const decoded=jwt.verify(token,String(process.env.JWT_SecretKey));
         req.user=decoded.user;//decoded.user because we have set user in payload
         //next callback after the middleware
         next();  
