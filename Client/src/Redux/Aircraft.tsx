@@ -1,4 +1,4 @@
-import { saveAircrafts } from "./AircraftSlice"
+import { saveAircrafts,saveAircraftList,saveAircraftNo } from "./AircraftSlice"
 import axios from "axios"
 export const fetchAircaft =()=> {
     return async (dispatch:any) => {
@@ -47,5 +47,12 @@ export const FilterAircraft =()=>{
     return async (dispatch:any,airline:any) => {
         const result = await axios.post('http://localhost:9000/aircraft/filter/airline',{airline})
         dispatch(saveAircrafts(result.data));
+    }
+}
+export const FetchAircraftList = () =>{
+    return async (dispatch:any)=>{
+        const result:any = await axios.get('http://localhost:9000/aircraftlist/')
+        dispatch(saveAircraftList(result.data[0].aircraftlist))
+        dispatch(saveAircraftNo(result.data[0].aircraftlist[0]))
     }
 }

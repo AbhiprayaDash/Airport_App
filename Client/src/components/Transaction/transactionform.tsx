@@ -28,14 +28,14 @@ type stateTypes= {
     quantity:Number
 }
 const TransactionForm:FC =() =>{
-    var Airportresult=useAppSelector((state)=>state.Airport.response);
-    var Aircraftresult=useAppSelector((state)=>state.Aircraft.response); 
+    var Airportresult=useAppSelector<Array<any>>((state)=>state.Airport.response);
+    var Aircraftresult=useAppSelector<Array<any>>((state)=>state.Aircraft.response); 
     const AirportList=Airportresult.map((airport)=>airport.name)
     const AircraftList=Aircraftresult.map((aircraft)=>aircraft.aircraft_no)
-    const [type,setType]=useState('IN')
-    const [airport_name,setAirportname] = useState('')
-    const [aircraft_no,setAircraftno] = useState(0)
-    const [quantity,setquantity] = useState(0)
+    const [type,setType]=useState<string>('IN')
+    const [airport_name,setAirportname] = useState<string>('')
+    const [aircraft_no,setAircraftno] = useState<Number>(0)
+    const [quantity,setquantity] = useState<Number>(0)
     const theme = createTheme();
     const dispatch = useAppDispatch();
     useEffect(()=>{

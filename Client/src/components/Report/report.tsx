@@ -11,8 +11,8 @@ import {FetchTransaction} from '../../Redux/Transaction'
 import {fetchAirport} from '../../Redux/Airport';
 import { useAppDispatch,useAppSelector } from '../../hooks';
 const ReportComponent:FC=() =>{
-    const response = useAppSelector((state:any)=>state.Transaction.response)
-    const airportresponse = useAppSelector((state:any)=>state.Airport.response)
+    const response = useAppSelector<Array<any>>((state:any)=>state.Transaction.response)
+    const airportresponse = useAppSelector<Array<any>>((state:any)=>state.Airport.response)
     const dispatch = useAppDispatch()
     useEffect(()=>{
         const loaddata=async()=>{

@@ -16,6 +16,8 @@ var _airport_route = _interopRequireDefault(require("./Router/airport_route.mjs"
 
 var _airportfetch_route = _interopRequireDefault(require("./Router/airportfetch_route.mjs"));
 
+var _aircraftfetch_route = _interopRequireDefault(require("./Router/aircraftfetch_route.mjs"));
+
 var _transaction_route = _interopRequireDefault(require("./Router/transaction_route.mjs"));
 
 var _swaggerUiExpress = _interopRequireDefault(require("swagger-ui-express"));
@@ -50,6 +52,7 @@ app.use('/aircraft', _aircraft_route.default);
 app.use('/airport', _airport_route.default);
 app.use('/transaction', _transaction_route.default);
 app.use('/airportlist', _airportfetch_route.default);
+app.use('/aircraftlist', _aircraftfetch_route.default);
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });

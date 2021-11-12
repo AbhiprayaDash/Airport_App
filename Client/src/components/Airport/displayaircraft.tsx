@@ -10,8 +10,8 @@ var set=true
 var aircrafts:any=[]
 const DisplayAircrafts:FC =() => {
 
-    const [filtername, setfiltername] = useState('Filter By');
-    const [sortname,setsortname] = useState('Sort By')
+    const [filtername, setfiltername] = useState<string>('Filter By');
+    const [sortname,setsortname] = useState<string>('Sort By')
     const response:any = useAppSelector((state:any) => state.Aircraft.response);
     if(response.length>0&&set===true)
     {

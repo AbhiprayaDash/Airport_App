@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,88 +13,72 @@ import AirplanemodeActiveSharpIcon from '@mui/icons-material/AirplanemodeActiveS
 import { errormsg } from '../Toast/toastservice';
 import Autocomplete from '@mui/material/Autocomplete';
 import axios from 'axios';
-type statetypes={
-    name:any,
-    location:string,
-    fuelcapacity:number,
-    fuelavailable:number,
-    AirportList:any
-}
-type proptypes={
-}
-class AirportForm extends React.Component<proptypes,statetypes>{
-    constructor(props:proptypes)
-    {
-        super(props);
-        this.state={
-            name:'Indira Gandhi International Airport,Delhi',
-            location:'',
-            fuelcapacity:0,
-            fuelavailable:0,
-            AirportList:[]
+import { FetchAirportList } from '../../Redux/Airport';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { saveAirportName } from '../../Redux/AirportSlice';
+
+
+const AirportForm:FC = () =>{
+    const [fuelcapacity,setfuelcapacity] = useState<number>(0)
+    const [fuelavailable,setfuelavailable] = useState<number>(0)
+    const AirportList:any = useAppSelector((state:any) => state.Airport.AirportList);
+    const name:string = useAppSelector((state:any)=>state.Airport.name)
+    const dispatch = useAppDispatch();
+    useEffect(()=>{
+      const loaddata = async ()=>{
+        try{
+            const fetchfunc=FetchAirportList()
+            await fetchfunc(dispatch)
         }
-    }
-    componentDidMount()
-    {
-        const loaddata = async ()=>{
-            try{
-                const result:any = await axios.get('http://localhost:9000/airportlist/')
-                this.setState({AirportList:result.data[0].airportList})
-                this.setState({name:result.data[0].airportList[0]})
-            }
-            catch(e:any)
-            {
-                console.log(e)
-            }
+        catch(e:any)
+        {
+            console.log(e)
         }
-        loaddata()
-    }
-    handlename=(event:any,value:any)=>{
+      }
+      loaddata()
+    },[])
+    const handlename=(event:any,value:any)=>{
       console.log(value)
         if(value!==null&&value!==undefined)
         {
-          console.log(value)
-          this.setState({
-            name: value
-          })
+          dispatch(saveAirportName(value))
         }
-      }
-    handlelocation=(event:any)=>{
-        this.setState({location: event.target.value});
     }
-    handlefuelav=(event:any)=>{
-        this.setState({fuelavailable: event.target.value});
+    const handlefuelav=(event:any)=>{
+        setfuelavailable(event.target.value);
     }
-    handlefuelcap=(event:any)=>{
-        this.setState({fuelcapacity: event.target.value});
+    const handlefuelcap=(event:any)=>{
+        setfuelcapacity(event.target.value);
     }
-    handlesubmit=async (event:any)=>{
+    const handlesubmit=async (event:any)=>{
         event.preventDefault();
         const reqbody = {
-            name:this.state.name,
-            fuelavailable:Number(this.state.fuelavailable),
-            fuelcapacity:Number(this.state.fuelcapacity)
+            name:name,
+            fuelavailable:Number(fuelavailable),
+            fuelcapacity:Number(fuelcapacity)
+        }
+        const state={
+            name,
+            fuelcapacity,
+            fuelavailable
         }
         console.log(reqbody)
-        const index = this.state.AirportList.indexOf(reqbody.name)
-        if(index>=this.state.AirportList.length)
+        const index = AirportList.indexOf(reqbody.name)
+        if(index>=AirportList.length)
             return errormsg("Airport is not available")
         try{
-          await postAirportData(reqbody,this.state,this.state.AirportList,index)
-          const result:any = await axios.get('http://localhost:9000/airportlist/')
-          this.setState({AirportList:result.data[0].airportList})
-          this.setState({name:result.data[0].airportList[0]})
+            await postAirportData(reqbody,state,AirportList,index)
+            const fetchfunc = FetchAirportList()
+            await fetchfunc(dispatch)
         }
         catch(e)
         {
           console.log(e)
         }
     }
-    render()
-    {
-        const theme = createTheme();
+    const theme = createTheme();
         return(
-                <ThemeProvider theme={theme}>
+          <ThemeProvider theme={theme}>
           <Container component="main" maxWidth="xs">
             <CssBaseline />
             <Box
@@ -111,17 +95,17 @@ class AirportForm extends React.Component<proptypes,statetypes>{
             <Typography component="h1" variant="h5">
               Add Airport
             </Typography>
-            <Box component="form" onSubmit={this.handlesubmit} noValidate sx={{ mt: 1 }}>
+            <Box component="form" onSubmit={handlesubmit} noValidate sx={{ mt: 1 }}>
             <Autocomplete
               id="disable-close-on-select"
               disableCloseOnSelect
-              options={this.state.AirportList}
+              options={AirportList}
               sx={{ width: 400 }}
-              value={this.state.name}
-              onInputChange={this.handlename}
+              value={name}
+              onInputChange={handlename}
               renderInput={(params:any) => 
               <TextField {...params} label="Airports" 
-              value={this.state.name}
+              value={name}
               />}
               />
               <TextField
@@ -129,10 +113,10 @@ class AirportForm extends React.Component<proptypes,statetypes>{
                 required
                 fullWidth
                 name="Fuel Available"
-                value={this.state.fuelavailable}
+                value={fuelavailable}
                 label="Fuel Available"
                 type="number"
-                onChange={this.handlefuelav}
+                onChange={handlefuelav}
                 id="password"
                 autoComplete="current-password"
               />
@@ -141,10 +125,10 @@ class AirportForm extends React.Component<proptypes,statetypes>{
                 required
                 fullWidth
                 name="Fuel Capacity"
-                value={this.state.fuelcapacity}
+                value={fuelcapacity}
                 label="Fuel Capacity"
                 type="number"
-                onChange={this.handlefuelcap}
+                onChange={handlefuelcap}
                 id="password"
                 autoComplete="current-password"
               />
@@ -160,7 +144,6 @@ class AirportForm extends React.Component<proptypes,statetypes>{
             </Box>
         </Container>
       </ThemeProvider>
-        )
-    }
+    )
 }
 export default AirportForm

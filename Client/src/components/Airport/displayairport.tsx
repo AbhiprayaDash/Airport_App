@@ -10,8 +10,8 @@ import {fetchAirport,SortAirport,FilterAirport} from '../../Redux/Airport'
 var airports:any=[]
 var set=true
 const  DisplayAirports:FC=()=>{    
-    const [filtername, setfiltername] = useState('Filter By');
-    const [sortname,setsortname] = useState('Sort By')
+    const [filtername, setfiltername] = useState<string>('Filter By');
+    const [sortname,setsortname] = useState<string>('Sort By')
     const response:any = useAppSelector((state:any) => state.Airport.response);
     const dispatch = useAppDispatch();
 

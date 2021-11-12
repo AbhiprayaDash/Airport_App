@@ -11,9 +11,9 @@ import { FetchTransaction,SortTransaction } from "../../Redux/Transaction";
 
 
 const DisplayTransaction:FC=() =>{
-    const [filtername,setfiltername]= useState('Filter By');
-    const [sortname,setsortname]= useState('');
-    const response = useSelector((state:any)=>state.Transaction.response)
+    const [filtername,setfiltername]= useState<string>('Filter By');
+    const [sortname,setsortname]= useState<string>('');
+    const response:Array<any> = useSelector((state:any)=>state.Transaction.response)
     const dispatch = useAppDispatch()
     const handlefilter:any = async(event:any)=>{
         const value=event.target.value

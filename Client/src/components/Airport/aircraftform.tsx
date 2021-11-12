@@ -1,4 +1,4 @@
-import React from 'react'
+import  { FC, useEffect, useState } from 'react'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,85 +11,65 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
+import {FetchAircraftList} from "../../Redux/Aircraft"
+import {saveAircraftNo} from "../../Redux/AircraftSlice"
+import { useAppDispatch, useAppSelector } from '../../hooks';
 
-
-type statetypes={
-    number:number,
-    airline:string,
-    AircraftList:Array<number>
-}
-type propTypes={
-}
-
-const airline =[
+const airlineList =[
     {label:"Air India"},
     {label:"IndiGo"},
     {label:"SpiceJet"},
     {label:"Go Air"}
 ]
-class AircraftForm extends React.Component<propTypes,statetypes>{
-    constructor(props:propTypes)
-    {
-        super(props);
-        this.state ={
-            number:162,
-            airline:'IndiGo',
-            AircraftList:[]
-        }
-    }
-    componentDidMount()
-    {
-        const loaddata = async ()=>{
-            try{
-                const result:any = await axios.get('http://localhost:9000/aircraftlist/')
-                this.setState({AircraftList:result.data[0].aircraftlist})
-                this.setState({number:result.data[0].aircraftlist[0]})
-            }
-            catch(e:any)
-            {
-                console.log(e)
-            }
+const AircraftForm:FC =()=>{
+    const [airline,setairline] = useState<string>('Airline')
+    const AircraftList:any = useAppSelector((state:any) => state.Aircraft.AircraftList);
+    const number:Number = useAppSelector((state:any)=>state.Aircraft.number)
+    const theme = createTheme();
+    const dispatch = useAppDispatch();
+        useEffect(()=>{
+          const loaddata = async ()=>{
+          try{
+              const fetchfunc = FetchAircraftList()
+              fetchfunc(dispatch)
+          }
+          catch(e:any)
+          {
+              console.log(e)
+          }
         }
         loaddata()
-    }
-    handlenumber=(event:any,value:any)=>{
+      },[])
+    const handleairline = (event:any,value:any)=>{
       if(value!==null&&value!==undefined)
       {
-        this.setState({
-          number: value
-        })
+        setairline(value.label)
       }
     }
-    handleairline = (event:any,value:any)=>{
+    const handlenumber=(event:any,value:any)=>{
       if(value!==null&&value!==undefined)
       {
-        this.setState({
-          airline: value.label
-        })
+        dispatch(saveAircraftNo(value))
       }
     }
-    handlesubmit=async (event:any)=>{
+    const handlesubmit=async (event:any)=>{
         event.preventDefault();
         const reqbody = {
-            aircraft_no:this.state.number,
-            airline:this.state.airline
+            aircraft_no:number,
+            airline:airline
         }
         try{
             await axios.post('http://localhost:9000/aircraft',reqbody)
-            var indexvalue = this.state.AircraftList.indexOf(Number(reqbody.aircraft_no))
+            var indexvalue = AircraftList.indexOf(Number(reqbody.aircraft_no))
             await axios.delete('http://localhost:9000/aircraftlist', { data: {indexvalue}, headers: { "Authorization": "***" } });
             successmsg("Aircraft Added Successfully")
-            const result:any = await axios.get('http://localhost:9000/aircraftlist/')
-            this.setState({AircraftList:result.data[0].aircraftlist})
-            this.setState({number:result.data[0].aircraftlist[0]})
+            const fetchfunc = FetchAircraftList()
+            fetchfunc(dispatch)
         }
         catch(e:any){
             errormsg(e.response.data)
         }
     }
-    render()
-    {
-        const theme = createTheme();
         return(
             <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
@@ -108,28 +88,28 @@ class AircraftForm extends React.Component<propTypes,statetypes>{
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LocalAirportSharpIcon />
           </Avatar>
-          <Box component="form" onSubmit={this.handlesubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handlesubmit} noValidate sx={{ mt: 1 }}>
             <Autocomplete
                 id="disable-close-on-select"
                 disableCloseOnSelect
-                options={this.state.AircraftList}
+                options={AircraftList}
                 sx={{ width: 400 }}
-                value={this.state.number}
-                onInputChange={this.handlenumber}
+                value={number}
+                onInputChange={handlenumber}
                 renderInput={(params:any) => 
             <TextField {...params} label="Aircraft number" 
-                value={this.state.number}
+                value={number}
              />}
             />
           <Autocomplete
                 id="disable-close-on-select"
                 disableCloseOnSelect
-                options={airline}
+                options={airlineList}
                 sx={{ width: 400 }}
-                onChange={this.handleairline}
+                onChange={handleairline}
                 renderInput={(params:any) => 
             <TextField {...params}
-                value={this.state.airline} label="Airline" fullWidth
+                value={airline} label="Airline" fullWidth
              />}
             />
             <Button
@@ -146,6 +126,4 @@ class AircraftForm extends React.Component<propTypes,statetypes>{
     </ThemeProvider>
     )
   }
-    
-}
 export default AircraftForm

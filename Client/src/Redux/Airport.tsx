@@ -1,5 +1,5 @@
 import axios from "axios"
-import { saveAirports } from "./AirportSlice"
+import { saveAirports,saveAirportList,saveAirportName} from "./AirportSlice"
 export const fetchAirport=()=> {
     return async (dispatch:any) => {
       try {
@@ -55,5 +55,13 @@ export const FilterAirport =()=>{
     return async (dispatch:any,name:any) => {
         const result = await axios.post('http://localhost:9000/airport/filter/name',{name})
         dispatch(saveAirports(result.data));
+    }
+}
+
+export const FetchAirportList = () =>{
+    return async (dispatch:any)=>{
+        const result:any = await axios.get('http://localhost:9000/airportlist/')
+        dispatch(saveAirportList(result.data[0].airportList))
+        dispatch(saveAirportName(result.data[0].airportList[0]))
     }
 }
