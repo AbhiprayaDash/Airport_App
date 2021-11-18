@@ -46,7 +46,6 @@ type propTypes={
 }
 const Airporttable:FC<propTypes>= (props:propTypes)=>{
     var response:any = props.response
-    const dispatch = useAppDispatch();
     return(
             <Fragment>
                 <DataTable

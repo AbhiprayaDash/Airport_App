@@ -1,8 +1,6 @@
 import { FC, Fragment, useEffect, useState } from "react"
 import Typography from '@mui/material/Typography';
-import Pagination from '../Pagination/pagination'
 import Airporttable from './airporttable'
-import FormControl from '@mui/material/FormControl';
 import '../../css/displayairport.css'
 import { useAppSelector,useAppDispatch } from "../../hooks";
 import {fetchAirport} from '../../Redux/Airport'
@@ -15,14 +13,22 @@ var set=true
 const  DisplayAirports:FC=()=>{    
     const response:any = useAppSelector((state:any) => state.Airport.response);
     const dispatch = useAppDispatch();
-    if(response.length===0)
-    {
-        const loaddata=async()=>{
-            const fetchfunc=fetchAirport()
-            await fetchfunc(dispatch)
-        } 
+    const loaddata=async()=>{
+        if(response.length===0)
+        {
+            try{
+                const fetchfunc=fetchAirport()
+                await fetchfunc(dispatch)
+            }
+            catch(e:any)
+            {
+                console.log(e)
+            }
+        }
+    } 
+    useEffect(() => {
         loaddata()
-    }
+    }, []);
     if(response.length>0&&set===true)
     {
         airports=response.filter((airport:any,index:Number)=>{
@@ -48,7 +54,7 @@ const  DisplayAirports:FC=()=>{
             {airports.length>0&&<SideNavbar airportlist={airports}/>}
         <div className="main">
         <div style={{width:'80%',float:'right',padding:'10px'}}>
-        {response.length>0&&<Airporttable response={response}/>}
+            {response.length>0&&<Airporttable response={response}/>}
         </div>
         </div>
         </Paper>

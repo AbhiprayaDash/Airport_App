@@ -13,8 +13,6 @@ type propTypes={
 const SideNavbarAirport:FC<propTypes> =(props:propTypes) =>{
     const airports=props.airportlist
     const [filtername, setfiltername] = useState<string>('Filter By');
-    const [sortname,setsortname] = useState<string>('Sort By')
-    const response:any = useAppSelector((state:any) => state.Airport.response);
     const [noOfelements,setnoelements] = useState<any>(5)
     const dispatch = useAppDispatch();
     var SlicedAirport=[]
@@ -31,7 +29,6 @@ const SideNavbarAirport:FC<propTypes> =(props:propTypes) =>{
         setnoelements(sum)
     }
     const handlefiltername:any =async(event:any)=>{
-        console.log(event.target.tagName)
         if(event.target.tagName==="A")
         {
             console.log('fetching')
@@ -48,18 +45,19 @@ const SideNavbarAirport:FC<propTypes> =(props:propTypes) =>{
     }
     return (
         <Fragment>
-            <Paper>
         <section id="sidebar" style={{float:'left'}}>
+        <Paper>
         <div className="container">
         <div className="row">
             <div className="col-sm">
-                <h2>Filter By</h2>
+                <h2 style={{marginLeft:'2px',fontStyle:'italic'}}>Filter By</h2>
             </div>
             <div className="col-sm"style={{paddingTop:"10px",paddingLeft:"5px"}}>
                 <span style={{color:'blue'}}><a onClick={handlefiltername}>Clear All</a></span>
             </div>
         </div>
         </div>
+        <hr style={{borderBottom: '1px solid #dee2e6'}}></hr>
         <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -82,13 +80,12 @@ const SideNavbarAirport:FC<propTypes> =(props:propTypes) =>{
             )
             })
         }
-        <div className="spanclass" onClick={loadmore}>Load More</div>
-        {noOfelements>5&&<div className="spanclass" onClick={showless}>Show Less</div>}
+        <div className="spanclass" style={{color:'blue'}}onClick={loadmore}>Load More</div>
+        {noOfelements>5&&<div style={{color:'red'}}className="spanclass" onClick={showless}>Show Less</div>}
         </AccordionDetails>
       </Accordion>
-
+      </Paper>
 </section>
-</Paper>
   </Fragment>
     )
 }

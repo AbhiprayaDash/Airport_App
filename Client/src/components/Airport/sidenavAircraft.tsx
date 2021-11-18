@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useAppDispatch} from "../../hooks";
 import { fetchAircaft, FilterAircraft } from "../../Redux/Aircraft";
+import { Paper } from "@mui/material";
 type propTypes={
     aircraftlist:any
 }
@@ -44,16 +45,18 @@ const SideNavbarAircraft:FC<propTypes> =(props:propTypes) =>{
     return (
         <Fragment>
         <section id="sidebar" >
+        <Paper>
         <div className="container">
         <div className="row">
             <div className="col-sm">
-                <h2>Filter By</h2>
+                <h2 style={{marginLeft:'2px',fontStyle:'italic'}}>Filter By</h2>
             </div>
             <div className="col-sm"style={{paddingTop:"10px",paddingLeft:"5px"}}>
                 <span style={{color:'blue'}}><a onClick={handlefiltername}>Clear All</a></span>
             </div>
         </div>
         </div>
+        <hr style={{borderBottom: '1px solid #dee2e6'}}></hr>
         <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -80,8 +83,8 @@ const SideNavbarAircraft:FC<propTypes> =(props:propTypes) =>{
         {noOfelements>5&&<div className="spanclass" onClick={showless}style={{color:'red'}}>Show Less</div>}
         </AccordionDetails>
       </Accordion>
-
-</section>
+      </Paper>
+    </section>
   </Fragment>
     )
 }

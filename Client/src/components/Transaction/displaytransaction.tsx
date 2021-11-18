@@ -1,63 +1,53 @@
-import { Fragment,FC, useState, useEffect } from "react"
+import { Fragment,FC, useState,useEffect } from "react"
 import Typography from '@mui/material/Typography';
 import Pagination from "../Pagination/pagination"
 import TransactionTable from "./transactiontable";
 import FormControl from '@mui/material/FormControl';
-import {FilterTransaction} from '../Airport/FilterService'
 import { useSelector } from "react-redux";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { savetransaction } from "../../Redux/TransactionSlice";
 import { FetchTransaction,SortTransaction } from "../../Redux/Transaction";
 import SideNavbarTransaction from "./Sidenavtransaction";
 import { fetchAircaft } from "../../Redux/Aircraft";
 
 
 const DisplayTransaction:FC=() =>{
-    const [filtername,setfiltername]= useState<string>('Filter By');
     const [sortname,setsortname]= useState<string>('');
     const response:Array<any> = useSelector((state:any)=>state.Transaction.response)
     var Aircraftresult=useAppSelector<Array<any>>((state)=>state.Aircraft.response);
     const AircraftList=Aircraftresult.map((aircraft)=>aircraft.aircraft_no)
     const dispatch = useAppDispatch()
-    if(Aircraftresult.length===0)
-    {
-        const loaddata=async()=>{
-            const fetchfuncAircraft = fetchAircaft()
-            await fetchfuncAircraft(dispatch)
-        }   
+
+    const loaddataAircraft=async()=>{
+        if(Aircraftresult.length===0)
+        {
+            try{
+                const fetchfuncAircraft = fetchAircaft()
+                await fetchfuncAircraft(dispatch)
+            }
+            catch(e:any)
+            {
+                console.log(e)
+            }
+        } 
+    }  
+    const loaddata=async()=>{
+        if(response.length===0)
+        {
+            try{
+                const fetchfunc=FetchTransaction()
+                await fetchfunc(dispatch)
+            }
+            catch(e:any)
+            {
+                console.log(e)
+            }
+        }
+    }
+    useEffect(() => {
         loaddata()
-    }
-    if(response.length==0)
-    {
-        const loaddata=async()=>{
-            const fetchfunc=FetchTransaction()
-            await fetchfunc(dispatch)
-        }
-        loaddata()
-    }
-    const handlefilter:any = async(event:any)=>{
-        const value=event.target.value
-        setfiltername(value)
-        var result:any
-        if(value==="All")
-        {
-            setfiltername(value)
-            const fetchfunc = FetchTransaction()
-            await fetchfunc(dispatch)
-        }
-        if(value==="IN")
-        {
-            const reqbody={type:"IN"}
-            result =await FilterTransaction(reqbody,value)
-            dispatch(savetransaction(result.data))
-        }
-        else if(value==="OUT")
-        {
-            const reqbody={type:"OUT"}
-            result= await FilterTransaction(reqbody,value)
-            dispatch(savetransaction(result.data))
-        }
-    }
+        loaddataAircraft()
+    }, []);
+    
     const handlesort:any = async(event:any)=>{
         const value=event.target.value
         setsortname(value)
@@ -86,13 +76,6 @@ const DisplayTransaction:FC=() =>{
                     <option value="datedesc">Sort By Date Desc</option>
                     <option value="quantityasc">Sort By Quantity Asc</option>
                     <option value="quantitydesc">Sort by Quantity Desc</option>
-                </select>
-            </FormControl>
-            <FormControl>
-                <select id="country" name="country" onChange={handlefilter} value={filtername}>
-                    <option value="All">All</option>
-                    <option value="IN">IN</option>
-                    <option value="OUT">OUT</option>
                 </select>
             </FormControl>
             {

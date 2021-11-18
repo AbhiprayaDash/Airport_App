@@ -7,12 +7,12 @@ import { fetchAircaft } from '../../Redux/Aircraft';
 const customStyles = {
     rows: {
         style: {
-            minHeight: '52px', // override the row height
+            minHeight: '52px', 
         },
     },
     headCells: {
         style: {
-            paddingLeft: '8px', // override the cell padding for head cells
+            paddingLeft: '8px', 
             paddingRight: '8px',
             fontSize:'20px'
         },
@@ -36,18 +36,28 @@ const columns:any = [
       
     },
   ];
-const Aircrafttable:FC =()=>{
-    const response:any = useAppSelector((state:any) => state.Aircraft.response);
+type propTypes={
+    response:any
+}
+const Aircrafttable:FC<propTypes> =(props:propTypes)=>{
+    const response:any = props.response;
     const dispatch = useAppDispatch();
-    if(response.length===0)
-    {
-        console.log('aircraft table')
-        const loaddata=async()=>{
-            const fetchfunc=fetchAircaft()
-            await fetchfunc(dispatch)
-        } 
-        loaddata()
+    const loaddata=async()=>{
+        if(response.length===0)
+        {
+            try{
+                const fetchfunc=fetchAircaft()
+                await fetchfunc(dispatch)
+            }
+            catch(e:any)
+            {
+                console.log(e)
+            }
+        }
     }
+    useEffect(() => {
+        loaddata()
+    }, []);
     return(
         <DataTable
         columns={columns}

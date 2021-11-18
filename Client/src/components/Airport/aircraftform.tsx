@@ -24,25 +24,30 @@ const airlineList =[
 ]
 const AircraftForm:FC =()=>{
     const [airline,setairline] = useState<string>('')
-    const AircraftList:any = useAppSelector((state:any) => state.Aircraft.AircraftList);
+    var AircraftList:any = useAppSelector((state:any) => state.Aircraft.AircraftList);
     const number:Number = useAppSelector((state:any)=>state.Aircraft.number)
     const theme = createTheme();
     const dispatch = useAppDispatch();
-    if(AircraftList.length===0)
-    {
-      console.log('aircraft form')
-      const loaddata = async ()=>{
+
+    const loaddata = async ()=>{
+      if(AircraftList.length===0)
+      {
         try{
-            const fetchfunc = FetchAircraftList()
-            fetchfunc(dispatch)
+          const fetchfunc = FetchAircraftList()
+          await fetchfunc(dispatch)
         }
         catch(e:any)
         {
-            console.log(e)
+          console.log(e)
         }
       }
-      loaddata()
     }
+
+    useEffect(() => {
+        loaddata()
+    }, []);
+
+    
     const handleairline = (event:any,value:any)=>{
       if(value!==null&&value!==undefined)
       {

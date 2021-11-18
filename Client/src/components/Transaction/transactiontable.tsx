@@ -1,26 +1,6 @@
 import React from 'react'
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import Paper from '@mui/material/Paper';
-import moment from 'moment'
-import {StyledTableCell,StyledTableRow} from '../Airport/tablestyle';
 import DataTable from 'react-data-table-component';
 import SortIcon from "@mui/icons-material/ArrowDownward";
-
-
-type durationType={
-    date:Date
-}
-
-interface typeProvider{
-    Duration:durationType,
-    Type:string,
-    airport:any,
-    aircraft:any,
-    quantity:number
-}
 
 type propTypes={
     data:any
@@ -29,6 +9,7 @@ type propTypes={
 type stateTypes={
     response:any
 }
+
 const columns:any = [
     {
       name: "Date/Time",
@@ -53,7 +34,9 @@ const columns:any = [
         sortable: true,
         
       },
-  ];
+];
+
+
 class TransactionTable extends React.Component<propTypes,stateTypes>
 {
     constructor(props:propTypes)

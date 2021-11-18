@@ -30,15 +30,20 @@ const Chart:FC =() =>{
         ],
         },
     };
-
-
-    useEffect(()=>{
-        const loaddata= async ()=>{
+    const loaddata=async() =>{
+        if(response.length===0)
+        {
             const fetchfunctransaction =FetchTransaction()
             await fetchfunctransaction(dispatch)
+        }
+        if(airportresponse.length===0)
+        {
             const fetchfunc=fetchAirport()
             await fetchfunc(dispatch)
         }
+    }
+
+    useEffect(()=>{
         loaddata()
     },[])
     const lineGraphData =()=>{

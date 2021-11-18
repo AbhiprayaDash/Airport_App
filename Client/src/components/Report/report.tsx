@@ -14,15 +14,21 @@ const ReportComponent:FC=() =>{
     const response = useAppSelector<Array<any>>((state:any)=>state.Transaction.response)
     const airportresponse = useAppSelector<Array<any>>((state:any)=>state.Airport.response)
     const dispatch = useAppDispatch()
+    const loaddata = async()=>{
+        if(response.length===0)
+        {
+            const fetchfunc=FetchTransaction()
+            await fetchfunc(dispatch)
+        }
+        if(airportresponse.length===0)
+        {
+            const fetchfuncAirport = fetchAirport()
+            await fetchfuncAirport(dispatch)
+        }
+    }
     useEffect(()=>{
-        const loaddata=async()=>{
-        const fetchfunc=FetchTransaction()
-        await fetchfunc(dispatch)
-        const fetchfuncAirport = fetchAirport()
-        await fetchfuncAirport(dispatch)
-        } 
         loaddata()
-        },[]); 
+    },[]); 
       return(
         <Fragment>
         <NavigationComponent/>

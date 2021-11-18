@@ -1,4 +1,4 @@
-import { FC, Fragment} from "react"
+import { FC, Fragment,useEffect} from "react"
 import Typography from '@mui/material/Typography';
 import {fetchAircaft} from '../../Redux/Aircraft'
 import Pagination from '../Pagination/pagination'
@@ -10,16 +10,22 @@ var aircrafts:any=[]
 const DisplayAircrafts:FC =() => {
     const response:any = useAppSelector((state:any) => state.Aircraft.response);
     const dispatch = useAppDispatch();
-    console.log(response)
-    if(response.length==0)
-    {
-        console.log('display aircrafts')
-        const loaddata=async()=>{
-            const fetchfunc=fetchAircaft()
-            await fetchfunc(dispatch)
+    const loaddata=async()=>{
+        if(response.length===0)
+        {
+            try{
+                const fetchfunc=fetchAircaft()
+                await fetchfunc(dispatch)
+            }
+            catch(e:any)
+            {
+                console.log(e)
+            }
         }   
-        loaddata()
     }
+    useEffect(() => {
+        loaddata()
+    }, []);
     if(response.length>0&&set===true)
     {
         aircrafts=response.filter((aircraft:any,index:Number)=>{
@@ -43,7 +49,7 @@ const DisplayAircrafts:FC =() => {
             <br/>
             <SideNavbar aircraftlist={aircrafts}/>
             <div style={{width:'80%',float:'right',padding:'10px'}}>
-            {response.length>0&&<Aircrafttable/>}
+            {response.length>0&&<Aircrafttable response={response}/>}
             </div>
         </Fragment>
     )

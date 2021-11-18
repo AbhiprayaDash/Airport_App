@@ -28,6 +28,7 @@ type stateTypes= {
     aircraft_no:Number,
     quantity:Number
 }
+
 const TransactionForm:FC =() =>{
     var Airportresult=useAppSelector<Array<any>>((state)=>state.Airport.response);
     var Aircraftresult=useAppSelector<Array<any>>((state)=>state.Aircraft.response); 
@@ -39,22 +40,37 @@ const TransactionForm:FC =() =>{
     const [quantity,setquantity] = useState<Number>(0)
     const theme = createTheme();
     const dispatch = useAppDispatch();
-    if(Airportresult.length===0)
-    {
-        const loaddata=async()=>{
-          const fetchfunc=fetchAirport()
-          await fetchfunc(dispatch)
+    
+    const loaddataAirport=async()=>{
+        if(Airportresult.length===0)
+        {
+          try{
+            const fetchfunc=fetchAirport()
+            await fetchfunc(dispatch)
+          }
+          catch(e:any)
+          {
+            console.log(e)
+          }
         } 
-        loaddata()
     }
-    if(Aircraftresult.length===0)
-    {
-      const loaddata=async()=>{
-          const fetchfuncAircraft = fetchAircaft()
-          await fetchfuncAircraft(dispatch)
-      } 
-      loaddata()
-    }
+    const loaddataAircraft=async()=>{
+        if(Aircraftresult.length===0)
+        {
+          try{
+            const fetchfuncAircraft = fetchAircaft()
+            await fetchfuncAircraft(dispatch)
+          }
+          catch(e:any)
+          {
+            console.log(e)
+          }
+        }
+      }
+    useEffect(()=>{
+        loaddataAircraft()
+        loaddataAirport()
+    },[])
     const handletype=(event:any)=>{
         setType(event.target.value);
     }

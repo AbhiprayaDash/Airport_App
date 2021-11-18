@@ -17,26 +17,30 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { saveAirportName } from '../../Redux/AirportSlice';
 import { ToastContainer } from 'react-toastify';
 
-
 const AirportForm:FC = () =>{
     const [fuelcapacity,setfuelcapacity] = useState<number>(0)
     const [fuelavailable,setfuelavailable] = useState<number>(0)
     const AirportList:any = useAppSelector((state:any) => state.Airport.AirportList);
     const name:string = useAppSelector((state:any)=>state.Airport.name)
     const dispatch = useAppDispatch();
-    useEffect(()=>{
-      const loaddata = async ()=>{
+    
+    
+    const loaddata = async()=>{
+      if(AirportList.length===0)
+      {
         try{
-            const fetchfunc=FetchAirportList()
-            await fetchfunc(dispatch)
+          const fetchfunc=FetchAirportList()
+          await fetchfunc(dispatch)
         }
         catch(e:any)
         {
             console.log(e)
         }
       }
-      loaddata()
-    },[])
+    }
+    useEffect(() => {
+        loaddata()
+    }, []);
     const handlename=(event:any,value:any)=>{
       console.log(value)
         if(value!==null&&value!==undefined)

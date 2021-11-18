@@ -17,7 +17,7 @@ import DisplayAircrafts from '../Airport/displayaircraft';
 import DisplayAirports from '../Airport/displayairport';
 import DisplayTransaction from '../Transaction/displaytransaction';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import { Button, Modal, Paper } from '@mui/material';
+import {  Modal, Paper } from '@mui/material';
 import AirportForm from '../Airport/airportform';
 import AircraftForm from '../Airport/aircraftform';
 import TransactionForm from '../Transaction/transactionform';
@@ -89,126 +89,126 @@ const Dashboard = ()=> {
   const handleOpenTransaction = () => setOpenfuncTransaction(true);
   const handleCloseTransaction = () => setOpenfuncTransaction(false);
   return (
-    <React.Fragment>
-      <Modal
-        open={OpenAirport}
-        onClose={handleCloseAirport}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Paper style={{width:'30%',alignContent:'center',marginLeft:'700px',marginTop:'200px'}}>
-        <AirportForm/>
-        </Paper>
-      </Modal>
-      <Modal
-        open={OpenAircraft}
-        onClose={handleCloseAircraft}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Paper style={{width:'30%',alignContent:'center',marginLeft:'700px',marginTop:'200px'}}>
-        <AircraftForm/>
-        </Paper>
-      </Modal>
-      <Modal
-        open={OpenTransaction}
-        onClose={handleCloseTransaction}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Paper style={{width:'30%',alignContent:'center',marginLeft:'700px',marginTop:'200px'}}>
-        <TransactionForm/>
-        </Paper>
-      </Modal>
-    <ThemeProvider theme={mdTheme}>
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-        <AppBar position="absolute" open={open}>
-          <Toolbar
-            sx={{
-              pr: '24px', // keep right padding when drawer closed
-            }}
+        <React.Fragment>
+          <Modal
+            open={OpenAirport}
+            onClose={handleCloseAirport}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
           >
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={toggleDrawer}
+            <Paper style={{width:'30%',alignContent:'center',marginLeft:'700px',marginTop:'200px'}}>
+            <AirportForm/>
+            </Paper>
+          </Modal>
+          <Modal
+            open={OpenAircraft}
+            onClose={handleCloseAircraft}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Paper style={{width:'30%',alignContent:'center',marginLeft:'700px',marginTop:'200px'}}>
+            <AircraftForm/>
+            </Paper>
+          </Modal>
+          <Modal
+            open={OpenTransaction}
+            onClose={handleCloseTransaction}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Paper style={{width:'30%',alignContent:'center',marginLeft:'700px',marginTop:'200px'}}>
+            <TransactionForm/>
+            </Paper>
+          </Modal>
+        <ThemeProvider theme={mdTheme}>
+          <Box sx={{ display: 'flex' }}>
+            <CssBaseline />
+            <AppBar position="absolute" open={open}>
+              <Toolbar
+                sx={{
+                  pr: '24px', // keep right padding when drawer closed
+                }}
+              >
+                <IconButton
+                  edge="start"
+                  color="inherit"
+                  aria-label="open drawer"
+                  onClick={toggleDrawer}
+                  sx={{
+                    marginRight: '16px',
+                    ...(open && { display: 'none' }),
+                  }}
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Typography
+                  component="h1"
+                  variant="h6"
+                  color="inherit"
+                  noWrap
+                  sx={{ flexGrow: 1 }}
+                >
+                  <DashboardIcon/>
+                  Dashboard
+                </Typography>
+                <button type="button" className="btn btn-secondary" onClick={handleOpenAirport} style={{padding:'8px',marginRight:'10px'}}>Add Airport</button>
+                <button type="button" className="btn btn-secondary" onClick={handleOpenAircraft} style={{padding:'8px',marginRight:'10px'}}>Add Aircraft</button>
+                <button type="button" className="btn btn-secondary" onClick={handleOpenTransaction} style={{padding:'8px'}}>Add Transaction</button>
+              </Toolbar>
+            </AppBar>
+            <Drawer variant="permanent" open={open}>
+              <Toolbar
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'flex-end',
+                  px: [1],
+                }}
+              >
+                <IconButton onClick={toggleDrawer}>
+                  <ChevronLeftIcon />
+                </IconButton>
+              </Toolbar>
+              <Divider />
+              <List>{mainListItems}</List>
+            </Drawer>
+            <Box
+              component="main"
               sx={{
-                marginRight: '16px',
-                ...(open && { display: 'none' }),
+                backgroundColor: (theme) =>
+                  theme.palette.mode === 'light'
+                    ? theme.palette.grey[100]
+                    : theme.palette.grey[900],
+                flexGrow: 1,
+                height: '100vh',
+                overflow: 'auto',
               }}
             >
-              <MenuIcon />
-            </IconButton>
-            <Typography
-              component="h1"
-              variant="h6"
-              color="inherit"
-              noWrap
-              sx={{ flexGrow: 1 }}
-            >
-              <DashboardIcon/>
-              Dashboard
-            </Typography>
-            <button type="button" className="btn btn-secondary" onClick={handleOpenAirport} style={{padding:'8px',marginRight:'10px'}}>Add Airport</button>
-            <button type="button" className="btn btn-secondary" onClick={handleOpenAircraft} style={{padding:'8px',marginRight:'10px'}}>Add Aircraft</button>
-            <button type="button" className="btn btn-secondary" onClick={handleOpenTransaction} style={{padding:'8px'}}>Add Transaction</button>
-          </Toolbar>
-        </AppBar>
-        <Drawer variant="permanent" open={open}>
-          <Toolbar
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              px: [1],
-            }}
-          >
-            <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </Toolbar>
-          <Divider />
-          <List>{mainListItems}</List>
-        </Drawer>
-        <Box
-          component="main"
-          sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === 'light'
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
-            flexGrow: 1,
-            height: '100vh',
-            overflow: 'auto',
-          }}
-        >
-          <Toolbar />
-          <Grid container
-            spacing={3}>
-              <Grid item xs>
-                <DisplayAirports/>
+              <Toolbar />
+              <Grid container
+                spacing={3}>
+                  <Grid item xs>
+                    <DisplayAirports/>
+                  </Grid>
               </Grid>
-          </Grid>
-          <br/>
-          <Grid container
-            spacing={3}>
-              <Grid item xs>
-                <DisplayAircrafts/>
+              <br/>
+              <Grid container
+                spacing={3}>
+                  <Grid item xs>
+                    <DisplayAircrafts/>
+                  </Grid>
               </Grid>
-          </Grid>
-            <br/>
-          <Grid container
-            spacing={3}>
-              <Grid item xs>
-                <DisplayTransaction/>
+                <br/>
+              <Grid container
+                spacing={3}>
+                  <Grid item xs>
+                    <DisplayTransaction/>
+                  </Grid>
               </Grid>
-          </Grid>
-        </Box>
-      </Box>
-    </ThemeProvider>
-    </React.Fragment>
+            </Box>
+          </Box>
+        </ThemeProvider>
+        </React.Fragment>
   );
 }
 export default Dashboard
