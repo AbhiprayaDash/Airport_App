@@ -36,7 +36,6 @@ export const postransaction = (model,AirportModel,AircraftModel) =>async(req,res
     }
     else{ 
         try{
-            console.log('e')
             if((Airportresult.fuelcapacity)<Number(req.body.quantity)+Airportresult.fuelavailable)
             {
                 res.statusCode=400

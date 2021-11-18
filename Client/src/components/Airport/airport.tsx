@@ -9,7 +9,6 @@ class AirportController extends React.Component{
     {
         return(
             <Fragment>
-              <ToastContainer limit={3} autoClose={1500}/>
                 <NavigationComponent/>
                 <AirportForm/>
             </Fragment>

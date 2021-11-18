@@ -1,69 +1,63 @@
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import Paper from '@mui/material/Paper';
-import {StyledTableCell,StyledTableRow} from './tablestyle'
-import React from 'react'
-
-interface typeProvider{
-    name:string,
-    fuelcapacity:number,
-    fuelavailable:number
-}
-type statetypes={
+import  { Fragment,FC } from 'react'
+import DataTable from "react-data-table-component";
+import SortIcon from "@mui/icons-material/ArrowDownward";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { fetchAirport } from "../../Redux/Airport";
+const caseInsensitiveSort = (rowA:any, rowB:any) => {
+    const a = rowA.name.toLowerCase().split(' ')[0];
+    const b = rowB.name.toLowerCase().split(' ')[0];
+    return a.localeCompare(b);
+};
+const customStyles = {
+    rows: {
+        style: {
+            minHeight: '52px', // override the row height
+        },
+    },
+    headCells: {
+        style: {
+            paddingLeft: '8px', // override the cell padding for head cells
+            paddingRight: '8px',
+            fontSize:'20px'
+        },
+    },
+    cells: {
+        style: {
+            fontSize:'15px'
+        },
+    },
+};
+const columns:any = [
+    {
+      name: "Airport Name",
+      selector: "name",
+      sortable: true,
+      sortFunction: caseInsensitiveSort
+    },
+    {
+      name: "Fuel Available",
+      selector: "fuelavailable",
+      sortable: true,
+      
+    },
+];
+type propTypes={
     response:any
 }
-type proptypes={
-    data:any
-}
-class Airporttable extends React.Component<proptypes,statetypes>{
-    constructor(props:proptypes)
-    {
-        super(props)
-        var responsedata = this.props.data
-        this.state={
-            response:responsedata
-        }
-    }
-    componentDidUpdate()
-    {
-        if(this.state.response!==this.props.data)
-        {
-            this.setState({response:this.props.data})
-        }
-    }
-    render(){
-        
-        return(
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                   <TableHead>
-                    <StyledTableRow>
-                    <StyledTableCell>Airport Name</StyledTableCell>
-                    <StyledTableCell >Fuel Available</StyledTableCell>
-                    </StyledTableRow>
-                   </TableHead>
-                   <TableBody>
-                    {
-                    this.state.response.map(function(value:typeProvider,index:number){
-                        return(
-                            <StyledTableRow
-                              key={index}
-                              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                            >
-                              <StyledTableCell component="th" scope="row">
-                                {value.name}
-                              </StyledTableCell>
-                              <StyledTableCell >{value.fuelavailable}</StyledTableCell>
-                            </StyledTableRow>
-                            )
-                    })
-                    }
-                    </TableBody>
-                </Table>
-            </TableContainer>
+const Airporttable:FC<propTypes>= (props:propTypes)=>{
+    var response:any = props.response
+    const dispatch = useAppDispatch();
+    return(
+            <Fragment>
+                <DataTable
+                columns={columns}
+                data={response}
+                defaultSortFieldId={1}
+                pagination
+                customStyles={customStyles}
+                sortIcon={<SortIcon />}
+                />
+            </Fragment>
         )
-    }
 }
 export default Airporttable

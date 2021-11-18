@@ -10,6 +10,8 @@ import DashboardContent from "./components/Dashboard/dashboard"
 import AddTransaction from "./components/Transaction/addtransaction";
 import ReportComponent from "./components/Report/report";
 import Chart from "./components/Charts/charts";
+import DisplayAirports from "./components/Airport/displayairport";
+import DisplayAircrafts from "./components/Airport/displayaircraft";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
       <Route exact path="/" component={HomeComponent}/>
       <Route exact path="/login" component={LoginComponent}/>
       <Route exact path="/signup" component={SignUpComponent}/>
+      <Route exact path="/display" component={DisplayAirports}/>
+      <Route exact path="/displayaircrafts" component={DisplayAircrafts}/>
       <PrivateRoute exact path="/chart" component={Chart}/>
       <PrivateRoute exact path="/dashboard" component={DashboardContent}/>
       <PrivateRoute exact path="/transaction" component={AddTransaction}/>

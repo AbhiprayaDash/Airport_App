@@ -26,7 +26,19 @@ const ReportComponent:FC=() =>{
       return(
         <Fragment>
         <NavigationComponent/>
-        <br/><br/><br/>
+        <br/>
+        <Typography
+                component="h1"
+                variant="h3"
+                color="inherit"
+                align="center"
+                noWrap
+                sx={{ flex: 1 }}
+                fontFamily="Roboto"
+            >
+            Fuel Consumption Report
+        </Typography>
+        <br/>
         {
           airportresponse.map((value:any)=>{
             return (

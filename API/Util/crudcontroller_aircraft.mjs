@@ -12,7 +12,7 @@ export const AddAircraft = model=>async (req,res)=>{
 }
 export const getAircraft = model =>async(req,res)=>{
     try{
-        const result = await model.find({},{_id:0,aircraft_no:1,airline:1}).sort({aircraft_no:1});
+        const result = await model.find({},{_id:0,aircraft_no:1,airline:1}).sort({_id:-1});
         res.status(200).send(result);
     }
     catch(e)

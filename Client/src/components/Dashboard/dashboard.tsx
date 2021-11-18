@@ -17,6 +17,10 @@ import DisplayAircrafts from '../Airport/displayaircraft';
 import DisplayAirports from '../Airport/displayairport';
 import DisplayTransaction from '../Transaction/displaytransaction';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import { Button, Modal, Paper } from '@mui/material';
+import AirportForm from '../Airport/airportform';
+import AircraftForm from '../Airport/aircraftform';
+import TransactionForm from '../Transaction/transactionform';
 
 const drawerWidth: number = 240;
 
@@ -75,9 +79,47 @@ const Dashboard = ()=> {
   const toggleDrawer = () => {
     setOpen(!open);
   };
-
+  const [OpenAirport, setOpenfuncAirport] = React.useState(false);
+  const handleOpenAirport = () => setOpenfuncAirport(true);
+  const handleCloseAirport = () => setOpenfuncAirport(false);
+  const [OpenAircraft, setOpenfuncAircraft] = React.useState(false);
+  const handleOpenAircraft= () => setOpenfuncAircraft(true);
+  const handleCloseAircraft = () => setOpenfuncAircraft(false);
+  const [OpenTransaction, setOpenfuncTransaction] = React.useState(false);
+  const handleOpenTransaction = () => setOpenfuncTransaction(true);
+  const handleCloseTransaction = () => setOpenfuncTransaction(false);
   return (
     <React.Fragment>
+      <Modal
+        open={OpenAirport}
+        onClose={handleCloseAirport}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Paper style={{width:'30%',alignContent:'center',marginLeft:'700px',marginTop:'200px'}}>
+        <AirportForm/>
+        </Paper>
+      </Modal>
+      <Modal
+        open={OpenAircraft}
+        onClose={handleCloseAircraft}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Paper style={{width:'30%',alignContent:'center',marginLeft:'700px',marginTop:'200px'}}>
+        <AircraftForm/>
+        </Paper>
+      </Modal>
+      <Modal
+        open={OpenTransaction}
+        onClose={handleCloseTransaction}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Paper style={{width:'30%',alignContent:'center',marginLeft:'700px',marginTop:'200px'}}>
+        <TransactionForm/>
+        </Paper>
+      </Modal>
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
@@ -109,7 +151,9 @@ const Dashboard = ()=> {
               <DashboardIcon/>
               Dashboard
             </Typography>
-
+            <button type="button" className="btn btn-secondary" onClick={handleOpenAirport} style={{padding:'8px',marginRight:'10px'}}>Add Airport</button>
+            <button type="button" className="btn btn-secondary" onClick={handleOpenAircraft} style={{padding:'8px',marginRight:'10px'}}>Add Aircraft</button>
+            <button type="button" className="btn btn-secondary" onClick={handleOpenTransaction} style={{padding:'8px'}}>Add Transaction</button>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>

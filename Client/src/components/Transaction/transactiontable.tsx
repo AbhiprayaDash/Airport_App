@@ -6,6 +6,9 @@ import TableHead from '@mui/material/TableHead';
 import Paper from '@mui/material/Paper';
 import moment from 'moment'
 import {StyledTableCell,StyledTableRow} from '../Airport/tablestyle';
+import DataTable from 'react-data-table-component';
+import SortIcon from "@mui/icons-material/ArrowDownward";
+
 
 type durationType={
     date:Date
@@ -26,7 +29,31 @@ type propTypes={
 type stateTypes={
     response:any
 }
-
+const columns:any = [
+    {
+      name: "Date/Time",
+      selector: "Duration.date",
+      sortable: true,
+    },
+    {
+      name: "Type",
+      selector: "Type",
+      sortable: true,
+      
+    },
+    {
+        name: "Fuel",
+        selector: "quantity",
+        sortable: true,
+        
+      },
+      {
+        name: "aircraft",
+        selector: "aircraft",
+        sortable: true,
+        
+      },
+  ];
 class TransactionTable extends React.Component<propTypes,stateTypes>
 {
     constructor(props:propTypes)
@@ -46,38 +73,13 @@ class TransactionTable extends React.Component<propTypes,stateTypes>
     }
     render(){
         return(
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                   <TableHead>
-                    <StyledTableRow>
-                    <StyledTableCell>Date/Time</StyledTableCell>
-                    <StyledTableCell >Type</StyledTableCell>
-                    <StyledTableCell >Fuel</StyledTableCell>
-                    <StyledTableCell >Aircraft</StyledTableCell>
-                    </StyledTableRow>
-                   </TableHead>
-                   <TableBody>
-                    {
-                    this.state.response
-                    .map(function(value:typeProvider,index:number){
-                        return(
-                            <StyledTableRow
-                              key={index}
-                              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                            >
-                              <StyledTableCell component="th" scope="row">
-                              {moment(value.Duration.date).format('DD/MM/YYYY')} {moment(value.Duration.date).format('HH:mm:ss')}
-                              </StyledTableCell>
-                              <StyledTableCell >{value.Type}</StyledTableCell>
-                              <StyledTableCell >{value.quantity}</StyledTableCell>
-                              <StyledTableCell >{value.hasOwnProperty('aircraft')?<p>{value.aircraft.aircraft_no}</p>:<p>No Aircraft</p>}</StyledTableCell>
-                            </StyledTableRow>
-                            )
-                    })
-                    }
-                    </TableBody>
-                </Table>
-            </TableContainer>
+        <DataTable
+        columns={columns}
+        data={this.state.response}
+        defaultSortFieldId={1}
+        pagination
+        sortIcon={<SortIcon />}
+        />
        )
     }
 }

@@ -14,36 +14,39 @@ import axios from 'axios';
 import {FetchAircraftList} from "../../Redux/Aircraft"
 import {saveAircraftNo} from "../../Redux/AircraftSlice"
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { ToastContainer } from 'react-toastify';
 
 const airlineList =[
-    {label:"Air India"},
-    {label:"IndiGo"},
-    {label:"SpiceJet"},
-    {label:"Go Air"}
+    "Air India",
+    "IndiGo",
+    "SpiceJet",
+    "Go Air"
 ]
 const AircraftForm:FC =()=>{
-    const [airline,setairline] = useState<string>('Airline')
+    const [airline,setairline] = useState<string>('')
     const AircraftList:any = useAppSelector((state:any) => state.Aircraft.AircraftList);
     const number:Number = useAppSelector((state:any)=>state.Aircraft.number)
     const theme = createTheme();
     const dispatch = useAppDispatch();
-        useEffect(()=>{
-          const loaddata = async ()=>{
-          try{
-              const fetchfunc = FetchAircraftList()
-              fetchfunc(dispatch)
-          }
-          catch(e:any)
-          {
-              console.log(e)
-          }
+    if(AircraftList.length===0)
+    {
+      console.log('aircraft form')
+      const loaddata = async ()=>{
+        try{
+            const fetchfunc = FetchAircraftList()
+            fetchfunc(dispatch)
         }
-        loaddata()
-      },[])
+        catch(e:any)
+        {
+            console.log(e)
+        }
+      }
+      loaddata()
+    }
     const handleairline = (event:any,value:any)=>{
       if(value!==null&&value!==undefined)
       {
-        setairline(value.label)
+        setairline(value)
       }
     }
     const handlenumber=(event:any,value:any)=>{
@@ -65,6 +68,8 @@ const AircraftForm:FC =()=>{
             successmsg("Aircraft Added Successfully")
             const fetchfunc = FetchAircraftList()
             fetchfunc(dispatch)
+            dispatch(saveAircraftNo(0))
+            setairline('')
         }
         catch(e:any){
             errormsg(e.response.data)
@@ -72,6 +77,7 @@ const AircraftForm:FC =()=>{
     }
         return(
             <ThemeProvider theme={theme}>
+              <ToastContainer limit={3} autoClose={1500}/>
             <Container component="main" maxWidth="xs">
             <CssBaseline />
             <Box
@@ -106,6 +112,7 @@ const AircraftForm:FC =()=>{
                 disableCloseOnSelect
                 options={airlineList}
                 sx={{ width: 400 }}
+                value={airline}
                 onChange={handleairline}
                 renderInput={(params:any) => 
             <TextField {...params}

@@ -1,5 +1,5 @@
 import {Fragment,FC, useEffect} from "react";
-import { Line } from 'react-chartjs-2'
+import { Line,Bar,Doughnut } from 'react-chartjs-2'
 import NavigationComponent from "../Navigation/navcomponent";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { fetchAirport } from "../../Redux/Airport";
@@ -16,7 +16,22 @@ const Chart:FC =() =>{
     var label:Array<string>=transactiondata.map((transaction) => new Date(transaction.Duration.date)
     .toLocaleString("en-US", { timeZone: 'Asia/Kolkata', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' })
     .toString())
-    .slice(0, 25)
+    .slice(0, 10)
+    var airportlabel:Array<string> =airportresponse.map((airport:any)=>airport.name)
+
+    const Options:any = {
+        scales: {
+        yAxes: [
+            {
+            ticks: {
+                beginAtZero: true,
+            },
+            },
+        ],
+        },
+    };
+
+
     useEffect(()=>{
         const loaddata= async ()=>{
             const fetchfunctransaction =FetchTransaction()
@@ -61,6 +76,29 @@ const Chart:FC =() =>{
         })
         return data
     }
+    const FuelcapacityPlot = ()=>{
+        const data:any = Airportresponse?.sort(function (a:any, b:any) {
+            var nameA = a.name.toUpperCase();
+            var nameB = b.name.toUpperCase(); 
+            if (nameA < nameB) {
+                return -1;
+            }
+            if (nameA > nameB) {
+                return 1;
+            }
+            return 0;
+        }).map((airport:any, airportIndex:any) => {
+            return (
+                {
+                    label: `${airport.name}`,
+                    data: `${airport.fuelavailable}`,
+                    fill: false,
+                    backgroundColor: colorHex[airportIndex],
+                    borderColor: colorHex[airportIndex],
+                })
+        })
+        return data
+    }
         return(
             <Fragment>
             <NavigationComponent/>
@@ -75,6 +113,9 @@ const Chart:FC =() =>{
                     labels: label,
                     datasets: lineGraphData(),
                 }} />
+            <Bar data={{labels:airportlabel,
+                datasets:FuelcapacityPlot(),
+                }} options={Options}/>
             </div>
         </div>
         </Fragment>

@@ -12,14 +12,6 @@ export const mainListItems = (
       <ListItemIcon>
         <AddIcon />
       </ListItemIcon>
-      <NavLink to="/airport" style={{ textDecoration: 'none',color:'black'}}>
-        <ListItemText primary="Add Airport" />
-      </NavLink>
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <AddIcon />
-      </ListItemIcon>
       <NavLink to="/aircraft" style={{ textDecoration: 'none',color:'black'}}>
       <ListItemText primary="Add Aircraft" />
       </NavLink>

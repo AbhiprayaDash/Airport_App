@@ -53,6 +53,5 @@ export const FetchAircraftList = () =>{
     return async (dispatch:any)=>{
         const result:any = await axios.get('http://localhost:9000/aircraftlist/')
         dispatch(saveAircraftList(result.data[0].aircraftlist))
-        dispatch(saveAircraftNo(result.data[0].aircraftlist[0]))
     }
 }

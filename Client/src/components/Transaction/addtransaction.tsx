@@ -19,7 +19,6 @@ class AddTransaction extends React.Component<propTypes,stateTypes>{
         return(
             <Fragment>
             <NavigationComponent/>
-            <ToastContainer limit={3} autoClose={1500}/>
             <TransactionForm />
     </Fragment>
         )

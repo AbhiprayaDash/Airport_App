@@ -6,6 +6,7 @@ import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import Paper from '@mui/material/Paper';
+import { Typography } from '@mui/material';
 
 type statetypes={
     response:any,
@@ -38,17 +39,18 @@ class Reporttable extends React.Component<proptypes,statetypes>{
         var output="No Aircraft"
         return(
             <Fragment>
-            <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-               <TableHead>
-                <StyledTableRow>
-                <StyledTableCell>Date/Time</StyledTableCell>
-                <StyledTableCell >Type</StyledTableCell>
-                <StyledTableCell>Fuel</StyledTableCell>
-                <StyledTableCell>Aircraft</StyledTableCell>
-                </StyledTableRow>
-               </TableHead>
-               <TableBody>
+            {
+            this.state.response.length===0?<h1 style={{marginLeft:'840px'}}>No data</h1>:
+            <table id="example" className="table table-striped table-bordered" style={{width:"100%"}}>
+                <thead>
+                <tr>
+                <th>Date/Time</th>
+                <th >Type</th>
+                <th>Fuel</th>
+                <th>Aircraft</th>
+                </tr>
+               </thead>
+               <tbody>
                 {
                 this.state.response.sort(function(a:any,b:any){
                     var date1:any = moment(a.Duration.date).format('YYYYMMDD')
@@ -64,26 +66,25 @@ class Reporttable extends React.Component<proptypes,statetypes>{
             .map((val:any)=>{ 
                 console.log(val)
                 return(
-                    <StyledTableRow
+                    <tr
                         key={moment(val.Duration.date).format('HH:mm:ss')}
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
-                    <StyledTableCell component="th" scope="row">
+                    <td >
                         {moment(val.Duration.date).format('DD/MM/YYYY')} {moment(val.Duration.date).format('HH:mm:ss')}
-                    </StyledTableCell>
-                    <StyledTableCell >{val.Type}</StyledTableCell>
-                    <StyledTableCell >{val.quantity}</StyledTableCell>
-                    <StyledTableCell >{
+                    </td>
+                    <td >{val.Type}</td>
+                    <td >{val.quantity}</td>
+                    <td >{
                         val.hasOwnProperty('aircraft')===true?<p>{val.aircraft.aircraft_no}</p>:<p>{output}</p>
                         }
-                    </StyledTableCell>
-                    </StyledTableRow>
+                    </td>
+                    </tr>
                     )
                 })
                 }
-              </TableBody>
-            </Table>
-            </TableContainer>
+              </tbody>
+            </table>
+            }
             </Fragment>
         )
     }

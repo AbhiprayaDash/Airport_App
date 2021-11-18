@@ -5,16 +5,36 @@ import TransactionTable from "./transactiontable";
 import FormControl from '@mui/material/FormControl';
 import {FilterTransaction} from '../Airport/FilterService'
 import { useSelector } from "react-redux";
-import { useAppDispatch } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import { savetransaction } from "../../Redux/TransactionSlice";
 import { FetchTransaction,SortTransaction } from "../../Redux/Transaction";
+import SideNavbarTransaction from "./Sidenavtransaction";
+import { fetchAircaft } from "../../Redux/Aircraft";
 
 
 const DisplayTransaction:FC=() =>{
     const [filtername,setfiltername]= useState<string>('Filter By');
     const [sortname,setsortname]= useState<string>('');
     const response:Array<any> = useSelector((state:any)=>state.Transaction.response)
+    var Aircraftresult=useAppSelector<Array<any>>((state)=>state.Aircraft.response);
+    const AircraftList=Aircraftresult.map((aircraft)=>aircraft.aircraft_no)
     const dispatch = useAppDispatch()
+    if(Aircraftresult.length===0)
+    {
+        const loaddata=async()=>{
+            const fetchfuncAircraft = fetchAircaft()
+            await fetchfuncAircraft(dispatch)
+        }   
+        loaddata()
+    }
+    if(response.length==0)
+    {
+        const loaddata=async()=>{
+            const fetchfunc=FetchTransaction()
+            await fetchfunc(dispatch)
+        }
+        loaddata()
+    }
     const handlefilter:any = async(event:any)=>{
         const value=event.target.value
         setfiltername(value)
@@ -44,15 +64,9 @@ const DisplayTransaction:FC=() =>{
         const sortfunc =SortTransaction()
         await sortfunc(dispatch,value)
     }
-    useEffect(()=>{
-        const loaddata=async()=>{
-            const fetchfunc=FetchTransaction()
-            await fetchfunc(dispatch)
-        }   
-        loaddata()
-    },[]);
     return(
         <Fragment>
+            <SideNavbarTransaction aircraftlist={AircraftList}/>
                 <Typography
                 component="h1"
                 variant="h3"

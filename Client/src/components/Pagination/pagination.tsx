@@ -51,34 +51,23 @@ class Pagination extends React.Component<propTypes,stateTypes>{
         return(
             <Fragment>
                 <this.props.RenderedComponent data={this.getPaginatedData()}/>
-            <div className="pagination">
-            {/* previous button */}
-            <button
-              onClick={this.goToPreviousPage}
-              className={`prev ${this.state.currentpage === 1 ? 'disabled' : ''}`}
-            >
-              prev
-            </button>
-      
-            {/* show page numbers */}
-            {this.getPaginationGroup().map((item, index) => (
-              <button
-                key={index}
-                onClick={this.changePage}
-                className={`paginationItem ${this.state.currentpage === item ? 'active' : null}`}
-              >
-                <span>{item}</span>
-              </button>
-            ))}
-      
-            {/* next button */}
-            <button
-              onClick={this.goToNextPage}
-              className={`next ${this.state.currentpage === this.state.pages ? 'disabled' : ''}`}
-            >
-              next
-            </button>
-          </div>
+            <nav aria-label="Page navigation example">
+              <ul className="pagination">
+                <li className={`page-item ${this.state.currentpage === 1 ? 'disabled' : ''}`}>
+                  <a className="page-link" onClick={this.goToPreviousPage} aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+                </li>
+                {this.getPaginationGroup().map((item, index) => (
+                          <li key={index} 
+                          onClick={this.changePage}
+                          className={`page-item ${this.state.currentpage === item ? 'active' : null}`}>
+                            <a className="page-link"><span>{item}</span></a>
+                          </li>
+                        ))}
+                <li className={`page-item ${this.state.currentpage === this.state.pages ? 'disabled' : ''}`}>
+                  <a className="page-link" onClick={this.goToNextPage} aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+                </li>
+              </ul>
+            </nav>
           </Fragment>
         )
     }

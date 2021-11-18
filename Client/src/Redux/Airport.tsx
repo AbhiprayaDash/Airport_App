@@ -62,6 +62,5 @@ export const FetchAirportList = () =>{
     return async (dispatch:any)=>{
         const result:any = await axios.get('http://localhost:9000/airportlist/')
         dispatch(saveAirportList(result.data[0].airportList))
-        dispatch(saveAirportName(result.data[0].airportList[0]))
     }
 }

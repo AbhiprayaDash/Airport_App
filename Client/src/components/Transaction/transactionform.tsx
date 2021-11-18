@@ -19,6 +19,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { useState } from "react";
 import { fetchAirport } from "../../Redux/Airport";
 import { fetchAircaft } from "../../Redux/Aircraft";
+import { ToastContainer } from "react-toastify";
 
 
 type stateTypes= {
@@ -38,15 +39,22 @@ const TransactionForm:FC =() =>{
     const [quantity,setquantity] = useState<Number>(0)
     const theme = createTheme();
     const dispatch = useAppDispatch();
-    useEffect(()=>{
-      const loaddata=async()=>{
+    if(Airportresult.length===0)
+    {
+        const loaddata=async()=>{
           const fetchfunc=fetchAirport()
           await fetchfunc(dispatch)
+        } 
+        loaddata()
+    }
+    if(Aircraftresult.length===0)
+    {
+      const loaddata=async()=>{
           const fetchfuncAircraft = fetchAircaft()
           await fetchfuncAircraft(dispatch)
       } 
       loaddata()
-      },[])
+    }
     const handletype=(event:any)=>{
         setType(event.target.value);
     }
@@ -80,10 +88,15 @@ const TransactionForm:FC =() =>{
           return errormsg('Quantity must be greater than 500')
         if(String(quantity)==="")
           return errormsg("Input is Required")
-        await PostTransactionService(statedata)      
+        await PostTransactionService(statedata)    
+        setquantity(0)  
+        setAirportname('')
+        setAircraftno(0)
+        setType('IN')
     }
     return(
             <ThemeProvider theme={theme}>
+              <ToastContainer limit={3} autoClose={1500}/>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

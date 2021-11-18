@@ -1,6 +1,8 @@
 export const Transactiontype = model =>async (req,res)=>{
     try{
-        const response =await model.find({Type:req.body.type})
+        const response =await model.find({Type:req.body.type}).populate({
+            path:'aircraft'
+        })
         return res.status(200).send(response)
     }
     catch(e)

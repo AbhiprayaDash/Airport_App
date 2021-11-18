@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import  { FC, useEffect, useState } from 'react'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,10 +12,10 @@ import { postAirportData } from './airportservice';
 import AirplanemodeActiveSharpIcon from '@mui/icons-material/AirplanemodeActiveSharp';
 import { errormsg } from '../Toast/toastservice';
 import Autocomplete from '@mui/material/Autocomplete';
-import axios from 'axios';
 import { FetchAirportList } from '../../Redux/Airport';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { saveAirportName } from '../../Redux/AirportSlice';
+import { ToastContainer } from 'react-toastify';
 
 
 const AirportForm:FC = () =>{
@@ -62,7 +62,6 @@ const AirportForm:FC = () =>{
             fuelcapacity,
             fuelavailable
         }
-        console.log(reqbody)
         const index = AirportList.indexOf(reqbody.name)
         if(index>=AirportList.length)
             return errormsg("Airport is not available")
@@ -70,6 +69,9 @@ const AirportForm:FC = () =>{
             await postAirportData(reqbody,state,AirportList,index)
             const fetchfunc = FetchAirportList()
             await fetchfunc(dispatch)
+            dispatch(saveAirportName(''))
+            setfuelcapacity(0);
+            setfuelavailable(0);
         }
         catch(e)
         {
@@ -79,6 +81,7 @@ const AirportForm:FC = () =>{
     const theme = createTheme();
         return(
           <ThemeProvider theme={theme}>
+            <ToastContainer limit={3} autoClose={1500}/>
           <Container component="main" maxWidth="xs">
             <CssBaseline />
             <Box
