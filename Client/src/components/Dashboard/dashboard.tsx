@@ -96,7 +96,7 @@ const Dashboard = ()=> {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
-            <Paper style={{width:'30%',alignContent:'center',marginLeft:'700px',marginTop:'200px'}}>
+            <Paper style={{width:'30%',height:'450px',alignContent:'center',marginLeft:'700px',marginTop:'200px'}}>
             <AirportForm/>
             </Paper>
           </Modal>
@@ -106,7 +106,7 @@ const Dashboard = ()=> {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
-            <Paper style={{width:'30%',alignContent:'center',marginLeft:'700px',marginTop:'200px'}}>
+            <Paper style={{width:'30%',height:'350px',alignContent:'center',marginLeft:'700px',marginTop:'200px'}}>
             <AircraftForm/>
             </Paper>
           </Modal>
@@ -116,7 +116,7 @@ const Dashboard = ()=> {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
-            <Paper style={{width:'30%',alignContent:'center',marginLeft:'700px',marginTop:'200px'}}>
+            <Paper style={{width:'30%',height:'450px',alignContent:'center',marginLeft:'700px',marginTop:'200px'}}>
             <TransactionForm/>
             </Paper>
           </Modal>

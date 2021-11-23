@@ -36,6 +36,8 @@ export const SortTransaction =()=>{
         else if(value==="recent")
         {
             result = await axios.get('http://localhost:9000/transaction/sort/recent')
+            console.log('result is ')
+            console.log(result.data)
         }
         else if(value==="older")
         {

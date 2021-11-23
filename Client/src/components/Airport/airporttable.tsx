@@ -1,8 +1,6 @@
 import  { Fragment,FC } from 'react'
 import DataTable from "react-data-table-component";
 import SortIcon from "@mui/icons-material/ArrowDownward";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import { fetchAirport } from "../../Redux/Airport";
 const caseInsensitiveSort = (rowA:any, rowB:any) => {
     const a = rowA.name.toLowerCase().split(' ')[0];
     const b = rowB.name.toLowerCase().split(' ')[0];

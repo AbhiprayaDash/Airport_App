@@ -123,7 +123,7 @@ const TransactionForm:FC =() =>{
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }} style={{marginTop:'20px'}}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -144,6 +144,8 @@ const TransactionForm:FC =() =>{
                 <MenuItem value={"OUT"}>OUT</MenuItem>
             </Select>
             </FormControl>
+            <br/>
+            
             <Autocomplete
               id="disable-close-on-select"
               disableCloseOnSelect

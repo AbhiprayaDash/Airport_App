@@ -8,22 +8,6 @@ import DescriptionIcon from '@mui/icons-material/Description';
 
 export const mainListItems = (
   <div>
-    <ListItem button>
-      <ListItemIcon>
-        <AddIcon />
-      </ListItemIcon>
-      <NavLink to="/aircraft" style={{ textDecoration: 'none',color:'black'}}>
-      <ListItemText primary="Add Aircraft" />
-      </NavLink>
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <AddIcon />
-      </ListItemIcon>
-      <NavLink to="/transaction" style={{ textDecoration: 'none',color:'black'}}>
-      <ListItemText primary="Add Transaction" />
-      </NavLink>
-    </ListItem>
 
     <ListItem button>
       <ListItemIcon>

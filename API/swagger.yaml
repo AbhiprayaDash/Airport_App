@@ -5,10 +5,11 @@ info:
   version: 0.1.0
 servers:
   - url: http://localhost:9000
-    description: Main (production) server
 paths:
   /:
     get:
+      tags:
+       - Home Page
       summary: get home page
       description: Home page
       responses: 
@@ -16,47 +17,73 @@ paths:
           description: Successful response
   /user/signin:
     post:
+      tags:
+       - User API
       summary: post login data.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Email Id of user
+                  required: true
+                password:
+                  type: string
+                  description: Password of user
+                  required: true
       description: Post Login Data email and password
-      parameters: 
-       - name: Email
-         in: query
-         description: Email Id of user
-         required: true
-         type: string
-       - name: Password
-         in: query
-         description: Password of user
-         required: true
-         type: string
       responses:
         '200':    # status code
-          description: sucessfully logged in 
+          description: sucessfully logged in
+        '400':
+          description: Email or password is Incorrect.
+        '404':
+          description: A user with the specified ID was not found.
+        default:
+          description: Unexpected error
+
   /user/signup:
     post:
+      tags:
+       - User API
       summary: post Signup data.
       description: Post Signup Data username,email and password
-      parameters: 
-       - name: Name
-         in: query
-         description: Email Id of user
-         required: true
-         type: string
-       - name: Email
-         in: query
-         description: Email Id of user
-         required: true
-         type: string
-       - name: Password
-         in: query
-         description: Password of user
-         required: true
-         type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of user
+                  required: true
+                email:
+                  type: string
+                  description: Email Id of user
+                  required: true
+                password:
+                  type: string
+                  description: Password of user
+                  required: true
       responses:
         '200':    # status code
-          description: sucessfully Signed up    
+          description: sucessfully logged in
+        '400':
+          description: Email or password is Invalid.
+        '404':
+          description: A user with the specified ID was not found.
+        default:
+          description: Unexpected error
   /airport:
     post:
+      tags:
+       - Airport API
       summary: post Airport data data.
       description: Post Airport data like name,fuelcapacity and fuelcavailable
       parameters:
@@ -79,6 +106,8 @@ paths:
         '200':    # status code
           description: sucessfully added airport details
     get:
+      tags:
+       - Airport API
       summary: get Airport data data.
       description: get Airport data like name,fuelcapacity and fuelcavailable
       responses:
@@ -92,6 +121,8 @@ paths:
                   type: string 
   /aircraft:
     post:
+      tags:
+       - Aircraft API
       summary: post Aircraft data.
       description: Post Aircraft Data like aircraft_no and Airline
       parameters:
@@ -109,6 +140,8 @@ paths:
         '200':    # status code
           description: sucessfully added aircraft details
     get:
+      tags:
+       - Aircraft API
       summary: get Aircraft data.
       description: get Aircraft Data like aircraft_no and Airline
       responses:
@@ -122,6 +155,8 @@ paths:
                   type: string
   /transaction:
     post:
+      tags:
+       - Transaction API
       summary: post Transaction data.
       description: Post Aircraft Data like Transaction type,airport,aircraft,quantity
       parameters:
@@ -149,6 +184,8 @@ paths:
         '200':    # status code
           description: sucessfully added Transaction details
     get:
+      tags:
+       - Transaction API
       summary: get Transaction data.
       description: Post Aircraft Data like Transaction type,airport,aircraft,quantity
       responses:
@@ -160,12 +197,14 @@ paths:
                 type: array
                 items: 
                   type: string         
-  /transaction/filter/type:
+  /transaction/filter/type/:
     post:
+      tags:
+       - Transaction Filter API
       summary: post type of transaction
       description: Post type of transaction on the basis of what we want to filter
       parameters: 
-       - name: transaction
+       - name: type
          in: query
          description: Type of transaction
          required: true
@@ -173,270 +212,417 @@ paths:
       responses:
         '200':  #status code
           description: Successfully posted transaction filter
-  /airport/sort/name:
-    get:
-      summary: get airport data sorted in order of their name
-      description: get airport data sorted in order of their name in asc or desc order
+  /airport/filter/name/:
+    post:
+      tags:
+       - Transaction Filter API
+      summary: post Airportname of transaction
+      description: Post Airportname on which transaction occur on the basis of what we want to filter
       parameters: 
-       - name: Order
+       - name: name
          in: query
-         description: Asc/Desc
+         description: AirportName of transaction
          required: true
          type: string
-      responses: 
-        '200':
-          description: A JSON array of sorted Airport data
-          content:
-            application/json:
-              schema: 
-                type: array
-                items: 
-                  type: string  
-  /airport/sort/fuelcapacity:
-    get:
-      summary: get airport data sorted in order of their fuelcapacity
-      description: get airport data sorted in order of their fuelcapacity in asc or desc order
+      responses:
+        '200':  #status code
+          description: Successfully posted transaction filter
+  /transaction/filter/aircraftname:
+    post:
+      tags:
+       - Transaction Filter API
+      summary: post AircraftName of transaction
+      description: Post AircraftName on which transaction occur on the basis of what we want to filter
       parameters: 
-       - name: Order
+       - name: aircraft
          in: query
-         description: Asc/Desc
+         description: AircraftName of transaction
          required: true
          type: string
-      responses: 
-        '200':
-          description: A JSON array of sorted Airport data
-              content:
-                application/json:
-                  schema: 
-                    type: array
-                    items: 
-                      type: string  
-  /airport/sort/fuelavailable:
-    get:
-      summary: get airport data sorted in order of their fuelavailable
-      description: get airport data sorted in order of their fuelavailable in asc or desc order
+      responses:
+        '200':  #status code
+          description: Successfully posted transaction filter
+  /aircraft/filter/airline:
+    post:
+      tags:
+       - Transaction Filter API
+      summary: post Airline name of transaction
+      description: Post Airline name on which transaction occur on the basis of what we want to filter
       parameters: 
-       - name: Order
+       - name: airline
          in: query
-         description: Asc/Desc
+         description: Airline
          required: true
          type: string
-      responses: 
-        '200':
-          description: A JSON array of sorted Airport data
-              content:
-                application/json:
-                  schema: 
-                    type: array
-                    items: 
-                      type: string  
-  /airport/sort/recent:
-    get:
-      summary: get airport data sorted in order of their time
-      description: get airport data sorted in order of their time in asc or desc order
-      parameters: 
-       - name: Order
-         in: query
-         description: Asc/Desc
-         required: true
-         type: string
-      responses: 
-        '200':
-          description: A JSON array of sorted Airport data
-              content:
-                application/json:
-                  schema: 
-                    type: array
-                    items: 
-                      type: string 
-  /airport/sort/older:
-    get:
-      summary: get airport data sorted in order of their time
-      description: get airport data sorted in order of their time in asc or desc order
-      parameters: 
-       - name: Order
-         in: query
-         description: Asc/Desc
-         required: true
-         type: string
-      responses: 
-        '200':
-          description: A JSON array of sorted Airport data
-              content:
-                application/json:
-                  schema: 
-                    type: array
-                    items: 
-                      type: string 
-  /airport/sort/older:
-    get:
-      summary: get airport data sorted in order of their time
-      description: get airport data sorted in order of their time in asc or desc order
-      parameters: 
-       - name: Order
-         in: query
-         description: Asc/Desc
-         required: true
-         type: string
-      responses: 
-        '200':
-          description: A JSON array of sorted Airport data
-              content:
-                application/json:
-                  schema: 
-                    type: array
-                    items: 
-                      type: string 
-  /aircraft/sort/aircraft_no:
-    get:
-      summary: get aircraft data sorted in order of aircraft number
-      description: get aircraft data sorted in order of aircraft number in asc or desc order
-      parameters: 
-       - name: Order
-         in: query
-         description: Asc/Desc
-         required: true
-         type: string
-      responses: 
-        '200':
-          description: A JSON array of sorted Aircraft data
-              content:
-                application/json:
-                  schema: 
-                    type: array
-                    items: 
-                      type: string 
-  /aircraft/sort/airline:
-    get:
-      summary: get aircraft data sorted in order of airline
-      description: get airport data sorted in order of airline in asc or desc order
-      parameters: 
-       - name: Order
-         in: query
-         description: Asc/Desc
-         required: true
-         type: string
-      responses: 
-        '200':
-            description: A JSON array of sorted Aircraft data
-                content:
-                  application/json:
-                    schema: 
-                      type: array
-                      items: 
-                        type: string 
-  /aircraft/sort/older:
-    get:
-      summary: get aircraft data sorted in order of their time
-      description: get aircraft data sorted in order of their time in asc or desc order
-      parameters: 
-       - name: Order
-         in: query
-         description: Asc/Desc
-         required: true
-         type: string
-      responses: 
-        '200':
-          description: A JSON array of sorted Aircraft data
-              content:
-                application/json:
-                  schema: 
-                    type: array
-                    items: 
-                      type: string 
-  /aircraft/sort/older:
-    get:
-      summary: get aircraft data sorted in order of their time
-      description: get aircraft data sorted in order of their time in asc or desc order
-      parameters: 
-       - name: Order
-         in: query
-         description: Asc/Desc
-         required: true
-         type: string
-      responses: 
-        '200':
-            description: A JSON array of sorted Aircraft data
-                content:
-                  application/json:
-                    schema: 
-                      type: array
-                      items: 
-                        type: string
+      responses:
+        '200':  #status code
+          description: Successfully posted transaction filter
+components:
+  schemas:
+    users:
+        type: object
+        description: "User Model"
+        properties:
+              name:
+                type: string
+                description: "Name of user"
+                example: "Abhipraya"
+              email:
+                type: string
+                description: "Email Id of User"
+                example: "dashabhipraya@gmail.com"
+              password:
+                type: string
+                description: "Password"
+                example: "Abhipraya@12"
+    transactions:
+              type: object
+              description: "Transaction Model"
+              properties:
+                  Duration:
+                      type: object,
+                      description: "Time of transaction"
+                  Type:
+                      type: string
+                      description: "type of transaction"
+                  airport:
+                      type: object
+                      description: "Airport"
+                  aircraft:
+                      type: object
+                      description: "Aircraft"
+                  quantity:
+                      type: Number
+                      description: "Quantity of transaction"
+    airports:
+            type: object
+            description: "Airport Model"
+            properties:
+                name:
+                    type: string
+                    description: "name of Airport"
+                fuelcapacity:
+                    type: Number
+                    description: "Fuel capacity of Airport"
+                fuelavailable:
+                    type: Number
+                    description: "Fuel available in Airport"
+    aircrafts:
+            type: object
+            description: "Aircraft Model"
+            properties:
+                aircraft_no:
+                    type: Number
+                    description: "Aircraft Number"
+                airline:
+                    type: string
+                    description: "Airline name"
+    aircraftlists:
+            type: object
+            description: "AircraftList Model"
+            properties:
+                aircraftlist:
+                    type: Array
+                    description: "List of Aircrafts Available"
+    airportlists:
+            type: object
+            description: "AirportList Model"
+            properties:
+                airportList:
+                    type: Array
+                    description: "List of Airports Available"
+  # /airport/sort/name:
+  #   get:
+  #     tags:
+  #      - Sort Airport API
+  #     summary: get airport data sorted in order of their name
+  #     description: get airport data sorted in order of their name in asc or desc order
+  #     parameters: 
+  #      - name: Order
+  #        in: query
+  #        description: Asc/Desc
+  #        required: true
+  #        type: string
+  #     responses: 
+  #       '200':
+  #         description: A JSON array of sorted Airport data
+  #         content:
+  #           application/json:
+  #             schema: 
+  #               type: array
+  #               items: 
+  #                 type: string  
+  # /airport/sort/fuelcapacity:
+  #   get:
+  #     tags:
+  #      - Sort Airport API
+  #     summary: get airport data sorted in order of their fuelcapacity
+  #     description: get airport data sorted in order of their fuelcapacity in asc or desc order
+  #     parameters: 
+  #      - name: Order
+  #        in: query
+  #        description: Asc/Desc
+  #        required: true
+  #        type: string
+  #     responses: 
+  #       '200':
+  #         description: A JSON array of sorted Airport data
+  #             content:
+  #               application/json:
+  #                 schema: 
+  #                   type: array
+  #                   items: 
+  #                     type: string  
+  # /airport/sort/fuelavailable:
+  #   get:
+  #     tags:
+  #      - Sort Airport API
+  #     summary: get airport data sorted in order of their fuelavailable
+  #     description: get airport data sorted in order of their fuelavailable in asc or desc order
+  #     parameters: 
+  #      - name: Order
+  #        in: query
+  #        description: Asc/Desc
+  #        required: true
+  #        type: string
+  #     responses: 
+  #       '200':
+  #         description: A JSON array of sorted Airport data
+  #             content:
+  #               application/json:
+  #                 schema: 
+  #                   type: array
+  #                   items: 
+  #                     type: string  
+  # /airport/sort/recent:
+  #   get:
+  #     tags:
+  #      - Sort Airport API
+  #     summary: get airport data sorted in order of their time
+  #     description: get airport data sorted in order of their time in asc or desc order
+  #     parameters: 
+  #      - name: Order
+  #        in: query
+  #        description: Asc/Desc
+  #        required: true
+  #        type: string
+  #     responses: 
+  #       '200':
+  #         description: A JSON array of sorted Airport data
+  #             content:
+  #               application/json:
+  #                 schema: 
+  #                   type: array
+  #                   items: 
+  #                     type: string 
+  # /airport/sort/older:
+  #   get:
+  #     tags:
+  #      - Sort Airport API
+  #     summary: get airport data sorted in order of their time
+  #     description: get airport data sorted in order of their time in asc or desc order
+  #     parameters: 
+  #      - name: Order
+  #        in: query
+  #        description: Asc/Desc
+  #        required: true
+  #        type: string
+  #     responses: 
+  #       '200':
+  #         description: A JSON array of sorted Airport data
+  #             content:
+  #               application/json:
+  #                 schema: 
+  #                   type: array
+  #                   items: 
+  #                     type: string 
+  # /airport/sort/older:
+  #   get:
+  #     tags:
+  #      - Sort Airport API
+  #     summary: get airport data sorted in order of their time
+  #     description: get airport data sorted in order of their time in asc or desc order
+  #     parameters: 
+  #      - name: Order
+  #        in: query
+  #        description: Asc/Desc
+  #        required: true
+  #        type: string
+  #     responses: 
+  #       '200':
+  #         description: A JSON array of sorted Airport data
+  #             content:
+  #               application/json:
+  #                 schema: 
+  #                   type: array
+  #                   items: 
+  #                     type: string 
+  # /aircraft/sort/aircraft_no:
+  #   get:
+  #     tags:
+  #      - Sort Aircraft API
+  #     summary: get aircraft data sorted in order of aircraft number
+  #     description: get aircraft data sorted in order of aircraft number in asc or desc order
+  #     parameters: 
+  #      - name: Order
+  #        in: query
+  #        description: Asc/Desc
+  #        required: true
+  #        type: string
+  #     responses: 
+  #       '200':
+  #         description: A JSON array of sorted Aircraft data
+  #             content:
+  #               application/json:
+  #                 schema: 
+  #                   type: array
+  #                   items: 
+  #                     type: string 
+  # /aircraft/sort/airline:
+  #   get:
+  #     tags:
+  #      - Sort Aircraft API
+  #     summary: get aircraft data sorted in order of airline
+  #     description: get airport data sorted in order of airline in asc or desc order
+  #     parameters: 
+  #      - name: Order
+  #        in: query
+  #        description: Asc/Desc
+  #        required: true
+  #        type: string
+  #     responses: 
+  #       '200':
+  #           description: A JSON array of sorted Aircraft data
+  #               content:
+  #                 application/json:
+  #                   schema: 
+  #                     type: array
+  #                     items: 
+  #                       type: string 
+  # /aircraft/sort/older:
+  #   get:
+  #     tags:
+  #      - Sort Aircraft API
+  #     summary: get aircraft data sorted in order of their time
+  #     description: get aircraft data sorted in order of their time in asc or desc order
+  #     parameters: 
+  #      - name: Order
+  #        in: query
+  #        description: Asc/Desc
+  #        required: true
+  #        type: string
+  #     responses: 
+  #       '200':
+  #         description: A JSON array of sorted Aircraft data
+  #             content:
+  #               application/json:
+  #                 schema: 
+  #                   type: array
+  #                   items: 
+  #                     type: string 
+  # /aircraft/sort/older:
+  #   get:
+  #     tags:
+  #      - Sort Aircraft API
+  #     summary: get aircraft data sorted in order of their time
+  #     description: get aircraft data sorted in order of their time in asc or desc order
+  #     parameters: 
+  #      - name: Order
+  #        in: query
+  #        description: Asc/Desc
+  #        required: true
+  #        type: string
+  #     responses: 
+  #       '200':
+  #           description: A JSON array of sorted Aircraft data
+  #               content:
+  #                 application/json:
+  #                   schema: 
+  #                     type: array
+  #                     items: 
+  #                       type: string
                   
-  /transaction/sort/date:
-    get:
-      summary: get transaction data sorted in order of their time
-      description: get trasaction data sorted in order of their time in desc order
-      parameters: 
-       - name: Order
-         in: query
-         description: Asc/Desc
-         required: true
-         type: string
-      responses: 
-        '200':
-            description: A JSON array of sorted Transaction data
-                content:
-                  application/json:
-                    schema: 
-                      type: array
-                      items: 
-                        type: string
-  /transaction/sort/quantity:
-    get:
-      summary: get transaction data sorted in order of their quantity
-      description: get transaction data sorted in order of their quantity in asc or desc order
-      parameters: 
-       - name: Order
-         in: query
-         description: Asc/Desc
-         required: true
-         type: string
-      responses: 
-        '200':
-            description: A JSON array of sorted Transaction data
-                content:
-                  application/json:
-                    schema: 
-                      type: array
-                      items: 
-                        type: string
-  /transaction/sort/older:
-    get:
-      summary: get transaction data sorted in order of their time
-      description: get transaction data sorted in order of their time in asc or desc order
-      parameters: 
-       - name: Order
-         in: query
-         description: Asc/Desc
-         required: true
-         type: string
-      responses: 
-        '200':
-            description: A JSON array of sorted Transaction data
-                content:
-                  application/json:
-                    schema: 
-                      type: array
-                      items: 
-                        type: string
-  /aircraft/sort/older:
-    get:
-      summary: get aircraft data sorted in order of their time
-      description: get aircraft data sorted in order of their time in asc or desc order
-      parameters: 
-       - name: Order
-         in: query
-         description: Asc/Desc
-         required: true
-         type: string
-      responses: 
-        '200':
-            description: A JSON array of sorted Aircraft data
-                content:
-                  application/json:
-                    schema: 
-                      type: array
-                      items: 
-                        type: string
+  # /transaction/sort/date:
+  #   get:
+  #     tags:
+  #      - Sort Transaction API
+  #     summary: get transaction data sorted in order of their time
+  #     description: get trasaction data sorted in order of their time in desc order
+  #     parameters: 
+  #      - name: Order
+  #        in: query
+  #        description: Asc/Desc
+  #        required: true
+  #        type: string
+  #     responses: 
+  #       '200':
+  #           description: A JSON array of sorted Transaction data
+  #               content:
+  #                 application/json:
+  #                   schema: 
+  #                     type: array
+  #                     items: 
+  #                       type: string
+  # /transaction/sort/quantity:
+  #   get:
+  #     tags:
+  #      - Sort Transaction API
+  #     summary: get transaction data sorted in order of their quantity
+  #     description: get transaction data sorted in order of their quantity in asc or desc order
+  #     parameters: 
+  #      - name: Order
+  #        in: query
+  #        description: Asc/Desc
+  #        required: true
+  #        type: string
+  #     responses: 
+  #       '200':
+  #           description: A JSON array of sorted Transaction data
+  #               content:
+  #                 application/json:
+  #                   schema: 
+  #                     type: array
+  #                     items: 
+  #                       type: string
+  # /transaction/sort/older:
+  #   get:
+  #     tags:
+  #      - Sort Transaction API
+  #     summary: get transaction data sorted in order of their time
+  #     description: get transaction data sorted in order of their time in asc or desc order
+  #     parameters: 
+  #      - name: Order
+  #        in: path
+  #        description: Asc/Desc
+  #        required: true
+  #        type: string
+  #     responses: 
+  #       '200':
+  #           description: A JSON array of sorted Transaction data
+  #               content:
+  #                 application/json:
+  #                   schema: 
+  #                     type: array
+  #                     items: 
+  #                       type: string
+  # /aircraft/sort/older:
+  #   get:
+  #     tags:
+  #      - Sort API
+  #     summary: get aircraft data sorted in order of their time
+  #     description: get aircraft data sorted in order of their time in asc or desc order
+  #     parameters: 
+  #      - name: Order
+  #        in: query
+  #        description: Asc/Desc
+  #        required: true
+  #        type: string
+  #     responses: 
+  #       '200':
+  #           description: A JSON array of sorted Aircraft data
+  #               content:
+  #                 application/json:
+  #                   schema: 
+  #                     type: array
+  #                     items: 
+  #                       type: string

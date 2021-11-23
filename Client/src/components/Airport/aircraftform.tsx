@@ -93,12 +93,12 @@ const AircraftForm:FC =()=>{
                 alignItems: 'center',
             }}
             >
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }} style={{marginTop:'20px'}}>
+                <LocalAirportSharpIcon />
+            </Avatar>
             <Typography component="h1" variant="h5">
             Add Aircraft
           </Typography>
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LocalAirportSharpIcon />
-          </Avatar>
           <Box component="form" onSubmit={handlesubmit} noValidate sx={{ mt: 1 }}>
             <Autocomplete
                 id="disable-close-on-select"
@@ -112,6 +112,7 @@ const AircraftForm:FC =()=>{
                 value={number}
              />}
             />
+            <br/>
           <Autocomplete
                 id="disable-close-on-select"
                 disableCloseOnSelect
@@ -139,3 +140,4 @@ const AircraftForm:FC =()=>{
     )
   }
 export default AircraftForm
+

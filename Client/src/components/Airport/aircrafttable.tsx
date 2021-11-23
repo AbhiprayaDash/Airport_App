@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from 'react'
 import DataTable from 'react-data-table-component';
 import SortIcon from "@mui/icons-material/ArrowDownward";
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch} from '../../hooks';
 import { fetchAircaft } from '../../Redux/Aircraft';
 
 const customStyles = {

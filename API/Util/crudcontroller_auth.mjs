@@ -20,7 +20,6 @@ export const loginController = model =>async(req,res)=>{
             id:result._id
         }
     }
-    console.log(payload)
     jwt.sign(payload,'shhhhh',
     {expiresIn:360000},
     (err,token)=>{

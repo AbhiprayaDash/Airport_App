@@ -45,7 +45,7 @@ export const SortAircraft =()=>{
 }
 export const FilterAircraft =()=>{
     return async (dispatch:any,airline:any) => {
-        const result = await axios.post('http://localhost:9000/aircraft/filter/airline',{airline})
+        const result = await axios.post('http://localhost:9000/aircraft/filter/',{},{ params: { airline:airline,category:"Airline" } })
         dispatch(saveAircrafts(result.data));
     }
 }

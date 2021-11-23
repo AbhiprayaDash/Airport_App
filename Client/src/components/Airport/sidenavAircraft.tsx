@@ -44,9 +44,9 @@ const SideNavbarAircraft:FC<propTypes> =(props:propTypes) =>{
     }
     return (
         <Fragment>
-        <section id="sidebar" >
+        <div id="sidebar" style={{backgroundColor:'#f5f3f4'}}>
         <Paper>
-        <div className="container">
+        <div className="container" >
         <div className="row">
             <div className="col-sm">
                 <h2 style={{marginLeft:'2px',fontStyle:'italic'}}>Filter By</h2>
@@ -84,7 +84,7 @@ const SideNavbarAircraft:FC<propTypes> =(props:propTypes) =>{
         </AccordionDetails>
       </Accordion>
       </Paper>
-    </section>
+    </div>
   </Fragment>
     )
 }

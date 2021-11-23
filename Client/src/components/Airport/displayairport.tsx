@@ -8,6 +8,10 @@ import '../../css/navbar.css'
 import SideNavbar from './sidenavbarAirport'
 import '../../jshandlers/navbarhandler'
 import { Paper } from "@mui/material";
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+
 var airports:any=[]
 var set=true
 const  DisplayAirports:FC=()=>{    
@@ -38,11 +42,14 @@ const  DisplayAirports:FC=()=>{
     }
     return(
         <Fragment>
+            <Card sx={{ minWidth: 875 }}>
+            <CardContent>
             <Typography
                 component="h1"
                 variant="h3"
                 color="inherit"
                 align="center"
+                style={{fontWeight:"bold",fontSize:54}}
                 noWrap
                 sx={{ flex: 1 }}
                 fontFamily="Roboto"
@@ -58,6 +65,8 @@ const  DisplayAirports:FC=()=>{
         </div>
         </div>
         </Paper>
+        </CardContent>
+        </Card>
         </Fragment>
     )
 }

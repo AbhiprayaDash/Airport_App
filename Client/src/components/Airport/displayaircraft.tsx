@@ -1,7 +1,8 @@
 import { FC, Fragment,useEffect} from "react"
 import Typography from '@mui/material/Typography';
 import {fetchAircaft} from '../../Redux/Aircraft'
-import Pagination from '../Pagination/pagination'
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 import Aircrafttable from './aircrafttable'
 import {useAppSelector,useAppDispatch} from '../../hooks';
 import SideNavbar from "./sidenavAircraft";
@@ -35,11 +36,14 @@ const DisplayAircrafts:FC =() => {
     }
     return(
         <Fragment>
+            <Card sx={{ minWidth: 875 }}>
+            <CardContent>
             <Typography
                 component="h1"
                 variant="h3"
                 color="inherit"
                 align="center"
+                style={{fontWeight:"bold",fontSize:54}}
                 noWrap
                 sx={{ flex: 1 }}
                 fontFamily="Roboto"
@@ -51,6 +55,8 @@ const DisplayAircrafts:FC =() => {
             <div style={{width:'80%',float:'right',padding:'10px'}}>
             {response.length>0&&<Aircrafttable response={response}/>}
             </div>
+            </CardContent>
+            </Card>
         </Fragment>
     )
 }

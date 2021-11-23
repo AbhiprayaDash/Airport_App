@@ -3,9 +3,9 @@ import { AircraftFilter } from '../controller/Filtercontroller.mjs';
 const router = Router();
 
 router.
-     route('/airline')
+     route('/')
      .post(function(req,res){
-        AircraftFilter.FilterAirline(req,res)
+        AircraftFilter.AircraftFilter(req,res)
      })
 
 export default router

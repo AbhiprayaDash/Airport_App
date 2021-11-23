@@ -96,7 +96,7 @@ const AirportForm:FC = () =>{
                 alignItems: 'center',
               }}
             >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }} style={{marginTop:'20px'}}>
             <AirplanemodeActiveSharpIcon />
             </Avatar>
             <Typography component="h1" variant="h5">

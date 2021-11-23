@@ -31,7 +31,6 @@ const SideNavbarAirport:FC<propTypes> =(props:propTypes) =>{
     const handlefiltername:any =async(event:any)=>{
         if(event.target.tagName==="A")
         {
-            console.log('fetching')
             setfiltername("recent")
             const fetchfunc = fetchAirport()
             await fetchfunc(dispatch)
@@ -45,7 +44,7 @@ const SideNavbarAirport:FC<propTypes> =(props:propTypes) =>{
     }
     return (
         <Fragment>
-        <section id="sidebar" style={{float:'left'}}>
+        <section id="sidebar" style={{backgroundColor:'#f5f3f4'}}>
         <Paper>
         <div className="container">
         <div className="row">

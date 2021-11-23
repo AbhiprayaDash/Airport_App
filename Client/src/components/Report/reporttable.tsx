@@ -1,12 +1,5 @@
-import {StyledTableCell,StyledTableRow} from '../Airport/tablestyle'
 import moment from 'moment'
 import React,{Fragment} from 'react'
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import Paper from '@mui/material/Paper';
-import { Typography } from '@mui/material';
 
 type statetypes={
     response:any,
@@ -25,9 +18,6 @@ class Reporttable extends React.Component<proptypes,statetypes>{
             sortname:'Sort By'
         }
     }
-    handlesortname = async (event:any)=>{
-        
-    }
     componentDidUpdate()
     {
         if(this.state.response!==this.props.data)
@@ -40,7 +30,7 @@ class Reporttable extends React.Component<proptypes,statetypes>{
         return(
             <Fragment>
             {
-            this.state.response.length===0?<h1 style={{marginLeft:'840px'}}>No data</h1>:
+            this.state.response.length===0?<h2 style={{marginLeft:'840px',fontWeight:'bold'}}>No data</h2>:
             <table id="example" className="table table-striped table-bordered" style={{width:"100%"}}>
                 <thead>
                 <tr>
@@ -64,7 +54,6 @@ class Reporttable extends React.Component<proptypes,statetypes>{
                     return date2-date1
                 })
             .map((val:any)=>{ 
-                console.log(val)
                 return(
                     <tr
                         key={moment(val.Duration.date).format('HH:mm:ss')}

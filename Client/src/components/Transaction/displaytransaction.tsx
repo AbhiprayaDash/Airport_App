@@ -2,12 +2,12 @@ import { Fragment,FC, useState,useEffect } from "react"
 import Typography from '@mui/material/Typography';
 import Pagination from "../Pagination/pagination"
 import TransactionTable from "./transactiontable";
-import FormControl from '@mui/material/FormControl';
 import { useSelector } from "react-redux";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { FetchTransaction,SortTransaction } from "../../Redux/Transaction";
 import SideNavbarTransaction from "./Sidenavtransaction";
 import { fetchAircaft } from "../../Redux/Aircraft";
+import { Card, CardContent, Paper } from "@mui/material";
 
 
 const DisplayTransaction:FC=() =>{
@@ -56,31 +56,36 @@ const DisplayTransaction:FC=() =>{
     }
     return(
         <Fragment>
-            <SideNavbarTransaction aircraftlist={AircraftList}/>
-                <Typography
+            <Card sx={{ minWidth: 875 }}>
+            <CardContent>
+            <Typography
                 component="h1"
                 variant="h3"
                 color="inherit"
-                align="left"
+                align="center"
+                style={{fontWeight:"bold",fontSize:54}}
                 fontFamily="Roboto"
                 noWrap
                 sx={{ flex: 1 }}
             >
             Transaction Details
             </Typography>
-            <FormControl style={{width:"50%",alignItems:'center',alignContent:'center'}}>
-                <select id="country" name="country" onChange={handlesort} value={sortname}>
-                    <option value="recent">Recent</option>
-                    <option value="older">Older</option>
-                    <option value="dateasc">Sort By Date Asc</option>
-                    <option value="datedesc">Sort By Date Desc</option>
-                    <option value="quantityasc">Sort By Quantity Asc</option>
-                    <option value="quantitydesc">Sort by Quantity Desc</option>
-                </select>
-            </FormControl>
-            {
-                response.length>0&&<Pagination RenderedComponent={TransactionTable} data={response} title={"transaction"} pageLimit={5} dataLimit={3} />
-            }
+
+            <Paper>
+                {AircraftList.length>0&&<SideNavbarTransaction aircraftlist={AircraftList}/>}
+                <div className="main">
+                <div style={{width:'80%',float:'right',padding:'10px'}}>
+                {
+                    response.length>0&&<TransactionTable data={response}/>
+                }
+                </div>
+                </div>
+            </Paper>
+            {/* {
+                //response.length>0&&<Pagination RenderedComponent={TransactionTable} data={response} title={"transaction"} pageLimit={5} dataLimit={3} />
+            } */}
+            </CardContent>
+            </Card>
         </Fragment>
     )
 }

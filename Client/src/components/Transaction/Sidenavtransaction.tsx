@@ -9,6 +9,7 @@ import { FetchTransaction } from "../../Redux/Transaction";
 import { FilterTransaction } from "../Airport/FilterService";
 import { savetransaction } from "../../Redux/TransactionSlice";
 import axios from "axios";
+import { Paper } from "@mui/material";
 
 type propTypes={
     aircraftlist:Array<any>
@@ -31,11 +32,7 @@ const SideNavbarTransaction:FC<propTypes>= (props:propTypes) =>{
         setnoelements(sum)
     }
     const aircraftfilter:any =async (event:any) =>{
-        console.log(event.target.value)
-        const req={
-            aircraft:event.target.value
-        }
-        const response = await axios.post('http://localhost:9000/transaction/filter/aircraftname',req)
+        const response = await axios.post('http://localhost:9000/transaction/filter/',{},{params:{aircraft:event.target.value,category:"Aircraft"}})
         dispatch(savetransaction(response.data))
     }
     const handlefilter:any = async(event:any)=>{
@@ -70,17 +67,19 @@ const SideNavbarTransaction:FC<propTypes>= (props:propTypes) =>{
     }
     return (
         <Fragment>
-        <section id="sidebar">
+        <section id="sidebar" style={{backgroundColor:'#f5f3f4'}}>
+        <Paper>
         <div className="container">
         <div className="row">
             <div className="col-sm">
-                <h2>Filter By</h2>
+                <h2 style={{marginLeft:'2px',fontStyle:'italic'}}>Filter By</h2>
             </div>
-            <div className="col-sm"style={{paddingTop:"10px",paddingLeft:"5px"}}>
+            <div className="col-sm" style={{paddingTop:"10px",paddingLeft:"5px"}}>
                 <span style={{color:'blue'}}><a onClick={handlefilter}>Clear All</a></span>
             </div>
         </div>
         </div>
+        <hr style={{borderBottom: '1px solid #dee2e6'}}></hr>
         <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -141,7 +140,7 @@ const SideNavbarTransaction:FC<propTypes>= (props:propTypes) =>{
         {noOfelements>5&&<div className="spanclass" onClick={showless}>Show Less</div>}
         </AccordionDetails>
       </Accordion>
-
+     </Paper>
 </section>
   </Fragment>
     )
