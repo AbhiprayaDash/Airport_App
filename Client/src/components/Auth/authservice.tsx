@@ -23,7 +23,7 @@ export async function validateSignupData(reqbody:any):Promise<any>{
         errormsg("Enter a proper password")
         throw new Error("Password is not valid")
     }
-    const response:any=await axios.post('http://localhost:9000/user/signup',reqbody);
+    const response:any=await axios.post('http://localhost:9000/users/signup',reqbody);
     console.log(response.data)
     if(response.data==="users exist")
     { 
@@ -38,7 +38,7 @@ export function isAuthenticated():Object{
 }
 
 export async function postlogindata(reqbody:any):Promise<any>{
-    const response = await axios.post('http://localhost:9000/user/signin',reqbody)
+    const response = await axios.post('http://localhost:9000/users/signin',reqbody)
     const Accesstoken = response.data
     if(Accesstoken)
     {

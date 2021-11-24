@@ -1,7 +1,7 @@
 const TransactionFilterHandler = async (category,model,req,res) =>{
     if(category==="Type")
     {
-        const response =await model.find({Type:req.query.type}).populate({
+        const response =await model.find({Type:req.params.filtertype}).populate({
             path:'aircraft'
         })
         return res.status(200).send(response)
@@ -10,7 +10,7 @@ const TransactionFilterHandler = async (category,model,req,res) =>{
     {
         const response = await model.find({Type:"OUT"}).populate({
             path: 'aircraft',
-            match: { 'aircraft_no': req.query.aircraft }
+            match: { 'aircraft_no': req.params.filtertype }
         })
         const result = response.filter(res=>res.aircraft!==null)
         return res.status(200).send(result)
@@ -19,8 +19,7 @@ const TransactionFilterHandler = async (category,model,req,res) =>{
 
 export const TransactionFilter = (model) =>async (req,res)=>{
     try{
-        const category=req.query.category
-        console.log(req)
+        const category=req.params.category
         TransactionFilterHandler(category,model,req,res)
     }
     catch(e)

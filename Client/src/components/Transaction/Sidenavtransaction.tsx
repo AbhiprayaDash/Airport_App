@@ -4,20 +4,20 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useAppDispatch} from "../../hooks";
+import { useAppDispatch, useAppSelector} from "../../hooks";
 import { FetchTransaction } from "../../Redux/Transaction";
 import { FilterTransaction } from "../Airport/FilterService";
 import { savetransaction } from "../../Redux/TransactionSlice";
 import axios from "axios";
 import { Paper } from "@mui/material";
 
-type propTypes={
-    aircraftlist:Array<any>
-}
-const SideNavbarTransaction:FC<propTypes>= (props:propTypes) =>{
+
+
+const SideNavbarTransaction:FC = () =>{
     const [filtername, setfiltername] = useState<string>('Filter By');
     const [noOfelements,setnoelements] = useState<any>(5)
-    var AircraftList = props.aircraftlist
+    var Aircraftresult=useAppSelector<Array<any>>((state)=>state.Aircraft.response);
+    var AircraftList=Aircraftresult.map((aircraft)=>aircraft.aircraft_no)
     if(AircraftList.length>0)
     {
         AircraftList=AircraftList.slice(0,noOfelements)
@@ -32,7 +32,7 @@ const SideNavbarTransaction:FC<propTypes>= (props:propTypes) =>{
         setnoelements(sum)
     }
     const aircraftfilter:any =async (event:any) =>{
-        const response = await axios.post('http://localhost:9000/transaction/filter/',{},{params:{aircraft:event.target.value,category:"Aircraft"}})
+        const response = await axios.get(`http://localhost:9000/transactions/filter/${event.target.value}/${'Aircraft'}`)
         dispatch(savetransaction(response.data))
     }
     const handlefilter:any = async(event:any)=>{
@@ -122,7 +122,7 @@ const SideNavbarTransaction:FC<propTypes>= (props:propTypes) =>{
         >
           <Typography>Aircraft</Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        {AircraftList.length>0&&<AccordionDetails>
             {
                 AircraftList.map((aircraft:any)=>{
                 return(
@@ -139,6 +139,7 @@ const SideNavbarTransaction:FC<propTypes>= (props:propTypes) =>{
             <div className="spanclass" onClick={loadmore}>Load More</div>
         {noOfelements>5&&<div className="spanclass" onClick={showless}>Show Less</div>}
         </AccordionDetails>
+        }
       </Accordion>
      </Paper>
 </section>

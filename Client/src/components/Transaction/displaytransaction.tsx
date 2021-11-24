@@ -1,6 +1,5 @@
 import { Fragment,FC, useState,useEffect } from "react"
 import Typography from '@mui/material/Typography';
-import Pagination from "../Pagination/pagination"
 import TransactionTable from "./transactiontable";
 import { useSelector } from "react-redux";
 import { useAppDispatch, useAppSelector } from "../../hooks";
@@ -72,7 +71,7 @@ const DisplayTransaction:FC=() =>{
             </Typography>
 
             <Paper>
-                {AircraftList.length>0&&<SideNavbarTransaction aircraftlist={AircraftList}/>}
+                <SideNavbarTransaction/>
                 <div className="main">
                 <div style={{width:'80%',float:'right',padding:'10px'}}>
                 {

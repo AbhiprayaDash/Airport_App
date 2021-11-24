@@ -4,7 +4,7 @@ export const FetchTransaction=()=> {
     return async (dispatch:any) => {
       try {
           // make an async call in the thunk
-          const response = await axios.get('http://localhost:9000/transaction')
+          const response = await axios.get('http://localhost:9000/transactions')
           // dispatch an action when we get the response back
           dispatch(savetransaction(response.data))
       } catch (err) {

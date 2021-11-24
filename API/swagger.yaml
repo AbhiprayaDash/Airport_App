@@ -1,7 +1,6 @@
 openapi: 3.0.0
 info:
   title: Airport Fuel Inventory API
-  description: Optional multiline or single-line description in HTML.
   version: 0.1.0
 servers:
   - url: http://localhost:9000
@@ -15,7 +14,7 @@ paths:
       responses: 
         '200':
           description: Successful response
-  /user/signin:
+  /users/signin:
     post:
       tags:
        - User API
@@ -46,7 +45,7 @@ paths:
         default:
           description: Unexpected error
 
-  /user/signup:
+  /users/signup:
     post:
       tags:
        - User API
@@ -80,7 +79,7 @@ paths:
           description: A user with the specified ID was not found.
         default:
           description: Unexpected error
-  /airport:
+  /airports:
     post:
       tags:
        - Airport API
@@ -119,7 +118,7 @@ paths:
                 type: array
                 items: 
                   type: string 
-  /aircraft:
+  /aircrafts:
     post:
       tags:
        - Aircraft API
@@ -153,7 +152,7 @@ paths:
                 type: array
                 items: 
                   type: string
-  /transaction:
+  /transactions:
     post:
       tags:
        - Transaction API
@@ -197,61 +196,81 @@ paths:
                 type: array
                 items: 
                   type: string         
-  /transaction/filter/type/:
-    post:
+  /transactions/filter/{type}/{aircraftno}/{category}:
+    get:
       tags:
-       - Transaction Filter API
-      summary: post type of transaction
-      description: Post type of transaction on the basis of what we want to filter
+       - Filter API
+      summary: get type of transaction
+      description: Get type of transaction on the basis of what we want to filter
       parameters: 
        - name: type
-         in: query
+         in: path
          description: Type of transaction
          required: true
          type: string
+       - name: category
+         in: path
+         description: Category of transaction
+         required: true
+         type: string
       responses:
         '200':  #status code
           description: Successfully posted transaction filter
-  /airport/filter/name/:
-    post:
+  /transactions/filter/{aircraftno}/{category}:
+    get:
       tags:
-       - Transaction Filter API
-      summary: post Airportname of transaction
-      description: Post Airportname on which transaction occur on the basis of what we want to filter
+       - Filter API
+      summary: get AircraftNo of transaction
+      description: Get aircraft no of transaction on the basis of what we want to filter
       parameters: 
-       - name: name
-         in: query
+       - name: aircraftno
+         in: path
+         description: AircraftNO of transaction
+         required: false
+         type: Number
+       - name: category
+         in: path
+         description: Category of transaction
+         required: true
+         type: string
+      responses:
+        '200':  #status code
+          description: Successfully posted transaction filter
+  /airports/filter/{AiportName}/{category}:
+    get:
+      tags:
+       - Filter API
+      summary: get Airportname of transaction
+      description: Get Airportname on the basis of what we want to filter
+      parameters: 
+       - name: AiportName
+         in: path
          description: AirportName of transaction
+         required: false
+         type: string
+       - name: category
+         in: path
+         description: Category of Airport Filter
          required: true
          type: string
       responses:
         '200':  #status code
           description: Successfully posted transaction filter
-  /transaction/filter/aircraftname:
-    post:
+  /aircrafts/filter/{Airline}/{category}:
+    get:
       tags:
-       - Transaction Filter API
-      summary: post AircraftName of transaction
-      description: Post AircraftName on which transaction occur on the basis of what we want to filter
+       - Filter API
+      summary: get Airline of transaction
+      description: Get Airliney on the basis of what we want to filter
       parameters: 
-       - name: aircraft
-         in: query
-         description: AircraftName of transaction
-         required: true
-         type: string
-      responses:
-        '200':  #status code
-          description: Successfully posted transaction filter
-  /aircraft/filter/airline:
-    post:
-      tags:
-       - Transaction Filter API
-      summary: post Airline name of transaction
-      description: Post Airline name on which transaction occur on the basis of what we want to filter
-      parameters: 
-       - name: airline
-         in: query
+       - name: Airline
+         in: path
          description: Airline
+         required: false
+         type: string
+       - name: category
+         in: path
+         description: Category of Aircraft Filter
          required: true
          type: string
       responses:

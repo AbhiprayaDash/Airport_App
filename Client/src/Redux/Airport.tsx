@@ -4,7 +4,7 @@ export const fetchAirport=()=> {
     return async (dispatch:any) => {
       try {
           // make an async call in the thunk
-          const response = await axios.get('http://localhost:9000/airport')
+          const response = await axios.get('http://localhost:9000/airports')
           // dispatch an action when we get the response back
           dispatch(saveAirports(response.data))
       } catch (err) {
@@ -53,7 +53,7 @@ export const SortAirport =()=>{
 }
 export const FilterAirport =()=>{
     return async (dispatch:any,name:any) => {
-        const result = await axios.post('http://localhost:9000/airport/filter/',{},{ params: { name:name,category:"name"} })
+        const result = await axios.get(`http://localhost:9000/airports/filter/${name}/${'name'}`)
         dispatch(saveAirports(result.data));
     }
 }

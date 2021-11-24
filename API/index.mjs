@@ -29,10 +29,10 @@ app.use(InputCheck);
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 //Routes
 
-app.use('/user',AuthRoute);
-app.use('/aircraft',AircraftRoute);
-app.use('/airport',AirportRoute);
-app.use('/transaction',TransactionRoute)
+app.use('/users',AuthRoute);
+app.use('/aircrafts',AircraftRoute);
+app.use('/airports',AirportRoute);
+app.use('/transactions',TransactionRoute)
 app.use('/airportlist',AirportFetch)
 app.use('/aircraftlist',AircraftFetch)
 app.get('/', (req, res) => {

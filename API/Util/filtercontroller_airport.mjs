@@ -1,13 +1,13 @@
 const AirportFilterhandler = async (category,model,req,res) =>{
     if(category==="name")
     {
-        const result = await model.find({name:req.query.name})
+        const result = await model.find({name:req.params.filtertype})
         return res.status(200).send(result)
     }
 }
 export const AirportFilter = model =>async(req,res)=>{
     try{
-        const category = req.query.category
+        const category = req.params.category
         AirportFilterhandler(category,model,req,res)
     }
     catch(e)

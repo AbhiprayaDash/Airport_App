@@ -7,10 +7,8 @@ type stateTypes= {
     quantity:Number
 }
 export const errorhandling=async (reqbody:any)=>{
-    console.log('entered')
     try{
-        console.log(reqbody)
-        await axios.post('http://localhost:9000/transaction',reqbody)
+        await axios.post('http://localhost:9000/transactions',reqbody)
         successmsg("Transaction Added Successfully")
     }
     catch(e:any){

@@ -67,7 +67,7 @@ const AircraftForm:FC =()=>{
             airline:airline
         }
         try{
-            await axios.post('http://localhost:9000/aircraft',reqbody)
+            await axios.post('http://localhost:9000/aircrafts',reqbody)
             var indexvalue = AircraftList.indexOf(Number(reqbody.aircraft_no))
             await axios.delete('http://localhost:9000/aircraftlist', { data: {indexvalue}, headers: { "Authorization": "***" } });
             successmsg("Aircraft Added Successfully")

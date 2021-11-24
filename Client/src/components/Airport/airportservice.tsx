@@ -19,7 +19,7 @@ export async function postAirportData(reqbody:any,state:any,Airports:any,index:n
         {
             return errormsg("Capacity should be greater than available")
         }
-        await axios.post('http://localhost:9000/airport',reqbody)
+        await axios.post('http://localhost:9000/airports',reqbody)
         const request:any=
         {
             indexvalue:index

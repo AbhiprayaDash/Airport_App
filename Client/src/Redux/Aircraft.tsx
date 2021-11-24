@@ -1,10 +1,10 @@
-import { saveAircrafts,saveAircraftList,saveAircraftNo } from "./AircraftSlice"
+import { saveAircrafts,saveAircraftList } from "./AircraftSlice"
 import axios from "axios"
 export const fetchAircaft =()=> {
     return async (dispatch:any) => {
       try {
           // make an async call in the thunk
-          const response = await axios.get('http://localhost:9000/aircraft')
+          const response = await axios.get('http://localhost:9000/aircrafts')
           // dispatch an action when we get the response back
           dispatch(saveAircrafts(response.data))
       } catch (err) {
@@ -45,7 +45,7 @@ export const SortAircraft =()=>{
 }
 export const FilterAircraft =()=>{
     return async (dispatch:any,airline:any) => {
-        const result = await axios.post('http://localhost:9000/aircraft/filter/',{},{ params: { airline:airline,category:"Airline" } })
+        const result = await axios.get(`http://localhost:9000/aircrafts/filter/${airline}/${'Airline'}`)
         dispatch(saveAircrafts(result.data));
     }
 }

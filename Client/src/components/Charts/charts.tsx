@@ -168,6 +168,8 @@ const Chart:FC =() =>{
                 </div>
             </div >
             <div className="chart-container" >
+            <h3 style={{fontWeight:"bold"}}>X Axis-<span>Date & Time</span></h3>
+            <h3 style={{fontWeight:"bold"}}>Y Axis-<span>Fuel Available</span></h3>
             <Line data={{
                     labels: label,
                     datasets: lineGraphData(),

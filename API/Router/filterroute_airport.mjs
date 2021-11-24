@@ -3,8 +3,8 @@ import { AirportFilter } from '../controller/Filtercontroller.mjs';
 const router = Router();
 
 router.
-     route('/')
-     .post(function(req,res){
+     route('/:filtertype/:category')
+     .get(function(req,res){
         AirportFilter.AirportFilter(req,res)
      })
      

@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import  { FC, useEffect } from "react";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
