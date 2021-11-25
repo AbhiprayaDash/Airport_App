@@ -6,6 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import Aircrafttable from './aircrafttable'
 import {useAppSelector,useAppDispatch} from '../../hooks';
 import SideNavbar from "./sidenavAircraft";
+import InvalidPage400component from "../InvalidPage/400page";
 var set=true
 var aircrafts:any=[]
 const DisplayAircrafts:FC =() => {
@@ -22,7 +23,7 @@ const DisplayAircrafts:FC =() => {
             }
             catch(e:any)
             {
-                console.log(e)
+                <InvalidPage400component/>
             }
         }   
     }
@@ -55,7 +56,7 @@ const DisplayAircrafts:FC =() => {
             <br/>
             <SideNavbar aircraftlist={aircrafts}/>
             <div style={{width:'80%',float:'right',padding:'10px'}}>
-            {filterResponse.length===0?<Aircrafttable response={response}/>:<Aircrafttable response={filterResponse}/>}
+            {filterResponse.length===0&&response.length>0?<Aircrafttable response={response}/>:<Aircrafttable response={filterResponse}/>}
             </div>
             </CardContent>
             </Card>

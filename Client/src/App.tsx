@@ -12,6 +12,8 @@ import ReportComponent from "./components/Report/report";
 import Chart from "./components/Charts/charts";
 import DisplayAirports from "./components/Airport/displayairport";
 import DisplayAircrafts from "./components/Airport/displayaircraft";
+import InvalidPage404component from "./components/InvalidPage/404page"
+import InvalidPage400component from "./components/InvalidPage/400page"
 
 function App() {
   return (
@@ -28,8 +30,7 @@ function App() {
       <PrivateRoute exact path="/aircraft" component={AircraftController}/>
       <PrivateRoute exact path="/logout" component={LogoutComponent}/>
       <PrivateRoute exact path="/report" component={ReportComponent}/>
-      <Route >
-      </Route>
+      <Route exact path="*" component={InvalidPage404component}/>
   </Switch>
   );
 }

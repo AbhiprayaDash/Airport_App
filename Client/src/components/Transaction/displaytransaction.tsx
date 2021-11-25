@@ -12,6 +12,7 @@ import { Card, CardContent, Paper } from "@mui/material";
 const DisplayTransaction:FC=() =>{
     const response:Array<any> = useSelector((state:any)=>state.Transaction.response)
     var Aircraftresult=useAppSelector<Array<any>>((state)=>state.Aircraft.response);
+    var filterResponse:any = useAppSelector((state:any) => state.Transaction.filterResponse);
     const AircraftList=Aircraftresult.map((aircraft)=>aircraft.aircraft_no)
     const dispatch = useAppDispatch()
 
@@ -68,7 +69,7 @@ const DisplayTransaction:FC=() =>{
                 <div className="main">
                 <div style={{width:'80%',float:'right',padding:'10px'}}>
                 {
-                    response.length>0&&<TransactionTable data={response}/>
+                    filterResponse.length===0?<TransactionTable data={response}/>:<TransactionTable data={filterResponse}/>
                 }
                 </div>
                 </div>

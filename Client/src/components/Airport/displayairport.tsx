@@ -10,6 +10,7 @@ import '../../jshandlers/navbarhandler'
 import { Paper } from "@mui/material";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import InvalidPage400component from "../InvalidPage/400page";
 
 var airports:any=[]
 var set=true
@@ -26,7 +27,7 @@ const  DisplayAirports:FC=()=>{
             }
             catch(e:any)
             {
-                console.log(e)
+                <InvalidPage400component/>
             }
         }
     } 

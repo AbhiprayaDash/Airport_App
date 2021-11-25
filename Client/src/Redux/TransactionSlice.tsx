@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 interface TransactionState {
-    response:Array<any>
+    response:Array<any>,
+    filterResponse:Array<any>
 }
 const initialState:TransactionState={
-    response:[]
+    response:[],
+    filterResponse:[]
 }
 export const TransactionSlice = createSlice({
     name: 'Transaction',
@@ -13,10 +15,13 @@ export const TransactionSlice = createSlice({
       savetransaction:(state,action)=>{
           state.response=action.payload;
       },
+      saveFilterTransaction:(state,action)=>{
+          state.filterResponse = action.payload
+      }
     }
 })
 
 // Action creators are generated for each case reducer function
-export const { savetransaction} = TransactionSlice.actions
+export const { savetransaction,saveFilterTransaction} = TransactionSlice.actions
 
 export default TransactionSlice.reducer

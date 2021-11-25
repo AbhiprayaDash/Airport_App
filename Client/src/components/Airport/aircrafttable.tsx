@@ -41,23 +41,6 @@ type propTypes={
 }
 const Aircrafttable:FC<propTypes> =(props:propTypes)=>{
     const response:any = props.response;
-    const dispatch = useAppDispatch();
-    const loaddata=async()=>{
-        if(response.length===0)
-        {
-            try{
-                const fetchfunc=fetchAircaft()
-                await fetchfunc(dispatch)
-            }
-            catch(e:any)
-            {
-                console.log(e)
-            }
-        }
-    }
-    useEffect(() => {
-        loaddata()
-    }, []);
     return(
         <DataTable
         columns={columns}

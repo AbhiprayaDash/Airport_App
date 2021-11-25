@@ -1,5 +1,5 @@
 import axios from "axios" 
-import {savetransaction} from './TransactionSlice'
+import {saveFilterTransaction, savetransaction} from './TransactionSlice'
 export const FetchTransaction=()=> {
     return async (dispatch:any) => {
       try {
@@ -7,6 +7,7 @@ export const FetchTransaction=()=> {
           const response = await axios.get('http://localhost:9000/v1/transactions')
           // dispatch an action when we get the response back
           dispatch(savetransaction(response.data))
+          dispatch(saveFilterTransaction([]));
       } catch (err) {
           console.log(err)
       }
@@ -49,4 +50,16 @@ export const SortTransaction =()=>{
     {
         console.log(e)
     }}
+}
+
+export const FilterTransaction=()=> {
+    return async (dispatch:any,value:any) => {
+        var result:any
+        const type=value
+        if(value==="IN"||value==="OUT")
+        {
+            result = await axios.get(`http://localhost:9000/v1/transactions/filter/${type}/${'Type'}`)
+        }
+        dispatch(saveFilterTransaction(result.data));
+    }
 }

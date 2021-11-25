@@ -5,9 +5,8 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useAppDispatch, useAppSelector} from "../../hooks";
-import { FetchTransaction } from "../../Redux/Transaction";
-import { FilterTransaction } from "../Airport/FilterService";
-import { savetransaction } from "../../Redux/TransactionSlice";
+import { FetchTransaction ,FilterTransaction} from "../../Redux/Transaction";
+import { saveFilterTransaction } from "../../Redux/TransactionSlice";
 import axios from "axios";
 import { Paper } from "@mui/material";
 
@@ -33,7 +32,7 @@ const SideNavbarTransaction:FC = () =>{
     }
     const aircraftfilter:any =async (event:any) =>{
         const response = await axios.get(`http://localhost:9000/v1/transactions/filter/${event.target.value}/${'Aircraft'}`)
-        dispatch(savetransaction(response.data))
+        dispatch(saveFilterTransaction(response.data))
     }
     const handlefilter:any = async(event:any)=>{
         var result:any
@@ -53,16 +52,14 @@ const SideNavbarTransaction:FC = () =>{
         if(event.target.value==="IN")
         {
             const value=event.target.value
-            const reqbody={type:"IN"}
-            result =await FilterTransaction(reqbody,value)
-            dispatch(savetransaction(result.data))
+            const filterfunc = FilterTransaction()
+            await filterfunc(dispatch,value)
         }
         else if(event.target.value==="OUT")
         {
             const value=event.target.value
-            const reqbody={type:"OUT"}
-            result= await FilterTransaction(reqbody,value)
-            dispatch(savetransaction(result.data))
+            const filterfunc = FilterTransaction()
+            await filterfunc(dispatch,value)
         }
     }
     return (
