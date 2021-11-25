@@ -29,24 +29,29 @@ const columns:any = [
     {
       name: "Date/Time",
       selector: "Duration.date",
-      sortable: true,
+      sortMethod: (a:any, b:any)=>{
+        const time1:any=moment(a).format("LLL")
+        const time2:any=moment(b).format("LLL")
+        return  time1-time2 
+      },
+      sortable:true
     },
     {
       name: "Type",
       selector: "Type",
-      sortable: true,
+      sortable:true
       
     },
     {
         name: "Fuel",
         selector: "quantity",
-        sortable: true,
+        sortable:true
         
       },
       {
         name: "aircraft",
         selector: "aircraft",
-        sortable: true,
+        sortable:true
         
       },
 ];
@@ -80,7 +85,7 @@ const TransactionTable:FC<propTypes> =(props:propTypes)=>
         var filteredResponse = filterResponse.map((response:any)=>{
             let res:any = Object.assign({}, response);
             let DurationObj={
-                date:moment(res.Duration.date).format("dddd, MMMM Do YYYY, h:mm:ss a")
+                date:moment(res.Duration.date).format("LLL")
             }
             res.Duration=DurationObj
             res.aircraft=res.hasOwnProperty('aircraft')?res.aircraft.aircraft_no:'No Aircraft'
@@ -96,7 +101,7 @@ const TransactionTable:FC<propTypes> =(props:propTypes)=>
         <DataTable
         columns={columns}
         data={filteredRes}
-        defaultSortFieldId={1}
+        defaultSortFieldId={-1}
         pagination
         customStyles={customStyles}
         sortIcon={<SortIcon />}

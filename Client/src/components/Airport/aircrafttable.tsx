@@ -62,7 +62,7 @@ const Aircrafttable:FC<propTypes> =(props:propTypes)=>{
         <DataTable
         columns={columns}
         data={response}
-        defaultSortFieldId={1}
+        defaultSortFieldId={-1}
         pagination
         customStyles={customStyles}
         sortIcon={<SortIcon />}

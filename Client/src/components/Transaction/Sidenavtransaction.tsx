@@ -32,7 +32,7 @@ const SideNavbarTransaction:FC = () =>{
         setnoelements(sum)
     }
     const aircraftfilter:any =async (event:any) =>{
-        const response = await axios.get(`http://localhost:9000/transactions/filter/${event.target.value}/${'Aircraft'}`)
+        const response = await axios.get(`http://localhost:9000/v1/transactions/filter/${event.target.value}/${'Aircraft'}`)
         dispatch(savetransaction(response.data))
     }
     const handlefilter:any = async(event:any)=>{
@@ -75,7 +75,7 @@ const SideNavbarTransaction:FC = () =>{
                 <h2 style={{marginLeft:'2px',fontStyle:'italic'}}>Filter By</h2>
             </div>
             <div className="col-sm" style={{paddingTop:"10px",paddingLeft:"5px"}}>
-                <span style={{color:'blue'}}><a onClick={handlefilter}>Clear All</a></span>
+                <span style={{color:'blue',fontSize:'18px'}}><a onClick={handlefilter}>Clear All</a></span>
             </div>
         </div>
         </div>
@@ -86,32 +86,32 @@ const SideNavbarTransaction:FC = () =>{
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography>Transaction Type</Typography>
+          <Typography style={{fontSize:'18px'}}>Transaction Type</Typography>
         </AccordionSummary>
         <AccordionDetails>
             <div className="form-check">
             <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" 
                 onClick={handlefilter} value="All"/>
-            <label className="form-check-label">
+            <label className="form-check-label" style={{fontSize:'15px'}}>
                 All
             </label>
             </div>
             <div className="form-check">
             <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" 
                 onClick={handlefilter} value="IN"/>
-            <label className="form-check-label">
+            <label className="form-check-label" style={{fontSize:'15px'}}>
                 IN
             </label>
             </div>
             <div className="form-check">
             <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" 
                 onClick={handlefilter} value="OUT"/>
-            <label className="form-check-label">
+            <label className="form-check-label" style={{fontSize:'15px'}}>
                 OUT
             </label>
             </div>
-        <div className="spanclass" onClick={loadmore}>Load More</div>
-        {noOfelements>5&&<div className="spanclass" onClick={showless}>Show Less</div>}
+            <div className="spanclass" onClick={loadmore} style={{color:'blue'}}>Load More</div>
+        {noOfelements>5&&<div className="spanclass" onClick={showless}style={{color:'red'}}>Show Less</div>}
         </AccordionDetails>
       </Accordion>
       <Accordion>
@@ -120,7 +120,7 @@ const SideNavbarTransaction:FC = () =>{
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography>Aircraft</Typography>
+          <Typography style={{fontSize:'18px'}}>Aircraft</Typography>
         </AccordionSummary>
         {AircraftList.length>0&&<AccordionDetails>
             {
@@ -129,15 +129,15 @@ const SideNavbarTransaction:FC = () =>{
                     <div className="form-check">
                         <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" 
                         onClick={aircraftfilter} value={aircraft}/>
-                        <label className="form-check-label">
+                        <label className="form-check-label" style={{fontSize:'15px'}}>
                         {aircraft}
                         </label>
                     </div>
                 )
                 })
             }
-            <div className="spanclass" onClick={loadmore}>Load More</div>
-        {noOfelements>5&&<div className="spanclass" onClick={showless}>Show Less</div>}
+            <div className="spanclass" onClick={loadmore} style={{color:'blue'}}>Load More</div>
+        {noOfelements>5&&<div className="spanclass" onClick={showless}style={{color:'red'}}>Show Less</div>}
         </AccordionDetails>
         }
       </Accordion>

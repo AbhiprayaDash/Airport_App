@@ -29,13 +29,13 @@ app.use(InputCheck);
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 //Routes
 
-app.use('/users',AuthRoute);
-app.use('/aircrafts',AircraftRoute);
-app.use('/airports',AirportRoute);
-app.use('/transactions',TransactionRoute)
-app.use('/airportlist',AirportFetch)
-app.use('/aircraftlist',AircraftFetch)
-app.get('/', (req, res) => {
+app.use('/v1/users',AuthRoute);
+app.use('/v1/aircrafts',AircraftRoute);
+app.use('/v1/airports',AirportRoute);
+app.use('/v1/transactions',TransactionRoute)
+app.use('/v1/airportlist',AirportFetch)
+app.use('/v1/aircraftlist',AircraftFetch)
+app.get('/v1/', (req, res) => {
   res.send('Hello World!')
 })
 app.listen(port, async () => {

@@ -47,13 +47,13 @@ app.use((0, _cors.default)());
 app.use(_InputCheck.default);
 app.use('/api-docs', _swaggerUiExpress.default.serve, _swaggerUiExpress.default.setup(swaggerDocument)); //Routes
 
-app.use('/user', _auth_route.default);
-app.use('/aircraft', _aircraft_route.default);
-app.use('/airport', _airport_route.default);
-app.use('/transaction', _transaction_route.default);
-app.use('/airportlist', _airportfetch_route.default);
-app.use('/aircraftlist', _aircraftfetch_route.default);
-app.get('/', (req, res) => {
+app.use('/v1/users', _auth_route.default);
+app.use('/v1/aircrafts', _aircraft_route.default);
+app.use('/v1/airports', _airport_route.default);
+app.use('/v1/transactions', _transaction_route.default);
+app.use('/v1/airportlist', _airportfetch_route.default);
+app.use('/v1/aircraftlist', _aircraftfetch_route.default);
+app.get('/v1/', (req, res) => {
   res.send('Hello World!');
 });
 app.listen(port, async () => {

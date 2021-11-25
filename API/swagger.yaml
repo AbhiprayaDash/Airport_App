@@ -5,7 +5,7 @@ info:
 servers:
   - url: http://localhost:9000
 paths:
-  /:
+  /v1/:
     get:
       tags:
        - Home Page
@@ -14,7 +14,7 @@ paths:
       responses: 
         '200':
           description: Successful response
-  /users/signin:
+  /v1/users/signin:
     post:
       tags:
        - User API
@@ -45,7 +45,7 @@ paths:
         default:
           description: Unexpected error
 
-  /users/signup:
+  /v1/users/signup:
     post:
       tags:
        - User API
@@ -79,7 +79,7 @@ paths:
           description: A user with the specified ID was not found.
         default:
           description: Unexpected error
-  /airports:
+  /v1/airports:
     post:
       tags:
        - Airport API
@@ -118,7 +118,7 @@ paths:
                 type: array
                 items: 
                   type: string 
-  /aircrafts:
+  /v1/aircrafts:
     post:
       tags:
        - Aircraft API
@@ -152,7 +152,7 @@ paths:
                 type: array
                 items: 
                   type: string
-  /transactions:
+  /v1/transactions:
     post:
       tags:
        - Transaction API
@@ -196,51 +196,31 @@ paths:
                 type: array
                 items: 
                   type: string         
-  /transactions/filter/{type}/{aircraftno}/{category}:
+  /v1/transactions/filter/{filtertype}/{category}:
     get:
       tags:
        - Filter API
-      summary: get type of transaction
+      summary: get transaction based on filter
       description: Get type of transaction on the basis of what we want to filter
       parameters: 
-       - name: type
+       - name: filtertype
          in: path
-         description: Type of transaction
+         description: Type of Filter 
          required: true
          type: string
        - name: category
          in: path
-         description: Category of transaction
+         description: Category of transaction filter
          required: true
          type: string
       responses:
         '200':  #status code
           description: Successfully posted transaction filter
-  /transactions/filter/{aircraftno}/{category}:
+  /v1/airports/filter/{AiportName}/{category}:
     get:
       tags:
        - Filter API
-      summary: get AircraftNo of transaction
-      description: Get aircraft no of transaction on the basis of what we want to filter
-      parameters: 
-       - name: aircraftno
-         in: path
-         description: AircraftNO of transaction
-         required: false
-         type: Number
-       - name: category
-         in: path
-         description: Category of transaction
-         required: true
-         type: string
-      responses:
-        '200':  #status code
-          description: Successfully posted transaction filter
-  /airports/filter/{AiportName}/{category}:
-    get:
-      tags:
-       - Filter API
-      summary: get Airportname of transaction
+      summary: get Airports based on filter
       description: Get Airportname on the basis of what we want to filter
       parameters: 
        - name: AiportName
@@ -256,12 +236,12 @@ paths:
       responses:
         '200':  #status code
           description: Successfully posted transaction filter
-  /aircrafts/filter/{Airline}/{category}:
+  /v1/aircrafts/filter/{Airline}/{category}:
     get:
       tags:
        - Filter API
-      summary: get Airline of transaction
-      description: Get Airliney on the basis of what we want to filter
+      summary: get Airline based on Filter
+      description: Get Airlines on the basis of what we want to filter
       parameters: 
        - name: Airline
          in: path

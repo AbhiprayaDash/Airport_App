@@ -4,6 +4,7 @@ import NavigationComponent from "../Navigation/navcomponent";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { fetchAirport } from "../../Redux/Airport";
 import { FetchTransaction } from "../../Redux/Transaction";
+import { Card, CardContent } from "@mui/material";
 
 // Note: changes to the plugin code is not reflected to the chart, because the plugin is loaded at chart construction time and editor changes only trigger an chart.update().
 const image = new Image();
@@ -145,7 +146,7 @@ const Chart:FC =() =>{
             return (
                 {
                     label: `${airport.name}`,
-                    data: `${airport.fuelcapacity}`,
+                    data: `${airport.fuelavailable}`,
                     fill: false,
                     backgroundColor: colorHex[airportIndex],
                     borderColor: colorHex[airportIndex],
@@ -175,13 +176,17 @@ const Chart:FC =() =>{
                     datasets: lineGraphData(),
                 }} height={100} options={Options} plugins={[plugin]}/>
             </div><br/><br/><br/><br/>
+            </div>
+            <div className="shadow-lg p-3 mb-5 bg-body rounded" style={{ margin: "20px" , minWidth: "fit-content"}}>
             <div className="chart-container" >
+            <h3 style={{fontWeight:"bold"}}>X Axis-<span>Airport Name</span></h3>
+            <h3 style={{fontWeight:"bold"}}>Y Axis-<span>Fuel Available</span></h3>
             <Bar data={{
                 labels:airportlabel,
                 datasets:FuelcapacityPlot(),
                 }} height={100} plugins={[plugin]}/>
             </div>
-        </div>
+            </div>
         </Fragment>
         )  
 }

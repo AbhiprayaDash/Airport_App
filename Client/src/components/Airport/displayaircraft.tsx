@@ -10,6 +10,8 @@ var set=true
 var aircrafts:any=[]
 const DisplayAircrafts:FC =() => {
     const response:any = useAppSelector((state:any) => state.Aircraft.response);
+    var filterResponse:any = useAppSelector((state:any) => state.Aircraft.FilterAircraftList);
+    console.log(filterResponse)
     const dispatch = useAppDispatch();
     const loaddata=async()=>{
         if(response.length===0)
@@ -53,7 +55,7 @@ const DisplayAircrafts:FC =() => {
             <br/>
             <SideNavbar aircraftlist={aircrafts}/>
             <div style={{width:'80%',float:'right',padding:'10px'}}>
-            {response.length>0&&<Aircrafttable response={response}/>}
+            {filterResponse.length===0?<Aircrafttable response={response}/>:<Aircrafttable response={filterResponse}/>}
             </div>
             </CardContent>
             </Card>

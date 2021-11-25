@@ -3,12 +3,14 @@ import { createSlice } from '@reduxjs/toolkit'
 interface AircraftState {
     response:Array<any>,
     AircraftList:Array<any>,
-    number:Number
+    number:Number,
+    FilterAircraftList:Array<any>
 }
 const initialState:AircraftState={
     response:[],
     AircraftList:[],
-    number:0
+    number:0,
+    FilterAircraftList:[]
 }
 export const AircraftSlice = createSlice({
     name: 'Aircraft',
@@ -22,11 +24,14 @@ export const AircraftSlice = createSlice({
       },
       saveAircraftNo:(state,action)=>{
           state.number=action.payload
+      },
+      saveFilterAircraftList:(state,action)=>{
+          state.FilterAircraftList=action.payload
       }
     }
 })
 
 // Action creators are generated for each case reducer function
-export const { saveAircrafts,saveAircraftList,saveAircraftNo} = AircraftSlice.actions
+export const { saveAircrafts,saveAircraftList,saveAircraftNo,saveFilterAircraftList} = AircraftSlice.actions
 
 export default AircraftSlice.reducer

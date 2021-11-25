@@ -52,7 +52,7 @@ const SideNavbarAirport:FC<propTypes> =(props:propTypes) =>{
                 <h2 style={{marginLeft:'2px',fontStyle:'italic'}}>Filter By</h2>
             </div>
             <div className="col-sm"style={{paddingTop:"10px",paddingLeft:"5px"}}>
-                <span style={{color:'blue'}}><a onClick={handlefiltername}>Clear All</a></span>
+                <span style={{color:'blue',fontSize:'18px'}} ><a onClick={handlefiltername}>Clear All</a></span>
             </div>
         </div>
         </div>
@@ -63,7 +63,7 @@ const SideNavbarAirport:FC<propTypes> =(props:propTypes) =>{
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography>Airport</Typography>
+          <Typography style={{fontSize:'18px'}}>Airport</Typography>
         </AccordionSummary>
         <AccordionDetails>
         {
@@ -72,7 +72,7 @@ const SideNavbarAirport:FC<propTypes> =(props:propTypes) =>{
                  <div className="form-check">
                  <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" 
                  onClick={handlefiltername} value={airport.name}/>
-                 <label className="form-check-label">
+                 <label className="form-check-label" style={{fontSize:'15px'}}>
                  {airport.name}
                  </label>
                 </div>

@@ -8,7 +8,7 @@ type stateTypes= {
 }
 export const errorhandling=async (reqbody:any)=>{
     try{
-        await axios.post('http://localhost:9000/transactions',reqbody)
+        await axios.post('http://localhost:9000/v1/transactions',reqbody)
         successmsg("Transaction Added Successfully")
     }
     catch(e:any){
@@ -17,7 +17,6 @@ export const errorhandling=async (reqbody:any)=>{
     }
 }
 export async function PostTransactionService(state:stateTypes):Promise<any>{
-    console.log('hit')
     if(state.type==="IN")
     {
         const reqbody = {type:state.type,airport_name:state.airport_name,quantity:state.quantity}

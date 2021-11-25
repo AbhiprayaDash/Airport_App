@@ -15,6 +15,7 @@ var airports:any=[]
 var set=true
 const  DisplayAirports:FC=()=>{    
     const response:any = useAppSelector((state:any) => state.Airport.response);
+    var filterResponse:any = useAppSelector((state:any) => state.Airport.FilterAirportList);
     const dispatch = useAppDispatch();
     const loaddata=async()=>{
         if(response.length===0)
@@ -60,7 +61,7 @@ const  DisplayAirports:FC=()=>{
             {airports.length>0&&<SideNavbar airportlist={airports}/>}
         <div className="main">
         <div style={{width:'80%',float:'right',padding:'10px'}}>
-            {response.length>0&&<Airporttable response={response}/>}
+            {filterResponse.length===0?<Airporttable response={response}/>:<Airporttable response={filterResponse}/>}
         </div>
         </div>
         </Paper>

@@ -12,7 +12,7 @@ import { postAirportData } from './airportservice';
 import AirplanemodeActiveSharpIcon from '@mui/icons-material/AirplanemodeActiveSharp';
 import { errormsg } from '../Toast/toastservice';
 import Autocomplete from '@mui/material/Autocomplete';
-import { FetchAirportList } from '../../Redux/Airport';
+import { fetchAirport, FetchAirportList } from '../../Redux/Airport';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { saveAirportName } from '../../Redux/AirportSlice';
 import { ToastContainer } from 'react-toastify';
@@ -76,6 +76,8 @@ const AirportForm:FC = () =>{
             dispatch(saveAirportName(''))
             setfuelcapacity(0);
             setfuelavailable(0);
+            const fetchAirports=fetchAirport()
+            await fetchAirports(dispatch)
         }
         catch(e)
         {

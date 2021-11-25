@@ -3,14 +3,13 @@ import Typography from '@mui/material/Typography';
 import TransactionTable from "./transactiontable";
 import { useSelector } from "react-redux";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { FetchTransaction,SortTransaction } from "../../Redux/Transaction";
+import { FetchTransaction} from "../../Redux/Transaction";
 import SideNavbarTransaction from "./Sidenavtransaction";
 import { fetchAircaft } from "../../Redux/Aircraft";
 import { Card, CardContent, Paper } from "@mui/material";
 
 
 const DisplayTransaction:FC=() =>{
-    const [sortname,setsortname]= useState<string>('');
     const response:Array<any> = useSelector((state:any)=>state.Transaction.response)
     var Aircraftresult=useAppSelector<Array<any>>((state)=>state.Aircraft.response);
     const AircraftList=Aircraftresult.map((aircraft)=>aircraft.aircraft_no)
@@ -47,12 +46,6 @@ const DisplayTransaction:FC=() =>{
         loaddataAircraft()
     }, []);
     
-    const handlesort:any = async(event:any)=>{
-        const value=event.target.value
-        setsortname(value)
-        const sortfunc =SortTransaction()
-        await sortfunc(dispatch,value)
-    }
     return(
         <Fragment>
             <Card sx={{ minWidth: 875 }}>

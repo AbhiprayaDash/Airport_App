@@ -1,4 +1,4 @@
-import  { FC, useEffect } from "react";
+import { FC, useEffect } from "react";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -20,6 +20,7 @@ import { useState } from "react";
 import { fetchAirport } from "../../Redux/Airport";
 import { fetchAircaft } from "../../Redux/Aircraft";
 import { ToastContainer } from "react-toastify";
+import { FetchTransaction } from "../../Redux/Transaction";
 
 
 type stateTypes= {
@@ -109,6 +110,8 @@ const TransactionForm:FC =() =>{
         setAirportname('')
         setAircraftno(0)
         setType('IN')
+        const fetchfunc=FetchTransaction()
+        await fetchfunc(dispatch)
     }
     return(
             <ThemeProvider theme={theme}>

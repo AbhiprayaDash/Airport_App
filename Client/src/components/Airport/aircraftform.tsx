@@ -11,7 +11,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
-import {FetchAircraftList} from "../../Redux/Aircraft"
+import {fetchAircaft, FetchAircraftList} from "../../Redux/Aircraft"
 import {saveAircraftNo} from "../../Redux/AircraftSlice"
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { ToastContainer } from 'react-toastify';
@@ -67,14 +67,16 @@ const AircraftForm:FC =()=>{
             airline:airline
         }
         try{
-            await axios.post('http://localhost:9000/aircrafts',reqbody)
+            await axios.post('http://localhost:9000/v1/aircrafts',reqbody)
             var indexvalue = AircraftList.indexOf(Number(reqbody.aircraft_no))
-            await axios.delete('http://localhost:9000/aircraftlist', { data: {indexvalue}, headers: { "Authorization": "***" } });
+            await axios.delete('http://localhost:9000/v1/aircraftlist', { data: {indexvalue}, headers: { "Authorization": "***" } });
             successmsg("Aircraft Added Successfully")
             const fetchfunc = FetchAircraftList()
             fetchfunc(dispatch)
             dispatch(saveAircraftNo(0))
             setairline('')
+            const fetchAircraft = fetchAircaft()
+            fetchAircraft(dispatch)
         }
         catch(e:any){
             errormsg(e.response.data)
