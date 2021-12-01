@@ -42,33 +42,37 @@ const  DisplayAirports:FC=()=>{
         set=false
     }
     return(
-        <Fragment>
-            <Card sx={{ minWidth: 875 }}>
-            <CardContent>
-            <Typography
-                component="h1"
-                variant="h3"
-                color="inherit"
-                align="center"
-                style={{fontWeight:"bold",fontSize:54}}
-                noWrap
-                sx={{ flex: 1 }}
-                fontFamily="Roboto"
-            >
-            Airport Details
-            </Typography>
-            <br/>
-            <Paper>
-            {airports.length>0&&<SideNavbar airportlist={airports}/>}
-        <div className="main">
-        <div style={{width:'80%',float:'right',padding:'10px'}}>
-            {filterResponse.length===0?<Airporttable response={response}/>:<Airporttable response={filterResponse}/>}
-        </div>
-        </div>
-        </Paper>
-        </CardContent>
-        </Card>
-        </Fragment>
+            <div className="container-fluid">
+                <div className="row">
+                    <div className="col-12">
+                    <Card >
+                        <CardContent>
+                        <Typography
+                            component="h1"
+                            variant="h3"
+                            color="inherit"
+                            align="center"
+                            style={{fontWeight:"bold"}}
+                            noWrap
+                            sx={{ flex: 1 }}
+                            fontFamily="Roboto"
+                        >
+                        Airport Details
+                        </Typography>
+                        <br/>
+                            <div className="row">
+                                <div className="col-2">
+                                    {airports.length>0&&<SideNavbar airportlist={airports}/>}
+                                </div>
+                                <div className="col-10">
+                                    {filterResponse.length===0?<Airporttable response={response}/>:<Airporttable response={filterResponse}/>}
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
+                    </div>
+                </div>
+            </div>
     )
 }
 export default DisplayAirports

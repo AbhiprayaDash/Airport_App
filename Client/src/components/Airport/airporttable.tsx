@@ -16,7 +16,7 @@ const customStyles = {
         style: {
             paddingLeft: '8px', // override the cell padding for head cells
             paddingRight: '8px',
-            fontSize:'20px'
+            fontSize:'22px'
         },
     },
     cells: {
@@ -46,14 +46,16 @@ const Airporttable:FC<propTypes>= (props:propTypes)=>{
     var response:any = props.response
     return(
             <Fragment>
-                <DataTable
-                columns={columns}
-                data={response}
-                defaultSortFieldId={-1}
-                pagination
-                customStyles={customStyles}
-                sortIcon={<SortIcon />}
-                />
+                <div className="table-responsive"> 
+                    <DataTable
+                    columns={columns}
+                    data={response}
+                    defaultSortFieldId={-1}
+                    pagination
+                    customStyles={customStyles}
+                    sortIcon={<SortIcon />}
+                    />
+                </div>
             </Fragment>
         )
 }

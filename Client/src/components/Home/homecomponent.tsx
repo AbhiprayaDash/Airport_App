@@ -15,7 +15,7 @@ class HomeComponent extends React.Component<propTypes>{
     {
         return(
             <Fragment>
-                <ImageComponent history={this.props.history} logo = {logo}/>
+                <ImageComponent signin={true} register = {false} history={this.props.history} logo = {logo}/>
             </Fragment>
         )
     }

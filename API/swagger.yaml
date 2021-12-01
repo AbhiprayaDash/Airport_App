@@ -36,8 +36,12 @@ paths:
                   required: true
       description: Post Login Data email and password
       responses:
-        '200':    # status code
+        '201':    # status code
           description: sucessfully logged in
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/users'
         '400':
           description: Email or password is Incorrect.
         '404':
@@ -72,7 +76,11 @@ paths:
                   required: true
       responses:
         '200':    # status code
-          description: sucessfully logged in
+          description: sucessfully Signed up
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/users'
         '400':
           description: Email or password is Invalid.
         '404':
@@ -85,143 +93,237 @@ paths:
        - Airport API
       summary: post Airport data data.
       description: Post Airport data like name,fuelcapacity and fuelcavailable
-      parameters:
-       - name: Name
-         in: query
-         description: Name of airport
-         required: true
-         type: string
-       - name: Fuel Capacity
-         in: query
-         description: Fuel Capacity of Airport
-         required: true
-         type: number
-       - name: Fuel Available
-         in: query
-         description: Fuel Available of Airport
-         required: true
-         type: number
+      security:
+      - ApiKeyAuth: [] 
+        responses:
+            '401':
+              $ref: '#/components/responses/UnauthorizedError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of airport
+                  required: true
+                fuelcapacity:
+                  type: number
+                  description: Fuel Capacity of Airport
+                  required: true
+                fuelavailable:
+                  type: number
+                  description: Fuel Available of Airport
+                  required: true
       responses:
-        '200':    # status code
+        '201':    # status code
           description: sucessfully added airport details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/airports'
+        '400':
+          description: Bad Request
+        default:
+          description: Unexpected error
     get:
       tags:
        - Airport API
       summary: get Airport data data.
       description: get Airport data like name,fuelcapacity and fuelcavailable
+      security:
+      - ApiKeyAuth: [] 
+        responses:
+            '401':
+              $ref: '#/components/responses/UnauthorizedError'
       responses:
         '200':    # status code
           description: A JSON array of Airport data
           content:
             application/json:
-              schema: 
-                type: array
-                items: 
-                  type: string 
+              schema:
+                $ref: '#/components/schemas/airports'
+        '400':
+          description: Bad Request
+        default:
+          description: Unexpected error
+        
   /v1/aircrafts:
     post:
       tags:
        - Aircraft API
       summary: post Aircraft data.
       description: Post Aircraft Data like aircraft_no and Airline
-      parameters:
-       - name: Aircraft Number
-         in: query
-         description: Aircraft number
-         required: true
-         type: number
-       - name: Airline
-         in: query
-         description: Name of Airline
-         required: true
-         type: string
+      security:
+        - ApiKeyAuth: [] 
+          responses:
+              '401':
+                $ref: '#/components/responses/UnauthorizedError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                aircraft_no:
+                  type: number
+                  description: Aircraft Number
+                  required: true
+                airline:
+                  type: string
+                  description: Name of Airline
+                  required: true
       responses:
-        '200':    # status code
+        '201':    # status code
           description: sucessfully added aircraft details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/aircrafts'
+        '400':
+          description: Bad Request
+        default:
+          description: Unexpected error
     get:
       tags:
        - Aircraft API
       summary: get Aircraft data.
       description: get Aircraft Data like aircraft_no and Airline
+      security:
+      - ApiKeyAuth: [] 
+        responses:
+            '401':
+              $ref: '#/components/responses/UnauthorizedError'
       responses:
         '200':    # status code
           description: A JSON array of Aircraft data
           content:
             application/json:
-              schema: 
-                type: array
-                items: 
-                  type: string
+              schema:
+                $ref: '#/components/schemas/aircrafts'
+        '400':
+          description: Bad Request
+        default:
+          description: Unexpected error
   /v1/transactions:
     post:
       tags:
        - Transaction API
       summary: post Transaction data.
       description: Post Aircraft Data like Transaction type,airport,aircraft,quantity
-      parameters:
-       - name: Type
-         in: query
-         description: Type of Transaction
-         required: true
-         type: string
-       - name: Airport name
-         in: query
-         description: Airport name
-         required: true
-         type: string
-       - name: Aircraft number
-         in: query
-         description: Aircraft number
-         required: true
-         type: number
-       - name: Quantity
-         in: query
-         description: Quantity
-         required: true
-         type: number
+      security:
+      - ApiKeyAuth: [] 
+        responses:
+            '401':
+              $ref: '#/components/responses/UnauthorizedError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Type:
+                  type: string
+                  description: Type of Transaction
+                  required: true
+                airport_name:
+                  type: string
+                  description: Airport name
+                  required: true
+                aircraft_no:
+                  type: number
+                  description: Aircraft number
+                  required: true
+                quantity:
+                  type: number
+                  description: Quantity
+                  required: true
       responses:
-        '200':    # status code
+        '201':    # status code
           description: sucessfully added Transaction details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transactions'
+        '400':
+          description: Bad Request
+        default:
+          description: Unexpected error
     get:
       tags:
        - Transaction API
       summary: get Transaction data.
       description: Post Aircraft Data like Transaction type,airport,aircraft,quantity
+      security:
+      - ApiKeyAuth: [] 
+        responses:
+            '401':
+              $ref: '#/components/responses/UnauthorizedError'
       responses:
         '200':    # status code
           description: A JSON array of Transaction data
           content:
             application/json:
-              schema: 
-                type: array
-                items: 
-                  type: string         
+              schema:
+                $ref: '#/components/schemas/transactions'
+        '400':
+          description: Bad Request
+        default:
+          description: Unexpected error   
   /v1/transactions/filter/{filtertype}/{category}:
     get:
       tags:
        - Filter API
       summary: get transaction based on filter
       description: Get type of transaction on the basis of what we want to filter
+      security:
+      - ApiKeyAuth: [] 
+        responses:
+            '401':
+              $ref: '#/components/responses/UnauthorizedError'
       parameters: 
        - name: filtertype
          in: path
          description: Type of Filter 
          required: true
+         schema: 
+            type: string
          type: string
        - name: category
          in: path
          description: Category of transaction filter
          required: true
-         type: string
+         schema:
+            type: string
+            enum:
+              - Type
+              - Aircraft
       responses:
         '200':  #status code
           description: Successfully posted transaction filter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transactions'
+        '400':
+          description: Bad Request
+        default:
+          description: Unexpected error
   /v1/airports/filter/{AiportName}/{category}:
     get:
       tags:
        - Filter API
       summary: get Airports based on filter
       description: Get Airportname on the basis of what we want to filter
+      security:
+      - ApiKeyAuth: [] 
+        responses:
+            '401':
+              $ref: '#/components/responses/UnauthorizedError'
       parameters: 
        - name: AiportName
          in: path
@@ -232,16 +334,32 @@ paths:
          in: path
          description: Category of Airport Filter
          required: true
-         type: string
+         schema:
+            type: string
+            enum:
+              - Airport
       responses:
         '200':  #status code
           description: Successfully posted transaction filter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/airports'
+        '400':
+          description: Bad Request
+        default:
+          description: Unexpected error
   /v1/aircrafts/filter/{Airline}/{category}:
     get:
       tags:
        - Filter API
       summary: get Airline based on Filter
       description: Get Airlines on the basis of what we want to filter
+      security:
+      - ApiKeyAuth: [] 
+        responses:
+            '401':
+              $ref: '#/components/responses/UnauthorizedError'
       parameters: 
        - name: Airline
          in: path
@@ -252,11 +370,192 @@ paths:
          in: path
          description: Category of Aircraft Filter
          required: true
-         type: string
+         schema:
+            type: string
+            enum:
+              - Airline
       responses:
         '200':  #status code
           description: Successfully posted transaction filter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/aircrafts'
+        '400':
+          description: Bad Request
+        default:
+          description: Unexpected error
+  /v1/aircrafts/{aircraft_no}:
+    delete:
+      tags:
+       - Delete API
+      summary: delete Aircraft based on Aircraft_no
+      description: Delete Aircraft on the basis of Aircraft_no 
+      security:
+      - ApiKeyAuth: [] 
+        responses:
+            '401':
+              $ref: '#/components/responses/UnauthorizedError'
+      parameters: 
+       - name: aircraft_no
+         in: path
+         description: Aircraft Number
+         required: true
+         type: Number
+      responses:
+        '200':  #status code
+          description: Aircraft Successfully deleted
+        '400':
+          description: Bad Request
+        default:
+          description: Unexpected error
+    put:
+      tags:
+       - Update API
+      summary: update Aircrafts based on Aircraft Number
+      description: Update Aircrafts based on Aircraft Number
+      security:
+      - ApiKeyAuth: [] 
+        responses:
+            '401':
+              $ref: '#/components/responses/UnauthorizedError'
+      parameters: 
+       - name: aircraft_no
+         in: path
+         description: Aircraft Number
+         required: true
+         type: Number
+       - name: airline
+         in: query
+         description: Airline
+         required: true
+         type: string
+      responses:
+        '201':  #status code
+          description: Aircraft Successfully updated
+        '400':
+          description: Bad Request
+        default:
+          description: Unexpected error
+  /v1/airports/{airportname}:
+    delete:
+      tags:
+       - Delete API
+      summary: delete Airport based on Airport Name
+      description: Delete Airport based on Airport Name 
+      security:
+      - ApiKeyAuth: [] 
+        responses:
+            '401':
+              $ref: '#/components/responses/UnauthorizedError'
+      parameters: 
+       - name: airportname
+         in: path
+         description: Airport Name
+         required: true
+         type: string
+      responses:
+        '200':  #status code
+          description: Airport Successfully deleted
+        '400':
+          description: Bad Request
+        default:
+          description: Unexpected error
+    put:
+      tags:
+       - Update API
+      summary: update Airports based on Airport name
+      description: Update Airports based on Airport name 
+      security:
+      - ApiKeyAuth: [] 
+        responses:
+            '401':
+              $ref: '#/components/responses/UnauthorizedError'
+      parameters: 
+       - name: airportname
+         in: path
+         description: Airport Name
+         required: true
+         type: string
+       - name: name
+         in: query
+         description: Airport Name
+         required: true
+         type: string
+       - name: fuelcapcity
+         in: query
+         description: Fuel Capacity
+         required: true
+         type: Number
+      responses:
+        '201':  #status code
+          description: Airport Successfully updated
+        '400':
+          description: Bad Request
+        default:
+          description: Unexpected error
+  /v1/transactions/{id}:
+    delete:
+      tags:
+       - Delete API
+      summary: delete Transaction based on transaction id
+      description: Delete Transaction based on transaction id 
+      security:
+      - ApiKeyAuth: [] 
+        responses:
+            '401':
+              $ref: '#/components/responses/UnauthorizedError'
+      parameters: 
+       - name: id
+         in: path
+         description: Transaction id
+         required: true
+         type: Object
+      responses:
+        '200':  #status code
+          description: Transaction Successfully deleted
+        '400':
+          description: Bad Request
+        default:
+          description: Unexpected error
+    put:
+      tags:
+       - Update API
+      summary: update Transaction based on transaction id
+      description: Update Transaction based on transaction id
+      security:
+      - ApiKeyAuth: [] 
+        responses:
+            '401':
+              $ref: '#/components/responses/UnauthorizedError' 
+      parameters: 
+       - name: id
+         in: path
+         description: Transaction id
+         required: true
+         type: Object
+       - name: quantity
+         in: query
+         description: Transaction quantity
+         required: true
+         type: Number
+      responses:
+        '201':  #status code
+          description: Transaction Successfully updated
+        '400':
+          description: Bad Request
+        default:
+          description: Unexpected error
+    
 components:
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid
+  securitySchemes:
+    ApiKeyAuth:        # arbitrary name for the security scheme
+      type: apiKey
+      in: header       # can be "header", "query" or "cookie"
+      name: x-auth-token
   schemas:
     users:
         type: object
@@ -291,27 +590,27 @@ components:
                       type: object
                       description: "Aircraft"
                   quantity:
-                      type: Number
+                      type: number
                       description: "Quantity of transaction"
     airports:
-            type: object
             description: "Airport Model"
+            type: object
             properties:
                 name:
                     type: string
                     description: "name of Airport"
                 fuelcapacity:
-                    type: Number
+                    type: number
                     description: "Fuel capacity of Airport"
                 fuelavailable:
-                    type: Number
+                    type: number
                     description: "Fuel available in Airport"
     aircrafts:
             type: object
             description: "Aircraft Model"
             properties:
                 aircraft_no:
-                    type: Number
+                    type: number
                     description: "Aircraft Number"
                 airline:
                     type: string

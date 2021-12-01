@@ -1,23 +1,30 @@
 import React from "react";
 import LoginFormComponent from "../Auth/loginform";
+import SignUpComponent from "../Auth/signupcomponent";
+import SignUpFormComponent from "../Auth/signupform";
 import NavigationComponent from "../Navigation/navcomponent";
 type proptypes={
     logo:any
-    history:any
+    history:any,
+    register:Boolean,
+    signin:Boolean
 }
 class ImageComponent extends React.Component<proptypes>
 {
-    render()
+    constructor(props:proptypes)
     {
+        super(props)
+        console.log(this.props)
+    }
+    render()
+    {   
         return (
             <body style={{ backgroundImage: `url(${this.props.logo})`,backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             position: "relative",height:'990px' }}>
-                <NavigationComponent/>
-                <div style={{paddingTop:'50px'}}>
-                    <LoginFormComponent history={this.props.history}/>
-                </div>
+                {this.props.signin===true&&<LoginFormComponent history={this.props.history}/>}
+                {this.props.signin===false&&<SignUpFormComponent history={this.props.history}/>}
                 </body>
         )
     }

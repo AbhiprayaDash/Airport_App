@@ -1,0 +1,13 @@
+.panel-body {
+    overflow: hidden;
+    transform: rotate(90deg);
+    transform-origin: 188px 241px 0;
+}
+   .t1 {
+        max-height: 390px;
+        overflow: scroll;
+    }
+    .t2 {
+        height: 320px;
+        width: 320px;
+    }

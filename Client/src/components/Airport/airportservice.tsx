@@ -2,6 +2,25 @@ import axios from "axios";
 import 'react-toastify/dist/ReactToastify.css';
 import { errormsg, successmsg } from "../Toast/toastservice";
 
+export const checkInput = (state:any) =>{
+        if(state.fuelavailable<0||state.fuelcapacity<0)
+            return false
+        if(state.name===""||String(state.fuelavailable)===""||state.fuelcapacity===0)
+        {
+            return false
+        }
+        if(state.fuelcapacity<state.fuelavailable)
+            return false
+        if(state.fuelcapacity<1000)
+        {
+            return false
+        }
+        if(state.fuelcapacity>100000)
+        {
+            return false;
+        }
+        return true;
+}
 export async function postAirportData(reqbody:any,state:any,Airports:any,index:number):Promise<any>{
     try{
         if(state.fuelavailable<0||state.fuelcapacity<0)

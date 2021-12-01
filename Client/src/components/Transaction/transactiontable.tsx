@@ -16,7 +16,7 @@ const customStyles = {
         style: {
             paddingLeft: '8px', // override the cell padding for head cells
             paddingRight: '8px',
-            fontSize:'20px'
+            fontSize:'22px'
         },
     },
     cells: {
@@ -43,13 +43,13 @@ const columns:any = [
       
     },
     {
-        name: "Fuel",
+        name: "Fuel Quantity",
         selector: "quantity",
         sortable:true
         
       },
       {
-        name: "aircraft",
+        name: "Aircraft",
         selector: "aircraft",
         sortable:true
         

@@ -8,7 +8,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {PostTransactionService} from './transactionService'
+import {checkFunc, PostTransactionService} from './transactionService'
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
@@ -41,7 +41,11 @@ const TransactionForm:FC =() =>{
     const [quantity,setquantity] = useState<Number>(0)
     const theme = createTheme();
     const dispatch = useAppDispatch();
-    
+    const state={
+        airport:airport_name,
+        aircraft_no,
+        quantity
+    }
     const loaddataAirport=async()=>{
         if(Airportresult.length===0)
         {
@@ -114,90 +118,109 @@ const TransactionForm:FC =() =>{
         await fetchfunc(dispatch)
     }
     return(
-            <ThemeProvider theme={theme}>
-              <ToastContainer limit={3} autoClose={1500}/>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }} style={{marginTop:'20px'}}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Add Transaction
-          </Typography>
-          <Typography component="h1" variant="h5">
-          </Typography>
-          <Box component="form" onSubmit={handlesubmit} noValidate sx={{ mt: 1 }}>
-          <FormControl fullWidth >
-            <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={type}
-                label="Age"
-                onChange={handletype}
-            >
-                <MenuItem value={"IN"}>IN</MenuItem>
-                <MenuItem value={"OUT"}>OUT</MenuItem>
-            </Select>
-            </FormControl>
-            <br/>
-            
-            <Autocomplete
-              id="disable-close-on-select"
-              disableCloseOnSelect
-              options={AirportList}
-              sx={{ width: 400 }}
-              value={airport_name}
-              onInputChange={handlename}
-              renderInput={(params:any) => 
-              <TextField {...params} label="Airports" 
-              value={airport_name}
-              />}
-              />
-            {
-            type==="OUT"&&
-                  <Autocomplete
-                    id="disable-close-on-select"
-                    disableCloseOnSelect
-                    options={AircraftList}
-                    sx={{ width: 400 }}
-                    onChange={handleno}
-                    renderInput={(params:any) => 
-                  <TextField {...params} label="Aircraft number" 
-                      value={aircraft_no}
-                    />}
-                  />
-            }
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="Quantity"
-              label="Quantity"
-              type="number"
-              id="password"
-              value={quantity}
-              onChange={handlequantity}
-              autoComplete="current-password"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Add Transaction
-            </Button>
-          </Box>
-        </Box>
-      </Container>
+          <ThemeProvider theme={theme}>
+          <ToastContainer limit={3} autoClose={1500}/>
+          <div className="container">
+            <div className="row">
+              <div className="col-12">
+              <CssBaseline />
+                  <Box
+                    sx={{
+                      marginTop: 2,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }} style={{marginTop:'20px'}}>
+                      <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5" style={{textAlign:'center'}}>
+                      Add Transaction
+                    </Typography>
+                    <Typography component="h1" variant="h5">
+                    </Typography>
+                    <Box component="form" onSubmit={handlesubmit} noValidate sx={{ mt: 1 }}>
+                    <FormControl fullWidth>
+                      <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          style={{width:'70%',marginRight:'auto',marginLeft:'15%'}}
+                          value={type}
+                          label="Age"
+                          onChange={handletype}
+                      >
+                          <MenuItem value={"IN"}>IN</MenuItem>
+                          <MenuItem value={"OUT"}>OUT</MenuItem>
+                      </Select>
+                      </FormControl>
+                      <br/>
+                      
+                      <Autocomplete
+                        id="disable-close-on-select"
+                        disableCloseOnSelect
+                        options={AirportList}
+                        style={{width:'70%',marginRight:'auto',marginLeft:'15%'}}
+                        value={airport_name}
+                        onChange={handlename}
+                        renderInput={(params:any) => 
+                        <TextField {...params} label="Airports" 
+                        value={airport_name}
+                        />}
+                        />
+                      {
+                      type==="OUT"&&
+                            <Autocomplete
+                              id="disable-close-on-select"
+                              disableCloseOnSelect
+                              options={AircraftList}
+                              style={{width:'70%',marginRight:'auto',marginLeft:'15%'}}
+                              onChange={handleno}
+                              renderInput={(params:any) => 
+                            <TextField {...params} label="Aircraft number" 
+                                value={aircraft_no}
+                              />}
+                            />
+                      }
+                      <TextField
+                        margin="normal"
+                        required
+                        style={{width:'70%',marginRight:'auto',marginLeft:'15%'}}
+                        name="Quantity"
+                        label="Quantity"
+                        type="number"
+                        value={quantity}
+                        onChange={handlequantity}
+                      />
+                      <div className="ui pointing label" style={{marginRight:'auto',marginLeft:'10%'}}>
+                            Please enter a positive value less than fuel capacity
+                      </div>
+                      {
+                        checkFunc(state)===true&&<Button
+                          type="submit"
+                          style={{width:'70%',marginRight:'auto',marginLeft:'15%'}}
+                          variant="contained"
+                          sx={{ mt: 3, mb: 2 }}
+                        >
+                          Add Transaction
+                        </Button>
+                      }
+                      {
+                        checkFunc(state)===false&&<Button
+                          type="submit"
+                          disabled
+                          style={{width:'70%',marginRight:'auto',marginLeft:'15%'}}
+                          variant="contained"
+                          sx={{ mt: 3, mb: 2 }}
+                        >
+                          Add Transaction
+                        </Button>
+                      }
+                    </Box>
+                  </Box>
+              </div>
+            </div>
+          </div>
     </ThemeProvider>
         )
 }

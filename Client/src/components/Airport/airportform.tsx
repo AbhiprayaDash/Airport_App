@@ -5,10 +5,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import 'react-toastify/dist/ReactToastify.css';
-import { postAirportData } from './airportservice';
+import { postAirportData,checkInput } from './airportservice';
 import AirplanemodeActiveSharpIcon from '@mui/icons-material/AirplanemodeActiveSharp';
 import { errormsg } from '../Toast/toastservice';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -16,6 +15,7 @@ import { fetchAirport, FetchAirportList } from '../../Redux/Airport';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { saveAirportName } from '../../Redux/AirportSlice';
 import { ToastContainer } from 'react-toastify';
+import InvalidPage400component from '../InvalidPage/400page';
 
 const AirportForm:FC = () =>{
     const [fuelcapacity,setfuelcapacity] = useState<number>(0)
@@ -23,8 +23,11 @@ const AirportForm:FC = () =>{
     const AirportList:any = useAppSelector((state:any) => state.Airport.AirportList);
     const name:string = useAppSelector((state:any)=>state.Airport.name)
     const dispatch = useAppDispatch();
-    
-    
+    const state={
+      name,
+      fuelcapacity,
+      fuelavailable
+    }
     const loaddata = async()=>{
       if(AirportList.length===0)
       {
@@ -61,11 +64,6 @@ const AirportForm:FC = () =>{
             fuelavailable:Number(fuelavailable),
             fuelcapacity:Number(fuelcapacity)
         }
-        const state={
-            name,
-            fuelcapacity,
-            fuelavailable
-        }
         const index = AirportList.indexOf(reqbody.name)
         if(index>=AirportList.length)
             return errormsg("Airport is not available")
@@ -81,77 +79,96 @@ const AirportForm:FC = () =>{
         }
         catch(e)
         {
-          console.log(e)
+          <InvalidPage400component/>
         }
     }
     const theme = createTheme();
         return(
           <ThemeProvider theme={theme}>
             <ToastContainer limit={3} autoClose={1500}/>
-          <Container component="main" maxWidth="xs">
-            <CssBaseline />
-            <Box
-              sx={{
-                marginTop: 8,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}
-            >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }} style={{marginTop:'20px'}}>
-            <AirplanemodeActiveSharpIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Add Airport
-            </Typography>
-            <Box component="form" onSubmit={handlesubmit} noValidate sx={{ mt: 1 }}>
-            <Autocomplete
-              id="disable-close-on-select"
-              disableCloseOnSelect
-              options={AirportList}
-              sx={{ width: 400 }}
-              value={name}
-              onInputChange={handlename}
-              renderInput={(params:any) => 
-              <TextField {...params} label="Airports" 
-              value={name}
-              />}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="Fuel Available"
-                value={fuelavailable}
-                label="Fuel Available"
-                type="number"
-                onChange={handlefuelav}
-                id="password"
-                autoComplete="current-password"
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="Fuel Capacity"
-                value={fuelcapacity}
-                label="Fuel Capacity"
-                type="number"
-                onChange={handlefuelcap}
-                id="password"
-                autoComplete="current-password"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Add Airport
-              </Button>
-              </Box>
-            </Box>
-        </Container>
+          <div className="container">
+            <div className="row">
+              <div className="col-12">
+              <CssBaseline />
+                    <Box
+                      sx={{
+                        marginTop: 2,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                      }}
+                    >
+                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }} style={{marginTop:'20px'}}>
+                    <AirplanemodeActiveSharpIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5" style={{textAlign:'center'}}>
+                      Add Airport
+                    </Typography>
+                    <Box component="form" onSubmit={handlesubmit} noValidate sx={{ mt: 1 }}>
+                    <Autocomplete
+                      id="disable-close-on-select"
+                      disableCloseOnSelect
+                      options={AirportList}
+                      style={{width:'70%',marginRight:'auto',marginLeft:'auto'}}
+                      value={name}
+                      onChange={handlename}
+                      renderInput={(params:any) => 
+                      <TextField {...params} label="Airports" 
+                      value={name}
+                      />}
+                      />
+                      <TextField
+                        margin="normal"
+                        required
+                        style={{width:'70%',marginRight:'auto',marginLeft:'15%'}}
+                        name="Fuel Available"
+                        value={fuelavailable}
+                        label="Fuel Available"
+                        type="number"
+                        onChange={handlefuelav}
+                      />
+                      <div className="ui pointing label" style={{marginRight:'auto',marginLeft:'10%'}}>
+                          Please enter a positive value less than fuel capacity
+                      </div>
+                      <TextField
+                        margin="normal"
+                        required
+                        style={{width:'70%',marginRight:'auto',marginLeft:'15%'}}
+                        name="Fuel Capacity"
+                        value={fuelcapacity}
+                        label="Fuel Capacity"
+                        type="number"
+                        onChange={handlefuelcap}
+                      />
+                      <div className="ui pointing label" style={{marginRight:'auto',marginLeft:'10%'}}>
+                        Please enter a value less than 100000 and greater than 1000
+                      </div>
+                      {checkInput(state)===false&&
+                          <Button
+                            type="submit"
+                            disabled
+                            style={{width:'70%',marginRight:'auto',marginLeft:'15%'}}
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                          >
+                            Add Airport
+                          </Button>
+                      }
+                      {checkInput(state)===true&&
+                          <Button
+                            type="submit"
+                            style={{width:'70%',marginRight:'auto',marginLeft:'15%'}}
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                          >
+                            Add Airport
+                          </Button>
+                      }
+                      </Box>
+                    </Box>
+              </div>
+            </div>
+            </div>
       </ThemeProvider>
     )
 }

@@ -3,6 +3,8 @@ import NavigationComponent from '../Navigation/navcomponent'
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SignUpFormComponent from './signupform';
+import logo from '../../images/tim-gouw-OwD1ON8O-O4-unsplash.jpg'
+import ImageComponent from '../Image/image';
 
 type statetypes={
     name:string,
@@ -21,7 +23,7 @@ class SignUpComponent extends React.Component<propTypes,statetypes>{
           <Fragment>
             <NavigationComponent/>
             <ToastContainer limit={3} autoClose={2000}/>
-            <SignUpFormComponent history={this.props.history}/>
+                <ImageComponent signin={false} register = {true} history={this.props.history} logo = {logo}/>
           </Fragment>
       )
   }

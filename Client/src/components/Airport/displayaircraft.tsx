@@ -7,6 +7,7 @@ import Aircrafttable from './aircrafttable'
 import {useAppSelector,useAppDispatch} from '../../hooks';
 import SideNavbar from "./sidenavAircraft";
 import InvalidPage400component from "../InvalidPage/400page";
+import { Paper } from "@mui/material";
 var set=true
 var aircrafts:any=[]
 const DisplayAircrafts:FC =() => {
@@ -38,29 +39,37 @@ const DisplayAircrafts:FC =() => {
         set=false
     }
     return(
-        <Fragment>
-            <Card sx={{ minWidth: 875 }}>
-            <CardContent>
-            <Typography
-                component="h1"
-                variant="h3"
-                color="inherit"
-                align="center"
-                style={{fontWeight:"bold",fontSize:54}}
-                noWrap
-                sx={{ flex: 1 }}
-                fontFamily="Roboto"
-            >
-            Aircraft Details
-            </Typography>
-            <br/>
-            <SideNavbar aircraftlist={aircrafts}/>
-            <div style={{width:'80%',float:'right',padding:'10px'}}>
-            {filterResponse.length===0&&response.length>0?<Aircrafttable response={response}/>:<Aircrafttable response={filterResponse}/>}
+        <div className="container-fluid">
+            <div className="row">
+                <div className="col-12">
+                <Card >
+                    <CardContent>
+                    <Typography
+                        component="h1"
+                        variant="h3"
+                        color="inherit"
+                        align="center"
+                        style={{fontWeight:"bold"}}
+                        noWrap
+                        sx={{ flex: 1 }}
+                        fontFamily="Roboto"
+                    >
+                    Aircraft Details
+                    </Typography>
+                    <br/>
+                        <div className="row">
+                            <div className="col-2">
+                                {aircrafts.length>0&&<SideNavbar aircraftlist={aircrafts}/>}
+                            </div>
+                            <div className="col-10">
+                                {filterResponse.length===0&&response.length>0?<Aircrafttable response={response}/>:<Aircrafttable response={filterResponse}/>}
+                            </div>
+                        </div>
+                    </CardContent>
+                    </Card>
+                </div>
             </div>
-            </CardContent>
-            </Card>
-        </Fragment>
+        </div>
     )
 }
 export default DisplayAircrafts

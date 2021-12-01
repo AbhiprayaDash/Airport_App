@@ -12,6 +12,7 @@ import Container from '@mui/material/Container';
 import {errormsg, successmsg} from '../Toast/toastservice'
 import { validateSignupData } from './authservice';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Card, CardContent } from '@mui/material';
 
 type statetypes={
     name:string,
@@ -75,11 +76,15 @@ class SignUpFormComponent extends React.Component<propTypes,statetypes>{
         var signedup = this.state.signedup
         return(
             signedup===false&&<ThemeProvider theme={theme}>
-                <Container component="main" maxWidth="xs">
+                <div className="container">
+                  <div className="row">
+                    <div className="col-12">
                   <CssBaseline />
+                  <Card sx={{ maxWidth: 450, maxHeight:550 }}  style={{height:'100%',alignContent:'center',marginLeft:'auto',marginRight:'auto',marginTop:'10%',width:'80%',display: 'flex',flexDirection: 'column'}}>
+                  <CardContent>
                   <Box
                     sx={{
-                      marginTop: 8,
+                      marginTop: 2,
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
@@ -130,9 +135,9 @@ class SignUpFormComponent extends React.Component<propTypes,statetypes>{
                         onChange={this.handlepassword}
                         autoComplete="new-password"
                       />
-                      {
-                      this.state.password!==""&&<Box component="div" display="inline" style={{color:'#5f6368'}}>Use 8 or more characters,must have uppercase and lowercase letter,at least 2 numbers and no spaces</Box>
-                      }
+                      <div className="ui pointing label">
+                          Use 8 or more characters,must have uppercase and lowercase letter,at least 2 numbers and no spaces
+                      </div>
                       <Button
                         type="submit"
                         fullWidth
@@ -150,7 +155,11 @@ class SignUpFormComponent extends React.Component<propTypes,statetypes>{
                       </Grid> 
                     </Box>
                   </Box>
-                </Container>
+                  </CardContent>
+                  </Card>
+                </div>
+                </div>
+                </div>
             </ThemeProvider>
         )
     }

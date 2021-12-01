@@ -31,13 +31,13 @@ class Reporttable extends React.Component<proptypes,statetypes>{
             <Fragment>
             {
             this.state.response.length===0?<h2 style={{marginLeft:'840px',fontWeight:'bold'}}>No data</h2>:
-            <table id="example" className="table table-striped table-bordered" style={{width:"100%"}}>
+            <table id="example" className="table table-striped-hover table-dark" style={{width:"100%"}}>
                 <thead>
                 <tr>
-                <th>Date/Time</th>
-                <th >Type</th>
-                <th>Fuel</th>
-                <th>Aircraft</th>
+                <th style={{fontSize:"18px"}}>Date/Time</th>
+                <th style={{fontSize:"18px"}}>Type</th>
+                <th style={{fontSize:"18px"}}>Fuel</th>
+                <th style={{fontSize:"18px"}}>Aircraft</th>
                 </tr>
                </thead>
                <tbody>
@@ -58,12 +58,12 @@ class Reporttable extends React.Component<proptypes,statetypes>{
                     <tr
                         key={moment(val.Duration.date).format('HH:mm:ss')}
                     >
-                    <td >
+                    <td style={{fontSize:"15px"}} >
                         {moment(val.Duration.date).format('DD/MM/YYYY')} {moment(val.Duration.date).format('HH:mm:ss')}
                     </td>
-                    <td >{val.Type}</td>
-                    <td >{val.quantity}</td>
-                    <td >{
+                    <td style={{fontSize:"15px"}}>{val.Type}</td>
+                    <td style={{fontSize:"15px"}}>{val.quantity}</td>
+                    <td style={{fontSize:"15px"}}>{
                         val.hasOwnProperty('aircraft')===true?<p>{val.aircraft.aircraft_no}</p>:<p>{output}</p>
                         }
                     </td>

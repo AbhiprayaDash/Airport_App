@@ -24,6 +24,7 @@ export const loginController = model =>async(req,res)=>{
     {expiresIn:360000},
     (err,token)=>{
         if(err) throw err;
+        console.log(token)
         return res.json(token);
     });
 }

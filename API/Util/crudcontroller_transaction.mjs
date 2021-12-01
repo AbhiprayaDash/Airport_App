@@ -58,12 +58,44 @@ export const postransaction = (model,AirportModel,AircraftModel) =>async(req,res
 }
 
 export const getransaction = (model)=> async(req,res)=>{
-    const result=await model.find({Type:"IN"}).populate("airport").sort({"_id":-1})
-    const result2 = await model.find({Type:"OUT"}).populate("aircraft").populate("airport").sort({"_id":-1})
-    const finalresult = result.concat(result2)
-    res.status(200).send(finalresult)
+    try{
+        const result=await model.find({Type:"IN"}).populate("airport").sort({"_id":-1})
+        const result2 = await model.find({Type:"OUT"}).populate("aircraft").populate("airport").sort({"_id":-1})
+        const finalresult = result.concat(result2)
+        return res.status(200).send(finalresult)
+    }
+    catch(e)
+    {
+        return res.status(400).send(e);
+    }
+}
+
+export const deleteTransaction = (model) => async(req,res)=>{
+    try{
+        await model.deleteOne({_id:req.params.id})
+        return res.status(200).send('Transaction deleted')
+    }
+    catch(e)
+    {
+        return res.status(400).send(e);
+    }
+}
+export const updateTransaction = model =>async(req,res)=>{
+    try{
+        await model.updateOne(
+            {_id:req.params.id},
+            {quantity:req.query.quantity}
+        )
+        return res.status(200).send('Transaction updated')
+    }
+    catch(e)
+    {
+        return res.status(400).send(e);
+    }
 }
 export const TransactionUtilController = (model,AirportModel,AircraftModel)=>({
     postransaction:postransaction(model,AirportModel,AircraftModel),
-    getransaction:getransaction(model,AircraftModel)
+    getransaction:getransaction(model,AircraftModel),
+    deleteTransaction:deleteTransaction(model),
+    updateTransaction:updateTransaction(model)
 })

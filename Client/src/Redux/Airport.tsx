@@ -4,7 +4,11 @@ export const fetchAirport=()=> {
     return async (dispatch:any) => {
       try {
           // make an async call in the thunk
-          const response = await axios.get('http://localhost:9000/v1/airports')
+          var AccessToken:string=localStorage.getItem('user')|| 'null'
+          const token = JSON.parse(AccessToken);
+          console.log('token is')
+          console.log(token)
+          const response = await axios.get('http://localhost:9000/v1/airports',{ headers: {"x-auth-token" : `${token}`} })
           // dispatch an action when we get the response back
           dispatch(saveAirports(response.data))
           dispatch(saveFilterAirportList(''))

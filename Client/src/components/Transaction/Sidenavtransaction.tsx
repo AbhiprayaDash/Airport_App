@@ -17,10 +17,10 @@ const SideNavbarTransaction:FC = () =>{
     const [noOfelements,setnoelements] = useState<any>(5)
     var Aircraftresult=useAppSelector<Array<any>>((state)=>state.Aircraft.response);
     var AircraftList=Aircraftresult.map((aircraft)=>aircraft.aircraft_no)
-    if(AircraftList.length>0)
-    {
-        AircraftList=AircraftList.slice(0,noOfelements)
-    }
+    const [expanded, setExpanded] = useState('panel1');
+    const handleChange = (panel:any) => (event:any, newExpanded:any) => {
+        setExpanded(newExpanded ? panel : false);
+    }; 
     const dispatch = useAppDispatch();
     const loadmore:any= () =>{
         const sum=noOfelements+noOfelements
@@ -77,7 +77,7 @@ const SideNavbarTransaction:FC = () =>{
         </div>
         </div>
         <hr style={{borderBottom: '1px solid #dee2e6'}}></hr>
-        <Accordion>
+        <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -85,7 +85,7 @@ const SideNavbarTransaction:FC = () =>{
         >
           <Typography style={{fontSize:'18px'}}>Transaction Type</Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails style={{overflowY:'scroll'}}>
             <div className="form-check">
             <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" 
                 onClick={handlefilter} value="All"/>
@@ -107,8 +107,6 @@ const SideNavbarTransaction:FC = () =>{
                 OUT
             </label>
             </div>
-            <div className="spanclass" onClick={loadmore} style={{color:'blue'}}>Load More</div>
-        {noOfelements>5&&<div className="spanclass" onClick={showless}style={{color:'red'}}>Show Less</div>}
         </AccordionDetails>
       </Accordion>
       <Accordion>
@@ -119,7 +117,7 @@ const SideNavbarTransaction:FC = () =>{
         >
           <Typography style={{fontSize:'18px'}}>Aircraft</Typography>
         </AccordionSummary>
-        {AircraftList.length>0&&<AccordionDetails>
+        {AircraftList.length>0&&<AccordionDetails style={{overflowY:'scroll',height:'150px'}}>
             {
                 AircraftList.map((aircraft:any)=>{
                 return(
@@ -133,8 +131,7 @@ const SideNavbarTransaction:FC = () =>{
                 )
                 })
             }
-            <div className="spanclass" onClick={loadmore} style={{color:'blue'}}>Load More</div>
-        {noOfelements>5&&<div className="spanclass" onClick={showless}style={{color:'red'}}>Show Less</div>}
+
         </AccordionDetails>
         }
       </Accordion>

@@ -8,7 +8,6 @@ import LoginSharpIcon from '@mui/icons-material/LoginSharp';
 import AppRegistrationSharpIcon from '@mui/icons-material/AppRegistrationSharp';
 import LogoutIcon from '@mui/icons-material/Logout';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import HomeIcon from '@mui/icons-material/Home';
 
 class NavigationComponent extends React.Component
 {
@@ -34,12 +33,12 @@ class NavigationComponent extends React.Component
                             <Link to="/dashboard" style={{ textDecoration: 'none',color:'white' }}>Dashboard</Link>
                         </Button>
                     }
-                    {isAuthenticated()===null&&
+                    {/* {isAuthenticated()===null&&
                         <Button variant="contained" style={{marginLeft:'15px',padding:'10px'}}>
                             <HomeIcon/>
                             <NavLink to="/" style={{ textDecoration: 'none',color:'white'}}>Home</NavLink>
                         </Button>
-                    }
+                    } */}
                     {isAuthenticated()===null&&
                         <Button variant="contained" style={{marginLeft:'15px',padding:'10px'}}>
                             <LoginSharpIcon/>

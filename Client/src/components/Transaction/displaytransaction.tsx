@@ -49,36 +49,41 @@ const DisplayTransaction:FC=() =>{
     
     return(
         <Fragment>
-            <Card sx={{ minWidth: 875 }}>
-            <CardContent>
-            <Typography
-                component="h1"
-                variant="h3"
-                color="inherit"
-                align="center"
-                style={{fontWeight:"bold",fontSize:54}}
-                fontFamily="Roboto"
-                noWrap
-                sx={{ flex: 1 }}
-            >
-            Transaction Details
-            </Typography>
-
-            <Paper>
-                <SideNavbarTransaction/>
-                <div className="main">
-                <div style={{width:'80%',float:'right',padding:'10px'}}>
-                {
-                    filterResponse.length===0?<TransactionTable data={response}/>:<TransactionTable data={filterResponse}/>
-                }
+            <div className="container-fluid">
+            <div className="row">
+                <div className="col-12">
+                <Card >
+                    <CardContent>
+                    <Typography
+                        component="h1"
+                        variant="h3"
+                        color="inherit"
+                        align="center"
+                        style={{fontWeight:"bold"}}
+                        fontFamily="Roboto"
+                        noWrap
+                        sx={{ flex: 1 }}
+                    >
+                    Transaction Details
+                    </Typography>
+                        <div className="row">
+                            <div className="col-2">
+                                <SideNavbarTransaction/>
+                            </div>
+                            <div className="col-10">
+                                {
+                                filterResponse.length===0?<TransactionTable data={response}/>:<TransactionTable data={filterResponse}/>
+                                }
+                            </div>
+                        </div>
+                    {/* {
+                        //response.length>0&&<Pagination RenderedComponent={TransactionTable} data={response} title={"transaction"} pageLimit={5} dataLimit={3} />
+                    } */}
+                    </CardContent>
+                    </Card>
                 </div>
-                </div>
-            </Paper>
-            {/* {
-                //response.length>0&&<Pagination RenderedComponent={TransactionTable} data={response} title={"transaction"} pageLimit={5} dataLimit={3} />
-            } */}
-            </CardContent>
-            </Card>
+            </div>
+            </div>
         </Fragment>
     )
 }

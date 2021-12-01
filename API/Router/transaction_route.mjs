@@ -12,6 +12,14 @@ router.
      .get(function(req,res){
         TransactionController.getransaction(req,res);
     })
+router.
+    route('/:id')
+    .put(function(req,res){
+       TransactionController.updateTransaction(req,res)
+    })
+    .delete(function(req,res){
+        TransactionController.deleteTransaction(req,res)
+    })
 router.use('/filter',FilterRouterTransaction)
 router.use('/sort',sortRouterTransaction)
 export default router

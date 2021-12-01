@@ -15,10 +15,14 @@ const SideNavbarAirport:FC<propTypes> =(props:propTypes) =>{
     const [filtername, setfiltername] = useState<string>('Filter By');
     const [noOfelements,setnoelements] = useState<any>(5)
     const dispatch = useAppDispatch();
+    const [expanded, setExpanded] = useState('panel1');
+    const handleChange = (panel:any) => (event:any, newExpanded:any) => {
+        setExpanded(newExpanded ? panel : false);
+    }; 
     var SlicedAirport=[]
     if(airports.length>0)
     {
-        SlicedAirport=airports.slice(0,noOfelements)
+        SlicedAirport=airports
     }
     const loadmore:any= () =>{
         const sum=noOfelements+noOfelements
@@ -46,7 +50,7 @@ const SideNavbarAirport:FC<propTypes> =(props:propTypes) =>{
         <Fragment>
         <section id="sidebar" style={{backgroundColor:'#f5f3f4'}}>
         <Paper>
-        <div className="container">
+        <div className="container-fluid">
         <div className="row">
             <div className="col-sm">
                 <h2 style={{marginLeft:'2px',fontStyle:'italic'}}>Filter By</h2>
@@ -57,7 +61,7 @@ const SideNavbarAirport:FC<propTypes> =(props:propTypes) =>{
         </div>
         </div>
         <hr style={{borderBottom: '1px solid #dee2e6'}}></hr>
-        <Accordion>
+        <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -65,7 +69,7 @@ const SideNavbarAirport:FC<propTypes> =(props:propTypes) =>{
         >
           <Typography style={{fontSize:'18px'}}>Airport</Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails style={{overflowY:'scroll',height:'200px'}}>
         {
         SlicedAirport?.map((airport:any)=>{
             return(
@@ -79,8 +83,7 @@ const SideNavbarAirport:FC<propTypes> =(props:propTypes) =>{
             )
             })
         }
-        <div className="spanclass" style={{color:'blue'}}onClick={loadmore}>Load More</div>
-        {noOfelements>5&&<div style={{color:'red'}}className="spanclass" onClick={showless}>Show Less</div>}
+        
         </AccordionDetails>
       </Accordion>
       </Paper>

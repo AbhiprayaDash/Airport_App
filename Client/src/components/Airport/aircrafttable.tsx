@@ -1,8 +1,6 @@
-import React, { FC, useEffect } from 'react'
+import {FC} from 'react'
 import DataTable from 'react-data-table-component';
 import SortIcon from "@mui/icons-material/ArrowDownward";
-import { useAppDispatch} from '../../hooks';
-import { fetchAircaft } from '../../Redux/Aircraft';
 
 const customStyles = {
     rows: {
@@ -14,7 +12,7 @@ const customStyles = {
         style: {
             paddingLeft: '8px', 
             paddingRight: '8px',
-            fontSize:'20px'
+            fontSize:'22px'
         },
     },
     cells: {
@@ -42,14 +40,16 @@ type propTypes={
 const Aircrafttable:FC<propTypes> =(props:propTypes)=>{
     const response:any = props.response;
     return(
-        <DataTable
-        columns={columns}
-        data={response}
-        defaultSortFieldId={-1}
-        pagination
-        customStyles={customStyles}
-        sortIcon={<SortIcon />}
-        />
+        <div className="table-responsive">
+            <DataTable
+            columns={columns}
+            data={response}
+            defaultSortFieldId={-1}
+            pagination
+            customStyles={customStyles}
+            sortIcon={<SortIcon />}
+            />           
+        </div>
     )
 }
 export default Aircrafttable

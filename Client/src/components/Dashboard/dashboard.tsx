@@ -21,6 +21,7 @@ import {  Modal, Paper } from '@mui/material';
 import AirportForm from '../Airport/airportform';
 import AircraftForm from '../Airport/aircraftform';
 import TransactionForm from '../Transaction/transactionform';
+import DashboardNavigation from './DashboardNav';
 
 const drawerWidth: number = 240;
 
@@ -75,140 +76,113 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const mdTheme = createTheme();
 
 const Dashboard = ()=> {
-  const [open, setOpen] = React.useState(true);
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
-  const [OpenAirport, setOpenfuncAirport] = React.useState(false);
-  const handleOpenAirport = () => setOpenfuncAirport(true);
-  const handleCloseAirport = () => setOpenfuncAirport(false);
-  const [OpenAircraft, setOpenfuncAircraft] = React.useState(false);
-  const handleOpenAircraft= () => setOpenfuncAircraft(true);
-  const handleCloseAircraft = () => setOpenfuncAircraft(false);
-  const [OpenTransaction, setOpenfuncTransaction] = React.useState(false);
-  const handleOpenTransaction = () => setOpenfuncTransaction(true);
-  const handleCloseTransaction = () => setOpenfuncTransaction(false);
-  return (
-        <React.Fragment>
-          <Modal
-            open={OpenAirport}
-            onClose={handleCloseAirport}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Paper style={{width:'30%',height:'450px',alignContent:'center',marginLeft:'700px',marginTop:'200px'}}>
-            <AirportForm/>
-            </Paper>
-          </Modal>
-          <Modal
-            open={OpenAircraft}
-            onClose={handleCloseAircraft}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Paper style={{width:'30%',height:'350px',alignContent:'center',marginLeft:'700px',marginTop:'200px'}}>
-            <AircraftForm/>
-            </Paper>
-          </Modal>
-          <Modal
-            open={OpenTransaction}
-            onClose={handleCloseTransaction}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Paper style={{width:'30%',height:'450px',alignContent:'center',marginLeft:'700px',marginTop:'200px'}}>
-            <TransactionForm/>
-            </Paper>
-          </Modal>
-        <ThemeProvider theme={mdTheme}>
-          <Box sx={{ display: 'flex' }}>
-            <CssBaseline />
-            <AppBar position="absolute" open={open}>
-              <Toolbar
-                sx={{
-                  pr: '24px', // keep right padding when drawer closed
-                }}
-              >
-                <IconButton
-                  edge="start"
-                  color="inherit"
-                  aria-label="open drawer"
-                  onClick={toggleDrawer}
-                  sx={{
-                    marginRight: '16px',
-                    ...(open && { display: 'none' }),
-                  }}
+    const [open, setOpen] = React.useState(true);
+    const toggleDrawer = () => {
+      setOpen(!open);
+    };
+    const [OpenAirport, setOpenfuncAirport] = React.useState(false);
+    const handleOpenAirport = () => setOpenfuncAirport(true);
+    const handleCloseAirport = () => setOpenfuncAirport(false);
+    const [OpenAircraft, setOpenfuncAircraft] = React.useState(false);
+    const handleOpenAircraft= () => setOpenfuncAircraft(true);
+    const handleCloseAircraft = () => setOpenfuncAircraft(false);
+    const [OpenTransaction, setOpenfuncTransaction] = React.useState(false);
+    const handleOpenTransaction = () => setOpenfuncTransaction(true);
+    const handleCloseTransaction = () => setOpenfuncTransaction(false);
+    return (
+          <React.Fragment>
+            <div className="container">
+              <div className="row">
+                <div className="col-12">
+                <Modal
+                  open={OpenAirport}
+                  onClose={handleCloseAirport}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
                 >
-                  <MenuIcon />
-                </IconButton>
-                <Typography
-                  component="h1"
-                  variant="h6"
-                  color="inherit"
-                  noWrap
-                  sx={{ flexGrow: 1 }}
+                  <Paper style={{width:'50%',maxWidth:'600px',height:'60%',maxHeight:'600px',alignContent:'center',marginLeft:'auto',marginRight:'auto',marginTop:'200px'}}>
+                    <AirportForm/>
+                  </Paper>
+                </Modal>
+                </div>
+              </div>
+            </div>
+            <div className="container">
+              <div className="row">
+                <div className="col-12">
+                  <Modal
+                    open={OpenAircraft}
+                    onClose={handleCloseAircraft}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                  >
+                  <Paper style={{width:'50%',maxWidth:'600px',height:'60%',maxHeight:'350px',alignContent:'center',marginLeft:'auto',marginRight:'auto',marginTop:'200px'}}>
+                    <AircraftForm/>
+                  </Paper>
+                  </Modal>
+                </div>
+              </div>
+            </div>
+            <div className="container">
+              <div className="row">
+                <div className="col-12">
+                <Modal
+                  open={OpenTransaction}
+                  onClose={handleCloseTransaction}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
                 >
-                  <DashboardIcon/>
-                  Dashboard
-                </Typography>
-                <button type="button" className="btn btn-secondary" onClick={handleOpenAirport} style={{padding:'8px',marginRight:'10px'}}>Add Airport</button>
-                <button type="button" className="btn btn-secondary" onClick={handleOpenAircraft} style={{padding:'8px',marginRight:'10px'}}>Add Aircraft</button>
-                <button type="button" className="btn btn-secondary" onClick={handleOpenTransaction} style={{padding:'8px'}}>Add Transaction</button>
-              </Toolbar>
-            </AppBar>
-            <Drawer variant="permanent" open={open}>
-              <Toolbar
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'flex-end',
-                  px: [1],
-                }}
-              >
-                <IconButton onClick={toggleDrawer}>
-                  <ChevronLeftIcon />
-                </IconButton>
-              </Toolbar>
-              <Divider />
-              <List>{mainListItems}</List>
-            </Drawer>
-            <Box
-              component="main"
-              sx={{
-                backgroundColor: (theme) =>
-                  theme.palette.mode === 'light'
-                    ? theme.palette.grey[100]
-                    : theme.palette.grey[900],
-                flexGrow: 1,
-                height: '100vh',
-                overflow: 'auto',
-              }}
-            >
-              <Toolbar />
-              <Grid container
-                spacing={3}>
-                  <Grid item xs>
-                    <DisplayAirports/>
-                  </Grid>
-              </Grid>
-              <br/>
-              <Grid container
-                spacing={3}>
-                  <Grid item xs>
-                    <DisplayAircrafts/>
-                  </Grid>
-              </Grid>
-                <br/>
-              <Grid container
-                spacing={3}>
-                  <Grid item xs>
-                    <DisplayTransaction/>
-                  </Grid>
-              </Grid>
-            </Box>
-          </Box>
-        </ThemeProvider>
-        </React.Fragment>
-  );
-}
+                <Paper style={{width:'50%',maxWidth:'600px',height:'60%',maxHeight:'500px',alignContent:'center',marginLeft:'auto',marginRight:'auto',marginTop:'200px'}}>
+                  <TransactionForm/>
+                </Paper>
+                </Modal>
+                </div>
+              </div>
+            </div>
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-12">
+                <DashboardNavigation/>
+              </div>
+              </div>
+                <div className="row">
+                  <div className="col-12">
+                          <Box
+                                component="main"
+                                sx={{
+                                  backgroundColor: (theme) =>
+                                    theme.palette.mode === 'light'
+                                      ? theme.palette.grey[100]
+                                      : theme.palette.grey[900],
+                                  height: '100%',
+                            }}
+                          >
+                            <Toolbar />
+                            <div className="row">
+                              <div className="col-12">
+                                  <DisplayAirports/>
+                              </div>
+                            </div>
+                            <br/>
+                            <div className="row">
+                              <div className="col-12">
+                                  <DisplayAircrafts/>
+                              </div>
+                            </div>
+                            <br/>
+                            <div className="row">
+                              <div className="col-12">
+                                  <DisplayTransaction/>
+                              </div>
+                            </div>
+                            <br/>
+                            
+                          </Box>
+                        
+                  </div>
+                </div>
+           </div>
+          </React.Fragment>
+    );
+  }
 export default Dashboard

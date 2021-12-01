@@ -1,9 +1,12 @@
-import { FC } from "react"
+import { FC, Fragment } from "react"
 import '../../css/404page.css'
+import NavigationComponent from "../Navigation/navcomponent"
 
 
 const InvalidPage404component:FC = () =>{
     return(
+        <Fragment>
+        <NavigationComponent/>
             <div className="error">
                 <div className="container-floud">
                     <div className="col-xs-12 ground-color text-center">
@@ -17,6 +20,7 @@ const InvalidPage404component:FC = () =>{
                     </div>
                 </div>
             </div>
+        </Fragment>
     )
 }
 export default InvalidPage404component

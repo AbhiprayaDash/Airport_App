@@ -6,6 +6,15 @@ type stateTypes= {
     aircraft_no:Number,
     quantity:Number
 }
+export const checkFunc = (state:any) =>{
+    if(state.airport==="")
+        return false;
+    if(state.aircraftno==="")
+        return false;
+    if(state.quantity===0)
+        return false;
+    return true
+}
 export const errorhandling=async (reqbody:any)=>{
     try{
         await axios.post('http://localhost:9000/v1/transactions',reqbody)
