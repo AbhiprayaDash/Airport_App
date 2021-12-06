@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { fetchAirport } from "../../Redux/Airport";
 import { FetchTransaction } from "../../Redux/Transaction";
 import ChartNavigation from "./chartnavigation";
-
+import '../../css/charts.css'
 // Note: changes to the plugin code is not reflected to the chart, because the plugin is loaded at chart construction time and editor changes only trigger an chart.update().
 const image = new Image();
 image.src = 'https://www.chartjs.org/img/chartjs-logo.svg';
@@ -23,7 +23,9 @@ const plugin = {
             }
         }
 };
-
+function isMobileDevice(){
+    return ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+}
 const colorHex = ["#937B63", "#1e88e5", "#64ffda", "#aa00ff", "#cddc39", "#7e57c2", "#81c784", "#0091ea", "#f06292", "#5e35b1", "#eeff41"]
 const Chart:FC =() =>{
         const response:Array<any>= useAppSelector((state:any) => state.Transaction.response);
@@ -55,10 +57,41 @@ const Chart:FC =() =>{
                     labelString: 'probability'
                     }
                 }];
+        const BarChartOptions:any = {
+            plugins: {
+                legend: {
+                  display: !isMobileDevice()  
+                }
+            },
+            scales:{
+                x: {
+                    ticks: {
+                      display: !isMobileDevice(),
+                    }
+                }
+            }
+        }
         const Options:any = {
             scales: {
-                yAxes: xAxesOptions
-            }
+                // yAxes: [{
+                //     // xAxesOptions,
+                //     ticks: {
+                //         fontSize: 52
+                //     }
+                // }],
+                x: {
+                    ticks: {
+                      display: !isMobileDevice(),
+                    }
+                }
+            },
+            
+            plugins: {
+                legend: {
+                  display: !isMobileDevice()
+                  
+                }
+            },
         };
         const loaddata=async() =>{
             if(response.length===0)
@@ -108,9 +141,9 @@ const Chart:FC =() =>{
                         borderColor: colorHex[airportIndex],
                         pointStyle:'circle',
                         hoverRadius:10,
-                        pointRadius:5,
+                        pointRadius:3,
                         yAxisID: 'y-axis-0',
-                        borderWidth:5,
+                         //borderWidth:5,
                         plugins: [plugin],
                         options: {
                             maintainAspectRatio : false,
@@ -120,15 +153,29 @@ const Chart:FC =() =>{
                                     display: true,
                                     text: 'Custom Chart Title'
                                 },
-                                legend:{
-                                    display:true,
-                                    labels: {
-                                        // This more specific font property overrides the global property
-                                        font: {
-                                            size: 14
-                                        }
+                                
+                                // legend:{
+                                //     display:false,
+                                //     labels: {
+                                //         // This more specific font property overrides the global property
+                                //         font: {
+                                //             size: 14
+                                //         }
+                                //     }
+                                // },
+                                yAxes: [{
+                                    // xAxesOptions,
+                                    ticks: {
+                                        fontSize: 52
                                     }
-                                },
+                                }],
+                                // x: {
+                                //     ticks: {
+                                //         font: {
+                                //             size: 62,
+                                //         }
+                                //     }
+                                // },
                                 datasets:{
                                     line:{
                                         borderWidth:20
@@ -163,6 +210,9 @@ const Chart:FC =() =>{
                         categoryPercentage:1.0,
                         barPercentage:1.0,
                         maxBarThickness:15,
+                        options: {
+                            maintainAspectRatio : false,
+                        }
                         
                     })
             })
@@ -171,6 +221,7 @@ const Chart:FC =() =>{
             return(
                 <Fragment>
                 <ChartNavigation/>
+                <br/><br/><br/><br/>
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-12">
@@ -180,14 +231,14 @@ const Chart:FC =() =>{
                     <br/>
                     <div className="row">
                         <div className="col-12">
-                            <h2 style={{textAlign:'center',fontSize: 40,fontWeight:"bold"}}>Fuel Quantity Line Chart</h2>
-                            <div className="shadow-lg p-3 mb-5 bg-body rounded" style={{   }}>
+                            <div className="shadow-lg p-3 mb-5 bg-body rounded" id="chartcontainer">
+                            <h2 className="heading" >Fuel Quantity Line Chart</h2>
                             <br/>                         
-                            <div className="chart-container">
+                            <div className="chart-container" > 
                             <Line data={{
                                     labels: label,
                                     datasets: lineGraphData(),
-                                }} height={100} options={Options} plugins={[plugin]}/>
+                                }}  className="linedata" style={{position: 'relative', height:'400px', width:'80vw'}} options={Options} plugins={[plugin]}/>
                             </div><br/><br/><br/><br/>
                             </div>
                         </div>
@@ -195,22 +246,22 @@ const Chart:FC =() =>{
                     <br/>
                     <div className="row">
                         <div className="col-12">
-                            <h2 style={{textAlign:'center',fontSize: 40,fontWeight:"bold"}}>Fuel Available Bar Chart</h2>
                             <div className="shadow-lg p-3 mb-5 bg-body rounded">
                             <br/>
+                            <h2 className="heading">Fuel Available Bar Chart</h2>
                             <div className="chart-container" >
                             <Bar data={{
                                 labels:airportlabel,
                                 datasets:FuelcapacityPlot(),
-                                }} height={100} plugins={[plugin]}/>
+                                }} className="linedata" options={BarChartOptions} plugins={[plugin]}/>
                             </div>
                             </div>
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-12">
+                        <h1 className="heading">Transaction(In/Out) Doughnut Chart</h1>
                             <br/>
-                        <h2 style={{textAlign:'center',fontSize: 40,fontWeight:"bold"}}>Transaction(In/Out) Doughnut Chart</h2>
                         <div className="shadow-lg p-3 mb-5 bg-body rounded" style={{
                         display: "flex",
                         flexDirection: "row",
@@ -221,6 +272,9 @@ const Chart:FC =() =>{
                         // justifyContent: "space-around",
                         justifyContent: "center"
                      }}>
+                         <br/>
+                          
+                          <br/><br/><br/>
                     {
                     responsedata?.map((response:any) => {
                         var insum=0;
@@ -234,9 +288,9 @@ const Chart:FC =() =>{
                                 outsum+=-res.quantity
                         })
                         return (
-                        response.length>0&&<div key={'1'} className="card" style={{ width: "18rem", margin: "5px" }}>
-                            <div className="card-body" style={{paddingTop:'30%'}}>
-                                <div >
+                        response.length>0&&<div key={'1'} className="card" style={{ width: "20rem", margin: "5px",display:'block' }}>
+                            <div className="card-body" style={{paddingTop:'20%'}}>
+                                <div className="bardata">
 
                                     <Doughnut data={{
                                         labels: [
@@ -255,7 +309,7 @@ const Chart:FC =() =>{
                                                 '#d81b60'
                                             ]
                                         }]
-                                    }} height={200} width={200} options={{
+                                    }}  options={{
                                         responsive: true,
                                         maintainAspectRatio: true,
                                         aspectRatio: 2,
@@ -269,9 +323,9 @@ const Chart:FC =() =>{
                                             },
                                         },
 
-                                    }} />
+                                    }}  />
                                     <br/>
-                                    <label style={{fontWeight:'bold'}}>{response[0].airport.name}</label>
+                                    <label style={{fontWeight:'bold',textAlign:'center'}}>{response[0].airport.name}</label>
                                 </div>
                             </div>
                         </div>

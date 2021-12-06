@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {errormsg, successmsg} from "../Toast/toastservice"
+import {errormsg, successmsg} from "./toastservice"
 type stateTypes= {
     type:string,
     airport_name:string,

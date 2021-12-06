@@ -6,14 +6,13 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {checkFunc, PostTransactionService} from './transactionService'
+import {checkFunc, PostTransactionService} from '../../services/transactionService'
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import 'react-toastify/dist/ReactToastify.css';
-import { errormsg } from "../Toast/toastservice";
+import { errormsg } from "../../services/toastservice";
 import { Autocomplete } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { useState } from "react";
@@ -195,6 +194,7 @@ const TransactionForm:FC =() =>{
                       <div className="ui pointing label" style={{marginRight:'auto',marginLeft:'10%'}}>
                             Please enter a positive value less than fuel capacity
                       </div>
+                      <br/><br/>
                       {
                         checkFunc(state)===true&&<Button
                           type="submit"

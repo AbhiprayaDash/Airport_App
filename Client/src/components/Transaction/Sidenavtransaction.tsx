@@ -69,7 +69,7 @@ const SideNavbarTransaction:FC = () =>{
         <div className="container">
         <div className="row">
             <div className="col-sm">
-                <h2 style={{marginLeft:'2px',fontStyle:'italic'}}>Filter By</h2>
+                <h3 style={{marginLeft:'2px',fontStyle:'italic'}}>Filter By</h3>
             </div>
             <div className="col-sm" style={{paddingTop:"10px",paddingLeft:"5px"}}>
                 <span style={{color:'blue',fontSize:'18px'}}><a onClick={handlefilter}>Clear All</a></span>

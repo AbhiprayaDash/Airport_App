@@ -1,0 +1,10 @@
+.addButton{
+    font-family: "Open Sans, sans-serif";
+    font-weight: 700;
+    size: "18px";
+    margin-left: "20px";
+}
+.addButton:hover{
+	background: "#3f37c9";
+	color:'white'
+}

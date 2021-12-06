@@ -1,8 +1,6 @@
 import React from "react";
 import LoginFormComponent from "../Auth/loginform";
-import SignUpComponent from "../Auth/signupcomponent";
 import SignUpFormComponent from "../Auth/signupform";
-import NavigationComponent from "../Navigation/navcomponent";
 type proptypes={
     logo:any
     history:any,

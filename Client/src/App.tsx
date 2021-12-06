@@ -13,8 +13,6 @@ import Chart from "./components/Charts/charts";
 import DisplayAirports from "./components/Airport/displayairport";
 import DisplayAircrafts from "./components/Airport/displayaircraft";
 import InvalidPage404component from "./components/InvalidPage/404page"
-import InvalidPage400component from "./components/InvalidPage/400page"
-import DashboardNavigation from "./components/Dashboard/DashboardNav";
 
 function App() {
   return (
@@ -23,7 +21,6 @@ function App() {
       <Route exact path="/login" component={HomeComponent}/>
       <Route exact path="/signup" component={SignUpComponent}/>
       <Route exact path="/display" component={DisplayAirports}/>
-      <Route exact path="/display2" component={DashboardNavigation}/>
       <Route exact path="/displayaircrafts" component={DisplayAircrafts}/>
       <PrivateRoute exact path="/chart" component={Chart}/>
       <PrivateRoute exact path="/dashboard" component={DashboardContent}/>

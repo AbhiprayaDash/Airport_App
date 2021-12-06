@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { ToastContainer } from "react-toastify";
-import {successmsg} from '../Toast/toastservice'
+import {successmsg} from '../../services/toastservice'
 import 'react-toastify/dist/ReactToastify.css';
 type stateTypes ={
     loggedout:boolean

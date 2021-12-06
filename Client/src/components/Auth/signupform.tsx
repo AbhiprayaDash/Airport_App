@@ -9,8 +9,8 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import {errormsg, successmsg} from '../Toast/toastservice'
-import { validateSignupData } from './authservice';
+import {errormsg, successmsg} from '../../services/toastservice'
+import { validateSignupData } from '../../services/authservice';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Card, CardContent } from '@mui/material';
 

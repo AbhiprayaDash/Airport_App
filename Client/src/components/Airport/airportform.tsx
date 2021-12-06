@@ -7,9 +7,9 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import 'react-toastify/dist/ReactToastify.css';
-import { postAirportData,checkInput } from './airportservice';
+import { postAirportData,checkInput } from '../../services/airportservice';
 import AirplanemodeActiveSharpIcon from '@mui/icons-material/AirplanemodeActiveSharp';
-import { errormsg } from '../Toast/toastservice';
+import { errormsg } from '../../services/toastservice';
 import Autocomplete from '@mui/material/Autocomplete';
 import { fetchAirport, FetchAirportList } from '../../Redux/Airport';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -42,10 +42,10 @@ const AirportForm:FC = () =>{
       }
     }
     useEffect(() => {
+      console.log('added')
         loaddata()
     }, []);
     const handlename=(event:any,value:any)=>{
-      console.log(value)
         if(value!==null&&value!==undefined)
         {
           dispatch(saveAirportName(value))
@@ -143,6 +143,7 @@ const AirportForm:FC = () =>{
                       <div className="ui pointing label" style={{marginRight:'auto',marginLeft:'10%'}}>
                         Please enter a value less than 100000 and greater than 1000
                       </div>
+                      <br/><br/>
                       {checkInput(state)===false&&
                           <Button
                             type="submit"

@@ -1,5 +1,4 @@
 import {FC, Fragment, useEffect, useState} from 'react'
-import NavigationComponent from '../Navigation/navcomponent'
 import Typography from '@mui/material/Typography';
 import Pagination from '../Pagination/pagination'
 import Reporttable from './reporttable'
@@ -11,6 +10,8 @@ import {FetchTransaction} from '../../Redux/Transaction'
 import {fetchAirport} from '../../Redux/Airport';
 import { useAppDispatch,useAppSelector } from '../../hooks';
 import ReportNavigation from './reportnavigation';
+import '../../css/report.css'
+
 const ReportComponent:FC=() =>{
     var response = useAppSelector<Array<any>>((state:any)=>state.Transaction.response)
     var airportresponse = useAppSelector<Array<any>>((state:any)=>state.Airport.response)
@@ -49,11 +50,11 @@ const ReportComponent:FC=() =>{
       return(
         <Fragment>
         <ReportNavigation/>
-        <br/>
+        <br/><br/><br/><br/><br/>
         <div className="container">
             <div className="row">
                 <div className="col-12">
-                    <h1 className="ui teal header" style={{textAlign:'center',fontSize: 60,fontWeight:"bold"}}>Fuel Consumption Report</h1>
+                    <h1 className="ui teal header" id="heading">Fuel Consumption Report</h1>
                 </div>
             </div>
             <br/>

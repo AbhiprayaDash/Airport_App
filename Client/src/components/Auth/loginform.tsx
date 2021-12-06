@@ -3,8 +3,8 @@ import { Button, Card, CardContent, Grid, Link, TextField } from "@mui/material"
 import { Avatar, Box, Container, createTheme, CssBaseline, Typography } from "@mui/material";
 import React from "react";
 import { ToastContainer } from "react-toastify";
-import { errormsg, successmsg } from "../Toast/toastservice";
-import { postlogindata } from "./authservice";
+import { errormsg, successmsg } from "../../services/toastservice";
+import { postlogindata } from "../../services/authservice";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import NavigationComponent from "../Navigation/navcomponent";
 

@@ -13,11 +13,11 @@ export const mainListItems = (
             <ListItemIcon>
               <DescriptionIcon />
               <NavLink to="/report" style={{ textDecoration: 'none',color:'black'}}>
-            <ListItemText primary={
-              <span style={{fontSize:'20px'}}>
-                Report
-              </span> 
-            }/>
+              <ListItemText primary={
+                <span style={{fontSize:'20px'}}>
+                  Report
+                </span> 
+              }/>
             </NavLink>
             </ListItemIcon>
             

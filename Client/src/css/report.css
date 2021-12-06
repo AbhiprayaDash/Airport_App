@@ -1,0 +1,14 @@
+@media only screen and (max-width:700px){
+    #heading{
+        text-align:center;
+        font-size: 30px;
+        font-weight:bold;
+    }
+}
+@media only screen and (min-width: 992px) {
+    #heading{
+        text-align:center;
+        font-size: 60px;
+        font-weight:bold;
+    }
+}

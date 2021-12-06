@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as EmailValidator from 'email-validator';
 import 'react-toastify/dist/ReactToastify.css';
-import {errormsg} from '../Toast/toastservice'
+import { errormsg } from "./toastservice";
 var passwordValidator = require('password-validator');
 
 

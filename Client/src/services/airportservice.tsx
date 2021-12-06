@@ -1,6 +1,6 @@
 import axios from "axios";
 import 'react-toastify/dist/ReactToastify.css';
-import { errormsg, successmsg } from "../Toast/toastservice";
+import { errormsg, successmsg } from "./toastservice";
 
 export const checkInput = (state:any) =>{
         if(state.fuelavailable<0||state.fuelcapacity<0)

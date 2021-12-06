@@ -29,23 +29,6 @@ interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
 
-const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: (prop) => prop !== 'open',
-    })<AppBarProps>(({ theme, open }) => ({
-      zIndex: theme.zIndex.drawer + 1,
-      transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-      }),
-    ...(open && {
-      marginLeft: drawerWidth,
-      width: `calc(100% - ${drawerWidth}px)`,
-      transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -73,21 +56,13 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-const mdTheme = createTheme();
-
 const Dashboard = ()=> {
     const [open, setOpen] = React.useState(true);
-    const toggleDrawer = () => {
-      setOpen(!open);
-    };
     const [OpenAirport, setOpenfuncAirport] = React.useState(false);
-    const handleOpenAirport = () => setOpenfuncAirport(true);
     const handleCloseAirport = () => setOpenfuncAirport(false);
     const [OpenAircraft, setOpenfuncAircraft] = React.useState(false);
-    const handleOpenAircraft= () => setOpenfuncAircraft(true);
     const handleCloseAircraft = () => setOpenfuncAircraft(false);
     const [OpenTransaction, setOpenfuncTransaction] = React.useState(false);
-    const handleOpenTransaction = () => setOpenfuncTransaction(true);
     const handleCloseTransaction = () => setOpenfuncTransaction(false);
     return (
           <React.Fragment>
@@ -144,6 +119,7 @@ const Dashboard = ()=> {
               <div className="col-12">
                 <DashboardNavigation/>
               </div>
+              <br/><br/>
               </div>
                 <div className="row">
                   <div className="col-12">

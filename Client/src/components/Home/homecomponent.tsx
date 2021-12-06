@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import ImageComponent from '../Image/image'
 import logo from '../../images/tim-gouw-OwD1ON8O-O4-unsplash.jpg'
-import { isAuthenticated } from "../Auth/authservice";
+import { isAuthenticated } from "../../services/authservice";
 
 type propTypes={
     history:any

@@ -53,7 +53,7 @@ const SideNavbarAircraft:FC<propTypes> =(props:propTypes) =>{
         <div className="container-fluid" >
         <div className="row">
             <div className="col-sm">
-                <h2 style={{marginLeft:'2px',fontStyle:'italic'}}>Filter By</h2>
+            <h3 style={{marginLeft:'2px',fontStyle:'italic'}}>Filter By</h3>
             </div>
             <div className="col-sm"style={{paddingTop:"10px",paddingLeft:"5px"}}>
                 <span style={{color:'blue',fontSize:'18px'}}><a onClick={handlefiltername}>Clear All</a></span>
@@ -67,7 +67,7 @@ const SideNavbarAircraft:FC<propTypes> =(props:propTypes) =>{
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography style={{fontSize:'18px'}}>Airline</Typography>
+          <Typography style={{fontSize:'18px',paddingLeft:'8px'}}>Airline</Typography>
         </AccordionSummary>
         <AccordionDetails style={{overflowY:'scroll',height:'150px'}}>
         {
