@@ -21,24 +21,13 @@ const customStyles = {
         },
     },
 };
-const columns:any = [
-    {
-      name: "Aircraft No",
-      selector: "aircraft_no",
-      sortable: true,
-    },
-    {
-      name: "Airline",
-      selector: "airline",
-      sortable: true,
-      
-    },
-  ];
 type propTypes={
-    response:any
+    response:any,
+    columns:any
 }
-const Aircrafttable:FC<propTypes> =(props:propTypes)=>{
+const TableComponent:FC<propTypes> =(props:propTypes)=>{
     const response:any = props.response;
+    const columns:any = props.columns
     return(
         <div className="table-responsive">
             <DataTable
@@ -52,4 +41,4 @@ const Aircrafttable:FC<propTypes> =(props:propTypes)=>{
         </div>
     )
 }
-export default Aircrafttable
+export default TableComponent

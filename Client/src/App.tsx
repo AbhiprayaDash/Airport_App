@@ -1,7 +1,6 @@
 import { Route, Switch } from "react-router";
 import HomeComponent from './components/Home/homecomponent';
 import SignUpComponent from './components/Auth/signupcomponent';
-import LoginComponent from './components/Auth/logincomponent'
 import {PrivateRoute} from './components/Route/PrivateRoute'
 import AirportController from "./components/Airport/airport";
 import AircraftController from "./components/Airport/aircraft";
@@ -13,6 +12,7 @@ import Chart from "./components/Charts/charts";
 import DisplayAirports from "./components/Airport/displayairport";
 import DisplayAircrafts from "./components/Airport/displayaircraft";
 import InvalidPage404component from "./components/InvalidPage/404page"
+import DisplayTransaction from "./components/Transaction/displaytransaction";
 
 function App() {
   return (
@@ -20,8 +20,9 @@ function App() {
       <Route exact path="/" component={HomeComponent}/>
       <Route exact path="/login" component={HomeComponent}/>
       <Route exact path="/signup" component={SignUpComponent}/>
-      <Route exact path="/display" component={DisplayAirports}/>
-      <Route exact path="/displayaircrafts" component={DisplayAircrafts}/>
+      <PrivateRoute exact path="/airports" component={DisplayAirports}/>
+      <PrivateRoute exact path="/aircrafts" component={DisplayAircrafts}/>
+      <PrivateRoute exact path="/transactions" component={DisplayTransaction}/>
       <PrivateRoute exact path="/chart" component={Chart}/>
       <PrivateRoute exact path="/dashboard" component={DashboardContent}/>
       <PrivateRoute exact path="/transaction" component={AddTransaction}/>

@@ -1,10 +1,13 @@
 import {Fragment,FC, useEffect} from "react";
-import { Line,Bar,Doughnut} from 'react-chartjs-2'
+import { Line,Bar} from 'react-chartjs-2'
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { fetchAirport } from "../../Redux/Airport";
 import { FetchTransaction } from "../../Redux/Transaction";
-import ChartNavigation from "./chartnavigation";
+import MediaQuery from "react-responsive";
 import '../../css/charts.css'
+import DashboardNavigation from "../Dashboard/DashboardNav";
+import { Chartdata } from "./chartnavdata";
+
 // Note: changes to the plugin code is not reflected to the chart, because the plugin is loaded at chart construction time and editor changes only trigger an chart.update().
 const image = new Image();
 image.src = 'https://www.chartjs.org/img/chartjs-logo.svg';
@@ -51,12 +54,6 @@ const Chart:FC =() =>{
             }
             return 0;
         }).map((airport:any)=>airport.name)
-                var xAxesOptions = [{
-                    scaleLabel: {
-                    display: true,
-                    labelString: 'probability'
-                    }
-                }];
         const BarChartOptions:any = {
             plugins: {
                 legend: {
@@ -153,29 +150,11 @@ const Chart:FC =() =>{
                                     display: true,
                                     text: 'Custom Chart Title'
                                 },
-                                
-                                // legend:{
-                                //     display:false,
-                                //     labels: {
-                                //         // This more specific font property overrides the global property
-                                //         font: {
-                                //             size: 14
-                                //         }
-                                //     }
-                                // },
                                 yAxes: [{
-                                    // xAxesOptions,
                                     ticks: {
                                         fontSize: 52
                                     }
                                 }],
-                                // x: {
-                                //     ticks: {
-                                //         font: {
-                                //             size: 62,
-                                //         }
-                                //     }
-                                // },
                                 datasets:{
                                     line:{
                                         borderWidth:20
@@ -220,15 +199,56 @@ const Chart:FC =() =>{
         }
             return(
                 <Fragment>
-                <ChartNavigation/>
+                <DashboardNavigation SidebarData={Chartdata} headersData={[]}/>
                 <br/><br/><br/><br/>
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-12">
+                        <div className="col-2">
+
+                        </div>
+                        <div className="col-10">
                         <h1 className="ui teal header" style={{marginTop:'2%',textAlign:'center',fontSize: 60,fontWeight:"bold"}}>Report</h1>
                         </div>
                     </div>
                     <br/>
+                <MediaQuery minWidth={1200}>
+                    <div className="row">
+                        <div className="col-2">
+
+                        </div>
+                        <div className="col-10">
+                            <div className="shadow-lg p-3 mb-5 bg-body rounded" id="chartcontainer">
+                            <h2 className="heading" >Fuel Quantity Line Chart</h2>
+                            <br/>                         
+                            <div className="chart-container" > 
+                            <Line data={{
+                                    labels: label,
+                                    datasets: lineGraphData(),
+                                }}  className="linedata" style={{position: 'relative', height:'400px', width:'80vw'}} options={Options} plugins={[plugin]}/>
+                            </div><br/><br/><br/><br/>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div className="row">
+                        <div className="col-2">
+
+                        </div>
+                        <div className="col-10">
+                            <div className="shadow-lg p-3 mb-5 bg-body rounded">
+                            <br/>
+                            <h2 className="heading">Fuel Available Bar Chart</h2>
+                            <div className="chart-container" >
+                            <Bar data={{
+                                labels:airportlabel,
+                                datasets:FuelcapacityPlot(),
+                                }} className="linedata" options={BarChartOptions} plugins={[plugin]}/>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </MediaQuery>
+                <MediaQuery maxWidth={600}>
                     <div className="row">
                         <div className="col-12">
                             <div className="shadow-lg p-3 mb-5 bg-body rounded" id="chartcontainer">
@@ -258,83 +278,7 @@ const Chart:FC =() =>{
                             </div>
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col-12">
-                        <h1 className="heading">Transaction(In/Out) Doughnut Chart</h1>
-                            <br/>
-                        <div className="shadow-lg p-3 mb-5 bg-body rounded" style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        flexWrap: "wrap",
-                        
-                        // height: "50%",
-                        
-                        // justifyContent: "space-around",
-                        justifyContent: "center"
-                     }}>
-                         <br/>
-                          
-                          <br/><br/><br/>
-                    {
-                    responsedata?.map((response:any) => {
-                        var insum=0;
-                        var outsum=0;
-                        console.log(response)
-                        response?.map((res:any)=>
-                        {
-                            if(res.Type==="IN")
-                                insum+=res.quantity
-                            if(res.Type=="OUT")
-                                outsum+=-res.quantity
-                        })
-                        return (
-                        response.length>0&&<div key={'1'} className="card" style={{ width: "20rem", margin: "5px",display:'block' }}>
-                            <div className="card-body" style={{paddingTop:'20%'}}>
-                                <div className="bardata">
-
-                                    <Doughnut data={{
-                                        labels: [
-                                            'In',
-                                            'Out'
-
-                                        ],
-                                        datasets: [{
-                                            data: [insum, outsum],
-                                            backgroundColor: [
-                                                '#023e8a',
-                                                '#52b788'
-                                            ],
-                                            hoverBackgroundColor: [
-                                                '#7b2cbf',
-                                                '#d81b60'
-                                            ]
-                                        }]
-                                    }}  options={{
-                                        responsive: true,
-                                        maintainAspectRatio: true,
-                                        aspectRatio: 2,
-                                        plugins: {
-                                            legend: {
-                                                display: true,
-                                                position: 'bottom',
-                                                labels: {
-                                                    padding: 4,
-                                                },
-                                            },
-                                        },
-
-                                    }}  />
-                                    <br/>
-                                    <label style={{fontWeight:'bold',textAlign:'center'}}>{response[0].airport.name}</label>
-                                </div>
-                            </div>
-                        </div>
-                        )
-                        })
-                    }
-                    </div>
-                    </div>
-                    </div>
+                </MediaQuery>
                 </div>
             </Fragment>
             )  

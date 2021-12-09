@@ -9,8 +9,9 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {FetchTransaction} from '../../Redux/Transaction'
 import {fetchAirport} from '../../Redux/Airport';
 import { useAppDispatch,useAppSelector } from '../../hooks';
-import ReportNavigation from './reportnavigation';
+import { Reportdata } from './reportdata';
 import '../../css/report.css'
+import DashboardNavigation from '../Dashboard/DashboardNav';
 
 const ReportComponent:FC=() =>{
     var response = useAppSelector<Array<any>>((state:any)=>state.Transaction.response)
@@ -30,7 +31,6 @@ const ReportComponent:FC=() =>{
     if(AirportRes.length>0)
     {
         expandedRes = AirportRes[0]
-        console.log(expandedRes)
     }
     const loaddata = async()=>{
         if(response.length===0)
@@ -49,7 +49,7 @@ const ReportComponent:FC=() =>{
     },[]); 
       return(
         <Fragment>
-        <ReportNavigation/>
+        <DashboardNavigation SidebarData={Reportdata} headersData={[]}/>
         <br/><br/><br/><br/><br/>
         <div className="container">
             <div className="row">
@@ -59,7 +59,10 @@ const ReportComponent:FC=() =>{
             </div>
             <br/>
             <div className="row">
-                <div className="col-12">
+                <div className="col-1">
+
+                </div>
+                <div className="col-11">
                 {AirportRes.length>0&&<Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}

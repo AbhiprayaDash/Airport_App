@@ -1,0 +1,30 @@
+.toolbar{
+    position: fixed;
+    background-color: #283046 !important;
+}
+
+@media only screen and (min-width: 1200px) {
+    .MuiAppBar-root {
+        width: 82.7% !important;
+        display: flex !important;
+        z-index: 1100 !important;
+        box-sizing: border-box !important;
+        flex-shrink: 0 !important;
+        flex-direction: column !important;
+        border: 5px !important;
+        border-radius: 7px !important;
+        background-color: #283046 !important;
+    }
+    .makeStyles-header-1 {
+        padding-left: 188px !important;
+        padding-right: 1px !important;
+    }
+    .makeStyles-header-12 {
+        padding-left: 188px !important;
+        padding-right: 1px !important;
+    }
+    .toolbar{
+        margin-left: 70% !important;
+    }
+
+}

@@ -2,36 +2,19 @@ import {
   AppBar,
   Toolbar,
   makeStyles,
-  Button,
   IconButton,
   Drawer,
   Link,
   MenuItem,
 } from "@material-ui/core";
+import '../../css/toolbar.css'
+import '../../css/sidebar.css'
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import MenuIcon from "@material-ui/icons/Menu";
-import React, { useState, useEffect, Fragment } from "react";
+import  { useState, useEffect, Fragment, FC } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import {  Modal, Paper } from '@mui/material';
-import AirportForm from '../Airport/airportform';
-import AircraftForm from '../Airport/aircraftform';
-import TransactionForm from '../Transaction/transactionform';
-
-
-const headersData = [
-  {
-    label: "Report",
-    href: "/report",
-  },
-  {
-    label: "Chart Report",
-    href: "/chart",
-  },
-  {
-    label: "Log Out",
-    href: "/logout",
-  },
-];
+import { ModalComponent } from "../Modal/modal";
+import { SideBar } from "./sidebar";
 
 const useStyles = makeStyles(() => ({
   header: {
@@ -72,26 +55,18 @@ const useStyles = makeStyles(() => ({
     padding: "10px 10px",
   },
 }));
+type PropTypes={
+  SidebarData:Array<any>,
+  headersData:Array<any>
+}
 
-export default function DashboardNavigation() {
-  const [OpenAirport, setOpenfuncAirport] = React.useState(false);
-  const handleOpenAirport = () => setOpenfuncAirport(true);
-  const handleCloseAirport = () => setOpenfuncAirport(false);
-  const [OpenAircraft, setOpenfuncAircraft] = React.useState(false);
-  const handleOpenAircraft= () => setOpenfuncAircraft(true);
-  const handleCloseAircraft = () => setOpenfuncAircraft(false);
-  const [OpenTransaction, setOpenfuncTransaction] = React.useState(false);
-  const handleOpenTransaction = () => setOpenfuncTransaction(true);
-  const handleCloseTransaction = () => setOpenfuncTransaction(false);
-  const { header, logo, menuButton, toolbar, drawerContainer } = useStyles();
-
+const DashboardNavigation:FC<PropTypes>=(props:PropTypes)=>{
+  const { header, toolbar, drawerContainer } = useStyles();
   const [state, setState] = useState({
     mobileView: false,
     drawerOpen: false,
   });
-
   const { mobileView, drawerOpen } = state;
-
   useEffect(() => {
     const setResponsiveness = () => {
       return window.innerWidth < 900
@@ -107,100 +82,32 @@ export default function DashboardNavigation() {
       window.removeEventListener("resize", () => setResponsiveness());
     };
   }, []);
-
   const displayDesktop = () => {
     return (
       <Fragment>
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col-12">
-                      <Modal
-                        open={OpenAirport}
-                        onClose={handleCloseAirport}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
-                      >
-                        <Paper style={{width:'70%',height:'600px',maxHeight:'550px',maxWidth:'500px',marginRight:'auto',marginLeft:'auto',marginTop:'10%',marginBottom:'auto'}}>
-                        <AirportForm/>
-                        </Paper>
-                      </Modal>
-                    </div>
-                </div>
-            </div>
-            
-          <Modal
-            open={OpenAircraft}
-            onClose={handleCloseAircraft}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Paper style={{width:'70%',height:'600px',maxHeight:'350px',maxWidth:'500px',marginRight:'auto',marginLeft:'auto',marginTop:'10%'}}>
-            <AircraftForm/>
-            </Paper>
-          </Modal>
-          <Modal
-            open={OpenTransaction}
-            onClose={handleCloseTransaction}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Paper style={{width:'70%',height:'600px',maxHeight:'500px',maxWidth:'500px',marginRight:'auto',marginLeft:'auto',marginTop:'10%',marginBottom:'auto'}}>
-            <TransactionForm/>
-            </Paper>
-          </Modal>
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-12">
-            <Toolbar className={toolbar}>
-              <h1>{DashboardLogo}</h1>
-              <div>{getMenuButtons()}</div>
+            <ModalComponent/>
+            <Toolbar className={toolbar} style={{marginLeft:'60%',zIndex:-1,float:'right',color:'#e5e5e5'}} >
+              
+              {/* <div>{getMenuButtons()}</div> */}
             </Toolbar>
+        <div className="container-fluid">
+        <div className="row">
+          <div className="col-2">
+            <SideBar SidebarData={props.SidebarData}/>
           </div>
         </div>
-      </div>
+      </div> 
       </Fragment>
     );
   };
-
   const displayMobile = () => {
     const handleDrawerOpen = () =>
       setState((prevState) => ({ ...prevState, drawerOpen: true }));
     const handleDrawerClose = () =>
       setState((prevState) => ({ ...prevState, drawerOpen: false }));
-
     return (
       <Fragment>
-          <Modal
-            open={OpenAirport}
-            onClose={handleCloseAirport}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Paper style={{width:'70%',height:'600px',maxHeight:'550px',maxWidth:'500px',marginRight:'auto',marginLeft:'auto',marginTop:'10%',marginBottom:'auto'}}>
-              <AirportForm/>
-            </Paper>
-          </Modal>
-            
-          <Modal
-            open={OpenAircraft}
-            onClose={handleCloseAircraft}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Paper style={{width:'70%',height:'600px',maxHeight:'350px',maxWidth:'500px',marginRight:'auto',marginLeft:'auto',marginTop:'10%'}}>
-            <AircraftForm/>
-            </Paper>
-          </Modal>
-          <Modal
-            open={OpenTransaction}
-            onClose={handleCloseTransaction}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Paper style={{width:'70%',height:'600px',maxHeight:'500px',maxWidth:'500px',marginRight:'auto',marginLeft:'auto',marginTop:'10%',marginBottom:'auto'}}>
-            <TransactionForm/>
-            </Paper>
-          </Modal>
+          <ModalComponent/>
           <div className="container-fluid">
             <div className="row">
               <div className="col-12">
@@ -226,10 +133,8 @@ export default function DashboardNavigation() {
             >
                 <div className={drawerContainer}>
                   {getDrawerChoices()}
-                </div>
-                
+                </div>   
             </Drawer>
-
             <div>{DashboardLogo}</div>
             </Toolbar>
               </div>
@@ -238,9 +143,8 @@ export default function DashboardNavigation() {
       </Fragment>
     );
   };
-
   const getDrawerChoices = () => {
-    return headersData.map(({ label, href }) => {
+    return props.headersData.map(({ label, href }) => {
       return (
         <Link
           {...{
@@ -262,28 +166,18 @@ export default function DashboardNavigation() {
       <h2 className="logo" style={{fontWeight:'bold'}}>
         <DashboardIcon style={{fontSize:'30px'}}>
         </DashboardIcon>
-        Dashboard
+        Airfuel
       </h2>
     </Fragment>
   );
 
-  const getMenuButtons = () => {
-    return headersData.map(({ label, href }) => {
-      return (
-        <Button
-          {...{
-            key: label,
-            color: "inherit",
-            to: href,
-            component: RouterLink,
-            className: menuButton,
-          }}
-        >
-          {label}
-        </Button>
-      );
-    });
-  };
+  // const getMenuButtons = () => {
+  //   return headersData.map(({ label, href }) => {
+  //     return (
+  //       <Button
+  //         {...{
+  //           key: label,
+
 
   return (
     <header>
@@ -293,3 +187,4 @@ export default function DashboardNavigation() {
     </header>
   );
 }
+export default DashboardNavigation

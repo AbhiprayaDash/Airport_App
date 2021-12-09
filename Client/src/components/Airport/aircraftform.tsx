@@ -4,17 +4,16 @@ import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { errormsg, successmsg } from '../../services/toastservice';
+import { errormsg } from '../../services/toastservice';
 import LocalAirportSharpIcon from '@mui/icons-material/LocalAirportSharp';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import axios from 'axios';
-import {fetchAircaft, FetchAircraftList} from "../../Redux/Aircraft"
+import { FetchAircraftList} from "../../Redux/Aircraft"
 import {saveAircraftNo} from "../../Redux/AircraftSlice"
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { ToastContainer } from 'react-toastify';
-import { checkFunc } from '../../services/aircraftservice';
+import { aircraftformhandler, checkFunc } from '../../services/aircraftservice';
 
 const airlineList =[
     "Air India",
@@ -70,16 +69,8 @@ const AircraftForm:FC =()=>{
             airline:airline
         }
         try{
-            await axios.post('http://localhost:9000/v1/aircrafts',reqbody)
-            var indexvalue = AircraftList.indexOf(Number(reqbody.aircraft_no))
-            await axios.delete('http://localhost:9000/v1/aircraftlist', { data: {indexvalue}, headers: { "Authorization": "***" } });
-            successmsg("Aircraft Added Successfully")
-            const fetchfunc = FetchAircraftList()
-            fetchfunc(dispatch)
-            dispatch(saveAircraftNo(0))
+            aircraftformhandler(AircraftList,reqbody,dispatch)
             setairline('')
-            const fetchAircraft = fetchAircaft()
-            fetchAircraft(dispatch)
         }
         catch(e:any){
             errormsg(e.response.data)
@@ -87,7 +78,7 @@ const AircraftForm:FC =()=>{
     }
         return(
             <ThemeProvider theme={theme}>
-              <ToastContainer limit={3} autoClose={1500}/>
+            <ToastContainer limit={3} autoClose={1500}/>
             <div className="container">
               <div className="row">
                 <div className="col-12">
@@ -104,7 +95,7 @@ const AircraftForm:FC =()=>{
                       <LocalAirportSharpIcon />
                   </Avatar>
                   <Typography component="h1" variant="h5" style={{textAlign:'center'}}>
-                    Add Aircraft
+                      Add Aircraft
                   </Typography>
                   <Box component="form" onSubmit={handlesubmit} noValidate sx={{ mt: 1 }}>
                     <Autocomplete

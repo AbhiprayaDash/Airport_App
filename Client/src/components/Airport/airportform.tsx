@@ -7,11 +7,11 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import 'react-toastify/dist/ReactToastify.css';
-import { postAirportData,checkInput } from '../../services/airportservice';
+import {checkInput, airportformhandler } from '../../services/airportservice';
 import AirplanemodeActiveSharpIcon from '@mui/icons-material/AirplanemodeActiveSharp';
 import { errormsg } from '../../services/toastservice';
 import Autocomplete from '@mui/material/Autocomplete';
-import { fetchAirport, FetchAirportList } from '../../Redux/Airport';
+import {  FetchAirportList } from '../../Redux/Airport';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { saveAirportName } from '../../Redux/AirportSlice';
 import { ToastContainer } from 'react-toastify';
@@ -42,7 +42,6 @@ const AirportForm:FC = () =>{
       }
     }
     useEffect(() => {
-      console.log('added')
         loaddata()
     }, []);
     const handlename=(event:any,value:any)=>{
@@ -68,14 +67,9 @@ const AirportForm:FC = () =>{
         if(index>=AirportList.length)
             return errormsg("Airport is not available")
         try{
-            await postAirportData(reqbody,state,AirportList,index)
-            const fetchfunc = FetchAirportList()
-            await fetchfunc(dispatch)
-            dispatch(saveAirportName(''))
+            airportformhandler(reqbody,state,AirportList,index,dispatch)
             setfuelcapacity(0);
             setfuelavailable(0);
-            const fetchAirports=fetchAirport()
-            await fetchAirports(dispatch)
         }
         catch(e)
         {

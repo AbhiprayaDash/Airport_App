@@ -2,7 +2,6 @@ import React,{Fragment} from 'react'
 import NavigationComponent from '../Navigation/navcomponent'
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import SignUpFormComponent from './signupform';
 import logo from '../../images/tim-gouw-OwD1ON8O-O4-unsplash.jpg'
 import ImageComponent from '../Image/image';
 

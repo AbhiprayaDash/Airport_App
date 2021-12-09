@@ -13,7 +13,6 @@ type propTypes={
 const SideNavbarAircraft:FC<propTypes> =(props:propTypes) =>{
     const aircrafts=props.aircraftlist
     const [filtername, setfiltername] = useState<string>('Filter By');
-    const [noOfelements,setnoelements] = useState<any>(5)
     const dispatch = useAppDispatch();
     const [expanded, setExpanded] = useState('panel1');
     const handleChange = (panel:any) => (event:any, newExpanded:any) => {
@@ -23,14 +22,6 @@ const SideNavbarAircraft:FC<propTypes> =(props:propTypes) =>{
     if(aircrafts.length>0)
     {
         SlicedAircraft=aircrafts
-    }
-    const loadmore:any= () =>{
-        const sum=noOfelements+noOfelements
-        setnoelements(sum)
-    }
-    const showless:any= () =>{
-        const sum=noOfelements-5
-        setnoelements(sum)
     }
     const handlefiltername:any = async(event:any)=>{
         if(event.target.tagName==="A")
@@ -53,7 +44,7 @@ const SideNavbarAircraft:FC<propTypes> =(props:propTypes) =>{
         <div className="container-fluid" >
         <div className="row">
             <div className="col-sm">
-            <h3 style={{marginLeft:'2px',fontStyle:'italic'}}>Filter By</h3>
+            <h3 style={{marginLeft:'2px',fontStyle:'italic',marginTop:'5%'}}>Filter By</h3>
             </div>
             <div className="col-sm"style={{paddingTop:"10px",paddingLeft:"5px"}}>
                 <span style={{color:'blue',fontSize:'18px'}}><a onClick={handlefiltername}>Clear All</a></span>

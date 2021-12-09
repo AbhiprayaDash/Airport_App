@@ -14,7 +14,6 @@ import { Paper } from "@mui/material";
 
 const SideNavbarTransaction:FC = () =>{
     const [filtername, setfiltername] = useState<string>('Filter By');
-    const [noOfelements,setnoelements] = useState<any>(5)
     var Aircraftresult=useAppSelector<Array<any>>((state)=>state.Aircraft.response);
     var AircraftList=Aircraftresult.map((aircraft)=>aircraft.aircraft_no)
     const [expanded, setExpanded] = useState('panel1');
@@ -22,20 +21,11 @@ const SideNavbarTransaction:FC = () =>{
         setExpanded(newExpanded ? panel : false);
     }; 
     const dispatch = useAppDispatch();
-    const loadmore:any= () =>{
-        const sum=noOfelements+noOfelements
-        setnoelements(sum)
-    }
-    const showless:any= () =>{
-        const sum=noOfelements-5
-        setnoelements(sum)
-    }
     const aircraftfilter:any =async (event:any) =>{
         const response = await axios.get(`http://localhost:9000/v1/transactions/filter/${event.target.value}/${'Aircraft'}`)
         dispatch(saveFilterTransaction(response.data))
     }
     const handlefilter:any = async(event:any)=>{
-        var result:any
         if(event.target.tagName==="A")
         {
             setfiltername("All")
@@ -69,7 +59,7 @@ const SideNavbarTransaction:FC = () =>{
         <div className="container">
         <div className="row">
             <div className="col-sm">
-                <h3 style={{marginLeft:'2px',fontStyle:'italic'}}>Filter By</h3>
+                <h3 style={{marginLeft:'2px',fontStyle:'italic',marginTop:'5%'}}>Filter By</h3>
             </div>
             <div className="col-sm" style={{paddingTop:"10px",paddingLeft:"5px"}}>
                 <span style={{color:'blue',fontSize:'18px'}}><a onClick={handlefilter}>Clear All</a></span>
@@ -83,7 +73,7 @@ const SideNavbarTransaction:FC = () =>{
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography style={{fontSize:'18px'}}>Transaction Type</Typography>
+          <Typography style={{fontSize:'18px',marginLeft:'2px'}}>Transaction Type</Typography>
         </AccordionSummary>
         <AccordionDetails style={{overflowY:'scroll'}}>
             <div className="form-check">
@@ -115,7 +105,7 @@ const SideNavbarTransaction:FC = () =>{
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography style={{fontSize:'18px'}}>Aircraft</Typography>
+          <Typography style={{fontSize:'18px',marginLeft:'2px'}}>Aircraft</Typography>
         </AccordionSummary>
         {AircraftList.length>0&&<AccordionDetails style={{overflowY:'scroll',height:'150px'}}>
             {

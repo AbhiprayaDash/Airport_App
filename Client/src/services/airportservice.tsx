@@ -1,5 +1,7 @@
 import axios from "axios";
 import 'react-toastify/dist/ReactToastify.css';
+import { fetchAirport, FetchAirportList } from "../Redux/Airport";
+import { saveAirportName } from "../Redux/AirportSlice";
 import { errormsg, successmsg } from "./toastservice";
 
 export const checkInput = (state:any) =>{
@@ -48,5 +50,19 @@ export async function postAirportData(reqbody:any,state:any,Airports:any,index:n
     }
     catch(e:any){
         return errormsg(e.response.data)
+    }
+}
+export const airportformhandler = async (reqbody:any,state:any,AirportList:any,index:any,dispatch:any) =>{
+    try{
+        await postAirportData(reqbody,state,AirportList,index)
+        const fetchfunc = FetchAirportList()
+        await fetchfunc(dispatch)
+        dispatch(saveAirportName(''))
+        const fetchAirports=fetchAirport()
+        await fetchAirports(dispatch)
+    }
+    catch(e:any)
+    {
+        console.log(e);
     }
 }

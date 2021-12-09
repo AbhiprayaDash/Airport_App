@@ -388,7 +388,7 @@ paths:
   /v1/aircrafts/{aircraft_no}:
     delete:
       tags:
-       - Delete API
+       - Aircraft API
       summary: delete Aircraft based on Aircraft_no
       description: Delete Aircraft on the basis of Aircraft_no 
       security:
@@ -411,7 +411,7 @@ paths:
           description: Unexpected error
     put:
       tags:
-       - Update API
+       - Aircraft API
       summary: update Aircrafts based on Aircraft Number
       description: Update Aircrafts based on Aircraft Number
       security:
@@ -440,7 +440,7 @@ paths:
   /v1/airports/{airportname}:
     delete:
       tags:
-       - Delete API
+       - Airport API
       summary: delete Airport based on Airport Name
       description: Delete Airport based on Airport Name 
       security:
@@ -463,7 +463,7 @@ paths:
           description: Unexpected error
     put:
       tags:
-       - Update API
+       - Airport API
       summary: update Airports based on Airport name
       description: Update Airports based on Airport name 
       security:
@@ -497,7 +497,7 @@ paths:
   /v1/transactions/{id}:
     delete:
       tags:
-       - Delete API
+       - Transaction API
       summary: delete Transaction based on transaction id
       description: Delete Transaction based on transaction id 
       security:
@@ -520,7 +520,7 @@ paths:
           description: Unexpected error
     put:
       tags:
-       - Update API
+       - Transaction API
       summary: update Transaction based on transaction id
       description: Update Transaction based on transaction id
       security:
