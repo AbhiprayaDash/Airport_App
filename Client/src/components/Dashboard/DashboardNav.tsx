@@ -6,16 +6,21 @@ import {
   Drawer,
   Link,
   MenuItem,
+  Button,
+  Avatar,
 } from "@material-ui/core";
 import '../../css/toolbar.css'
 import '../../css/sidebar.css'
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import MenuIcon from "@material-ui/icons/Menu";
 import  { useState, useEffect, Fragment, FC } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, Redirect } from "react-router-dom";
 import { ModalComponent } from "../Modal/modal";
 import { SideBar } from "./sidebar";
-
+import axios from "axios";
+import LogoutComponent from "../Auth/logout";
+import logo from '../../images/tim-gouw-OwD1ON8O-O4-unsplash.jpg'
+import '../../css/dashboard.css'
 const useStyles = makeStyles(() => ({
   header: {
     backgroundColor: "black",
@@ -57,7 +62,8 @@ const useStyles = makeStyles(() => ({
 }));
 type PropTypes={
   SidebarData:Array<any>,
-  headersData:Array<any>
+  headersData:Array<any>,
+  history:any
 }
 
 const DashboardNavigation:FC<PropTypes>=(props:PropTypes)=>{
@@ -66,7 +72,17 @@ const DashboardNavigation:FC<PropTypes>=(props:PropTypes)=>{
     mobileView: false,
     drawerOpen: false,
   });
+  const [username,setUsername]=useState<string>('')
+
   const { mobileView, drawerOpen } = state;
+  const loaduser= async (UserObject:any)=>{
+    const id:any=UserObject.user.id;
+    const response:any = await axios.get(`http://localhost:9000/v1/users/username/${id}`)
+    setUsername(response.data)
+  }
+  const handlelogout = () =>{
+    props.history.push('/logout')
+  }
   useEffect(() => {
     const setResponsiveness = () => {
       return window.innerWidth < 900
@@ -77,7 +93,10 @@ const DashboardNavigation:FC<PropTypes>=(props:PropTypes)=>{
     setResponsiveness();
 
     window.addEventListener("resize", () => setResponsiveness());
-
+    var AccessToken:string=localStorage.getItem('user')|| 'null'
+    var base64Url:any = AccessToken.split('.')[1];
+    var UserObject:any = JSON.parse(window.atob(base64Url));
+    loaduser(UserObject)
     return () => {
       window.removeEventListener("resize", () => setResponsiveness());
     };
@@ -89,14 +108,32 @@ const DashboardNavigation:FC<PropTypes>=(props:PropTypes)=>{
             <Toolbar className={toolbar} style={{marginLeft:'60%',zIndex:-1,float:'right',color:'#e5e5e5'}} >
               
               {/* <div>{getMenuButtons()}</div> */}
+              <div className="container">
+                <div className="row">
+                  <div className="col-8">
+
+                  </div>
+                  <div className="col-4" style={{display:'flex'}}>
+                    
+                    <Avatar src="/broken-image.jpg" />
+                    <h4 style={{color:'black',marginTop:'2%',marginRight:'5%',marginLeft:'4%'}}>{username}</h4> 
+                    <div className="dropdown">
+                      <button type="button" className="btn btn-dark " data-toggle="dropdown" style={{borderRadius:'50%',marginTop:'4%'}}>
+                        <i className="fas fa-caret-down"></i>
+                      </button>
+                      <div className="dropdown-menu">
+                        <a className="dropdown-item" onClick={handlelogout}>Logout</a>
+                      </div>
+                    </div>
+                    {/* <button type="button" className="btn btn-secondary" style={{marginLeft:'10%'}} onClick={handlelogout}>Logout</button> */}
+                  </div>
+                </div>
+              </div>
             </Toolbar>
-        <div className="container-fluid">
-        <div className="row">
-          <div className="col-2">
+
+        
             <SideBar SidebarData={props.SidebarData}/>
-          </div>
-        </div>
-      </div> 
+
       </Fragment>
     );
   };
@@ -171,14 +208,21 @@ const DashboardNavigation:FC<PropTypes>=(props:PropTypes)=>{
     </Fragment>
   );
 
-  // const getMenuButtons = () => {
-  //   return headersData.map(({ label, href }) => {
-  //     return (
-  //       <Button
-  //         {...{
-  //           key: label,
-
-
+   const getMenuButtons = () => {
+      return (
+        <Button
+          {...{
+            key: 'label',
+            color: "inherit",
+            to: 'href',
+            component: RouterLink,
+            // className: menuButton,
+          }}
+        >
+          Logout
+        </Button>
+      );
+  };
   return (
     <header>
       <AppBar className={header}>

@@ -54,7 +54,7 @@ const SideNavbarTransaction:FC = () =>{
     }
     return (
         <Fragment>
-        <section id="sidebar" style={{backgroundColor:'#f5f3f4'}}>
+        <section id="sidebar" style={{backgroundColor:'#f9fafd'}}>
         <Paper>
         <div className="container">
         <div className="row">

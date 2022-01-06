@@ -45,8 +45,20 @@ export const SignupController = model =>async(req,res)=>{
         return res.status(404).json({msg:'Error'});
     }
 }
-
+export const Usernamecontroller = model =>async(req,res) =>{
+    var id=req.params.id;
+    console.log(id)
+    try{
+        const result =await model.findOne({id})
+        console.log(result)
+        return res.status(200).send(result.name)
+    }
+    catch(e){
+        return res.status(404).json({msg:'Error'});
+    }
+}
 export const AuthUtilController = model=>({
     loginController:loginController(model),
-    SignupController:SignupController(model)
+    SignupController:SignupController(model),
+    Usernamecontroller:Usernamecontroller(model)
 })

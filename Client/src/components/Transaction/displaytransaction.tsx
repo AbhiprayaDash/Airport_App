@@ -12,12 +12,17 @@ import MediaQuery from "react-responsive";
 import DashboardNavigation from "../Dashboard/DashboardNav";
 import { SidebarAirport } from "../Airport/airportsidedata";
 import '../../css/table.css'
+import '../../css/displayairport.css'
 import { headerData } from "../Airport/navdataairport";
 import { Transactioncolumns } from "../Airport/tabledata";
 import TableComponent from "../table/table";
+import moment from "moment";
 
+type PropTypes ={
+    history:any
+}
 
-const DisplayTransaction:FC=() =>{
+const DisplayTransaction:FC<PropTypes> = (props:PropTypes) =>{
     const [OpenTransaction, setOpenfuncTransaction] = useState(false);
     const handleOpenTransaction = () => setOpenfuncTransaction(true);
     const handleCloseTransaction = () => setOpenfuncTransaction(false);
@@ -25,7 +30,25 @@ const DisplayTransaction:FC=() =>{
     var Aircraftresult=useAppSelector<Array<any>>((state)=>state.Aircraft.response);
     var filterResponse:any = useAppSelector((state:any) => state.Transaction.filterResponse);
     const dispatch = useAppDispatch()
-
+    var Responsecopy:Array<any> = [...response]
+    var filteredResponse = Responsecopy.map((response:any)=>{
+        let res:any = Object.assign({}, response);
+        let DurationObj={
+            date:moment(res.Duration.date).format("LLL")
+        }
+        res.Duration=DurationObj
+        res.aircraft=res.hasOwnProperty('aircraft')?res.aircraft.aircraft_no:'No Aircraft'
+        return res
+    })
+    var filterResponse = filterResponse.map((response:any)=>{
+        let res:any = Object.assign({}, response);
+        let DurationObj={
+            date:moment(res.Duration.date).format("LLL")
+        }
+        res.Duration=DurationObj
+        res.aircraft=res.hasOwnProperty('aircraft')?res.aircraft.aircraft_no:'No Aircraft'
+        return res
+    })
     const loaddataAircraft=async()=>{
         if(Aircraftresult.length===0)
         {
@@ -68,30 +91,29 @@ const DisplayTransaction:FC=() =>{
                         aria-labelledby="modal-modal-title"
                         aria-describedby="modal-modal-description"
                     >
-                    <Paper style={{width:'70%',height:'600px',maxHeight:'500px',maxWidth:'500px',marginRight:'auto',marginLeft:'auto',marginTop:'10%',marginBottom:'auto'}}>
+                    <Paper style={{width:'70%',height:'600px',maxHeight:'570px',maxWidth:'500px',marginRight:'auto',marginLeft:'auto',marginTop:'10%',marginBottom:'auto'}}>
                         <TransactionForm/>
                     </Paper>
                     </Modal>
                     </div>
                 </div>
             </div>
-            <div className="container-fluid">
+            <div className="container-fluid" id="aircraftcontainer">
             <div className="row">
               <div className="col-12">
-                <DashboardNavigation SidebarData={SidebarAirport} headersData={headerData}/>
+                <DashboardNavigation SidebarData={SidebarAirport} headersData={headerData} history={props.history}/>
               </div>
             </div>
             <br/><br/>
             <br/><br/>
             <div className="row">
                 <MediaQuery minWidth={1200}>
-                <div className="col-2"></div>
-                <div className="col-10">
+                <div className="col-12">
                 <Card >
                     <CardContent>
                     <div className="row">
-                        <div className="col-8">
-                            <Typography
+                        <div className="col-10">
+                            {/* <Typography
                                 component="h2"
                                 variant="h3"
                                 color="inherit"
@@ -102,9 +124,9 @@ const DisplayTransaction:FC=() =>{
                                 sx={{ flex: 1 }}
                             >
                                 Transaction Details
-                            </Typography>
+                            </Typography> */}
                         </div>
-                        <div className="col-4">
+                        <div className="col-2">
                             <button type="button" className="btn btn-success" onClick={handleOpenTransaction} style={{padding:'8px',marginBottom:'5px'}}>Add Transaction</button>
                         </div>
                     </div>
@@ -115,7 +137,7 @@ const DisplayTransaction:FC=() =>{
                             </div>
                             <div className="col-9">
                             {
-                                filterResponse.length===0?<TableComponent response={response} columns={Transactioncolumns}/>:<TableComponent response={response} columns={Transactioncolumns}/>
+                                filterResponse.length===0?<TableComponent response={filteredResponse} columns={Transactioncolumns}/>:<TableComponent response={filterResponse} columns={Transactioncolumns}/>
                             }
                             </div>
                         </div>
@@ -150,7 +172,7 @@ const DisplayTransaction:FC=() =>{
                         <div className="row">
                             <div className="col-12">
                             {
-                                filterResponse.length===0?<TableComponent response={response} columns={Transactioncolumns}/>:<TableComponent response={filterResponse} columns={Transactioncolumns}/>
+                                filterResponse.length===0?<TableComponent response={filteredResponse} columns={Transactioncolumns}/>:<TableComponent response={filterResponse} columns={Transactioncolumns}/>
                             }
                             </div>
                         </div>

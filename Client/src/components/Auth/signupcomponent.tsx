@@ -20,7 +20,7 @@ class SignUpComponent extends React.Component<propTypes,statetypes>{
     
         return(
           <Fragment>
-            <NavigationComponent/>
+            {/* <NavigationComponent/> */}
             <ToastContainer limit={3} autoClose={2000}/>
                 <ImageComponent signin={false} register = {true} history={this.props.history} logo = {logo}/>
           </Fragment>

@@ -21,7 +21,11 @@ import { Airportcolumns } from "./tabledata";
 
 var airports:any=[]
 var set=true
-const  DisplayAirports:FC=()=>{    
+
+type PropTypes = {
+    history:any
+}
+const  DisplayAirports:FC<PropTypes>=(props:PropTypes)=>{    
     const [OpenAirport, setOpenfuncAirport] = useState(false);
     const handleOpenAirport = () => setOpenfuncAirport(true);
     const handleCloseAirport = () => setOpenfuncAirport(false);
@@ -69,10 +73,10 @@ const  DisplayAirports:FC=()=>{
                     </div>
                 </div>
             </div>
-            <div className="container-fluid">
+            <div className="container-fluid" id="aircraftcontainer">
             <div className="row">
               <div className="col-12">
-                <DashboardNavigation SidebarData={SidebarAirport} headersData={headerData}/>
+                <DashboardNavigation SidebarData={SidebarAirport} headersData={headerData} history={props.history}/>
               </div>
             </div>
               <br/><br/>
@@ -114,15 +118,12 @@ const  DisplayAirports:FC=()=>{
             </MediaQuery>
             <MediaQuery minWidth={1200}>
                 <div className="row">
-                    <div className="col-2">
-
-                    </div>
-                    <div className="col-10">
+                    <div className="col-12">
                     <Card >
                         <CardContent>
                         <div className="row">
-                            <div className="col-8">
-                                <Typography
+                            <div className="col-10">
+                                {/* <Typography
                                     component="h1"
                                     variant="h3"
                                     color="inherit"
@@ -133,9 +134,9 @@ const  DisplayAirports:FC=()=>{
                                     fontFamily="Roboto"
                                 >
                                     Airport Details
-                                </Typography>
+                                </Typography> */}
                             </div>
-                            <div className="col-4">
+                            <div className="col-2">
                                 <button type="button" className="btn btn-success" onClick={handleOpenAirport} style={{padding:'8px',float:'left',marginBottom:'5px'}}>Add Airport</button>
                             </div>
                         </div>
@@ -145,7 +146,7 @@ const  DisplayAirports:FC=()=>{
                                 {airports.length>0&&<SideNavbar airportlist={airports}/>}
                             </div>
                             <div className="col-9">
-                                {filterResponse.length===0?<TableComponent response={response} columns={Airportcolumns}/>:<TableComponent response={response} columns={Airportcolumns}/>}
+                                {filterResponse.length===0?<TableComponent response={response} columns={Airportcolumns}/>:<TableComponent response={filterResponse} columns={Airportcolumns}/>}
                             </div>
                         </div>    
                         </CardContent>

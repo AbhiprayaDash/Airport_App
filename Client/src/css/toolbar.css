@@ -5,7 +5,7 @@
 
 @media only screen and (min-width: 1200px) {
     .MuiAppBar-root {
-        width: 82.7% !important;
+        width: 100% !important;
         display: flex !important;
         z-index: 1100 !important;
         box-sizing: border-box !important;
@@ -13,7 +13,7 @@
         flex-direction: column !important;
         border: 5px !important;
         border-radius: 7px !important;
-        background-color: #283046 !important;
+        background-color: #ffffff !important;
     }
     .makeStyles-header-1 {
         padding-left: 188px !important;

@@ -14,6 +14,8 @@ paths:
       responses: 
         '200':
           description: Successful response
+        '500':
+          description: Internal Server Error
   /v1/users/signin:
     post:
       tags:
@@ -46,6 +48,8 @@ paths:
           description: Email or password is Incorrect.
         '404':
           description: A user with the specified ID was not found.
+        '500':
+          description: Internal Server Error
         default:
           description: Unexpected error
 
@@ -85,6 +89,8 @@ paths:
           description: Email or password is Invalid.
         '404':
           description: A user with the specified ID was not found.
+        '500':
+          description: Internal Server Error
         default:
           description: Unexpected error
   /v1/airports:
@@ -126,6 +132,8 @@ paths:
                 $ref: '#/components/schemas/airports'
         '400':
           description: Bad Request
+        '500':
+          description: Internal Server Error
         default:
           description: Unexpected error
     get:
@@ -147,6 +155,8 @@ paths:
                 $ref: '#/components/schemas/airports'
         '400':
           description: Bad Request
+        '500':
+          description: Internal Server Error
         default:
           description: Unexpected error
         
@@ -185,6 +195,8 @@ paths:
                 $ref: '#/components/schemas/aircrafts'
         '400':
           description: Bad Request
+        '500':
+          description: Internal Server Error
         default:
           description: Unexpected error
     get:
@@ -206,6 +218,8 @@ paths:
                 $ref: '#/components/schemas/aircrafts'
         '400':
           description: Bad Request
+        '500':
+          description: Internal Server Error
         default:
           description: Unexpected error
   /v1/transactions:
@@ -251,6 +265,8 @@ paths:
                 $ref: '#/components/schemas/transactions'
         '400':
           description: Bad Request
+        '500':
+          description: Internal Server Error
         default:
           description: Unexpected error
     get:
@@ -272,6 +288,8 @@ paths:
                 $ref: '#/components/schemas/transactions'
         '400':
           description: Bad Request
+        '500':
+          description: Internal Server Error
         default:
           description: Unexpected error   
   /v1/transactions/filter/{filtertype}/{category}:
@@ -311,6 +329,8 @@ paths:
                 $ref: '#/components/schemas/transactions'
         '400':
           description: Bad Request
+        '500':
+          description: Internal Server Error
         default:
           description: Unexpected error
   /v1/airports/filter/{AiportName}/{category}:
@@ -347,6 +367,8 @@ paths:
                 $ref: '#/components/schemas/airports'
         '400':
           description: Bad Request
+        '500':
+          description: Internal Server Error  
         default:
           description: Unexpected error
   /v1/aircrafts/filter/{Airline}/{category}:

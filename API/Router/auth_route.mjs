@@ -13,5 +13,10 @@ router.
      .post(function(req,res){
          AuthController.SignupController(req,res);
      })
+router.
+     route('/username/:id')
+     .get(function(req,res){
+         AuthController.Usernamecontroller(req,res);
+     })
 
 export default router

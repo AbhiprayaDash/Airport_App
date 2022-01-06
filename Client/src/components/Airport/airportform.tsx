@@ -108,12 +108,21 @@ const AirportForm:FC = () =>{
                       onChange={handlename}
                       renderInput={(params:any) => 
                       <TextField {...params} label="Airports" 
-                      value={name}
+                      value={name} id="filled-number"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      variant="filled"
                       />}
                       />
                       <TextField
                         margin="normal"
                         required
+                        id="filled-number"
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        variant="filled"
                         style={{width:'70%',marginRight:'auto',marginLeft:'15%'}}
                         name="Fuel Available"
                         value={fuelavailable}
@@ -127,6 +136,11 @@ const AirportForm:FC = () =>{
                       <TextField
                         margin="normal"
                         required
+                        id="filled-number"
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        variant="filled"
                         style={{width:'70%',marginRight:'auto',marginLeft:'15%'}}
                         name="Fuel Capacity"
                         value={fuelcapacity}

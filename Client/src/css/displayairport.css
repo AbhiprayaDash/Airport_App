@@ -7,4 +7,9 @@ input[type=text], select {
     box-sizing: border-box;
     align-items: center;
   }
-  
+
+@media only screen and (min-width: 992px) {
+    #aircraftcontainer{
+        padding-left:270px !important
+    }
+}

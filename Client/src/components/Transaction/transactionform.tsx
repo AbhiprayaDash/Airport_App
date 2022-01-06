@@ -153,7 +153,7 @@ const TransactionForm:FC =() =>{
                           <MenuItem value={"OUT"}>OUT</MenuItem>
                       </Select>
                       </FormControl>
-                      <br/>
+                      <br/><br/>
                       
                       <Autocomplete
                         id="disable-close-on-select"
@@ -164,9 +164,10 @@ const TransactionForm:FC =() =>{
                         onChange={handlename}
                         renderInput={(params:any) => 
                         <TextField {...params} label="Airports" 
-                        value={airport_name}
+                        value={airport_name} id="filled-search" variant="filled"
                         />}
                         />
+                        <br/>
                       {
                       type==="OUT"&&
                             <Autocomplete
@@ -177,10 +178,11 @@ const TransactionForm:FC =() =>{
                               onChange={handleno}
                               renderInput={(params:any) => 
                             <TextField {...params} label="Aircraft number" 
-                                value={aircraft_no}
+                                value={aircraft_no} id="filled-search" variant="filled"
                               />}
                             />
                       }
+                      
                       <TextField
                         margin="normal"
                         required
@@ -190,6 +192,7 @@ const TransactionForm:FC =() =>{
                         type="number"
                         value={quantity}
                         onChange={handlequantity}
+                        id="filled-search" variant="filled"
                       />
                       <div className="ui pointing label" style={{marginRight:'auto',marginLeft:'10%'}}>
                             Please enter a positive value less than fuel capacity

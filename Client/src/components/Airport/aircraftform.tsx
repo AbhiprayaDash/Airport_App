@@ -108,6 +108,11 @@ const AircraftForm:FC =()=>{
                         renderInput={(params:any) => 
                     <TextField {...params} label="Aircraft number" 
                         value={number}
+                        id="filled-number"
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        variant="filled"
                     />}
                     />
                     <br/>
@@ -120,7 +125,7 @@ const AircraftForm:FC =()=>{
                         onChange={handleairline}
                         renderInput={(params:any) => 
                     <TextField {...params}
-                        value={airline} label="Airline" fullWidth
+                        value={airline} label="Airline" fullWidth id="filled-search" variant="filled"
                     />}
                     />
                     

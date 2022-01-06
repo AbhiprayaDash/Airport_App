@@ -100,7 +100,8 @@ class SignUpFormComponent extends React.Component<propTypes,statetypes>{
                         margin="normal"
                         required
                         fullWidth
-                        id="email"
+                        id="standard-required"
+                        variant="standard" 
                         label="Name"
                         name="name"
                         type="email"
@@ -113,7 +114,8 @@ class SignUpFormComponent extends React.Component<propTypes,statetypes>{
                         margin="normal"
                         required
                         fullWidth
-                        id="email"
+                        id="standard-required"
+                        variant="standard"  
                         label="Email"
                         name="name"
                         type="email"
@@ -129,7 +131,8 @@ class SignUpFormComponent extends React.Component<propTypes,statetypes>{
                         name="password"
                         label="Password"
                         type="password"
-                        id="password"
+                        id="standard-required"
+                        variant="standard" 
                         value={this.state.password}
                         onChange={this.handlepassword}
                         autoComplete="new-password"

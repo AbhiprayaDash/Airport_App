@@ -12,13 +12,18 @@ import MediaQuery from "react-responsive";
 import DashboardNavigation from "../Dashboard/DashboardNav";
 import { SidebarAirport } from "./airportsidedata";
 import '../../css/table.css'
+import '../../css/displayairport.css'
 import { headerData } from "./navdataairport";
 import TableComponent from "../table/table";
 import { Aircraftcolumns } from "./tabledata";
 
 var set=true
 var aircrafts:any=[]
-const DisplayAircrafts:FC =() => {
+
+type PropTypes = {
+    history:any
+}
+const DisplayAircrafts:FC<PropTypes> =(props:PropTypes) => {
     const [OpenAircraft, setOpenfuncAircraft] = useState(false);
     const handleOpenAircraft= () => setOpenfuncAircraft(true);
     const handleCloseAircraft = () => setOpenfuncAircraft(false);
@@ -66,25 +71,22 @@ const DisplayAircrafts:FC =() => {
                     </div>
                 </div>
         </div>
-        <div className="container-fluid">
+        <div className="container-fluid" id="aircraftcontainer">
             <div className="row">
               <div className="col-12">
-                <DashboardNavigation SidebarData={SidebarAirport} headersData={headerData}/>
+                <DashboardNavigation SidebarData={SidebarAirport} headersData={headerData} history={props.history}/>
               </div>
             </div>
             <br/><br/>
             <br/><br/>
             <MediaQuery minWidth={1200}>
             <div className="row">
-                <div className="col-2">
-
-                </div>
-                <div className="col-10">
+                <div className="col-12">
                 <Card >
                     <CardContent>
                     <div className="row">
-                        <div className="col-8">
-                        <Typography
+                        <div className="col-10">
+                        {/* <Typography
                             component="h1"
                             variant="h3"
                             color="inherit"
@@ -95,9 +97,9 @@ const DisplayAircrafts:FC =() => {
                             fontFamily="Roboto"
                         >
                             Aircraft Details
-                        </Typography>
+                        </Typography> */}
                         </div>
-                        <div className="col-4">
+                        <div className="col-2">
                             <button type="button" className="btn btn-success" onClick={handleOpenAircraft} style={{padding:'8px',float:'left',marginBottom:'5px'}}>Add Aircraft</button>
                         </div>
                     </div>
@@ -107,7 +109,7 @@ const DisplayAircrafts:FC =() => {
                             {aircrafts.length>0&&<SideNavbar aircraftlist={aircrafts}/>}
                         </div>
                         <div className="col-9">
-                            {filterResponse.length===0&&response.length>0?<TableComponent response={response} columns={Aircraftcolumns}/>:<TableComponent response={response} columns={Aircraftcolumns}/>}
+                            {filterResponse.length===0&&response.length>0?<TableComponent response={response} columns={Aircraftcolumns}/>:<TableComponent response={filterResponse} columns={Aircraftcolumns}/>}
                         </div>
                     </div>
                     </CardContent>

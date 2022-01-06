@@ -16,7 +16,7 @@ class LoginComponent extends React.Component<propTypes,statetypes>{
     {
         return(
           <Fragment>
-          <NavigationComponent/>
+          {/* <NavigationComponent/> */}
           <LoginFormComponent history={this.props.history}/>
           </Fragment>
         )

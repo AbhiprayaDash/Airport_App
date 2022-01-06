@@ -12,8 +12,14 @@ import { useAppDispatch,useAppSelector } from '../../hooks';
 import { Reportdata } from './reportdata';
 import '../../css/report.css'
 import DashboardNavigation from '../Dashboard/DashboardNav';
+import { headersData } from './reportnavdata';
 
-const ReportComponent:FC=() =>{
+
+type PropTypes = {
+    history:any
+}
+
+const ReportComponent:FC<PropTypes> = (props:PropTypes) =>{
     var response = useAppSelector<Array<any>>((state:any)=>state.Transaction.response)
     var airportresponse = useAppSelector<Array<any>>((state:any)=>state.Airport.response)
     const dispatch = useAppDispatch()
@@ -49,9 +55,9 @@ const ReportComponent:FC=() =>{
     },[]); 
       return(
         <Fragment>
-        <DashboardNavigation SidebarData={Reportdata} headersData={[]}/>
+        <DashboardNavigation SidebarData={Reportdata} headersData={headersData} history={props.history}/>
         <br/><br/><br/><br/><br/>
-        <div className="container">
+        <div className="container-fluid" id="reportcontainer">
             <div className="row">
                 <div className="col-12">
                     <h1 className="ui teal header" id="heading">Fuel Consumption Report</h1>
@@ -59,10 +65,7 @@ const ReportComponent:FC=() =>{
             </div>
             <br/>
             <div className="row">
-                <div className="col-1">
-
-                </div>
-                <div className="col-11">
+                <div className="col-12">
                 {AirportRes.length>0&&<Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}

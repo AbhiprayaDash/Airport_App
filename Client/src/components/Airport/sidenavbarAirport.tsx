@@ -39,7 +39,7 @@ const SideNavbarAirport:FC<propTypes> =(props:propTypes) =>{
     }
     return (
         <Fragment>
-        <section id="sidebar" style={{backgroundColor:'#f5f3f4'}}>
+        <section id="sidebar" style={{backgroundColor:'#f9fafd'}}>
         <Paper>
         <div className="container-fluid">
         <div className="row">
@@ -68,7 +68,7 @@ const SideNavbarAirport:FC<propTypes> =(props:propTypes) =>{
                  <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" 
                  onClick={handlefiltername} value={airport.name}/>
                  <label className="form-check-label" style={{fontSize:'15px'}}>
-                 {airport.name}
+                    {airport.name}
                  </label>
                 </div>
             )

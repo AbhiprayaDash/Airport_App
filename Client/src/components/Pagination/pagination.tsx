@@ -51,7 +51,7 @@ class Pagination extends React.Component<propTypes,stateTypes>{
         return(
             <Fragment>
                 <this.props.RenderedComponent data={this.getPaginatedData()}/>
-                {this.getPaginatedData().length>0&&
+                {this.getPaginatedData().length>4&&
             <nav aria-label="Page navigation example">
               <ul className="pagination">
                 <li className={`page-item ${this.state.currentpage === 1 ? 'disabled' : ''}`}>

@@ -39,7 +39,7 @@ const SideNavbarAircraft:FC<propTypes> =(props:propTypes) =>{
     }
     return (
         <Fragment>
-        <div id="sidebar" style={{backgroundColor:'#f5f3f4'}}>
+        <div id="sidebar" style={{backgroundColor:'#f9fafd'}}>
         <Paper>
         <div className="container-fluid" >
         <div className="row">

@@ -10,7 +10,7 @@ const customStyles = {
     },
     headCells: {
         style: {
-            paddingLeft: '8px', 
+            paddingLeft: '18px', 
             paddingRight: '8px',
             fontSize:'22px'
         },
@@ -30,6 +30,9 @@ const TableComponent:FC<propTypes> =(props:propTypes)=>{
     const columns:any = props.columns
     return(
         <div className="table-responsive">
+        {
+            props.response.length>5
+            &&
             <DataTable
             columns={columns}
             data={response}
@@ -38,6 +41,19 @@ const TableComponent:FC<propTypes> =(props:propTypes)=>{
             customStyles={customStyles}
             sortIcon={<SortIcon />}
             />           
+        }
+        {
+            props.response.length<=5
+            &&
+            <DataTable
+            columns={columns}
+            data={response}
+            defaultSortFieldId={-1}
+            customStyles={customStyles}
+            sortIcon={<SortIcon />}
+            />   
+        }
+            
         </div>
     )
 }

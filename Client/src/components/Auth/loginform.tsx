@@ -7,7 +7,6 @@ import { errormsg, successmsg } from "../../services/toastservice";
 import { postlogindata } from "../../services/authservice";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import NavigationComponent from "../Navigation/navcomponent";
-
 type statetypes={
     password:string,
     email:string,
@@ -66,7 +65,7 @@ class LoginFormComponent extends React.Component<propTypes,statetypes>{
         const theme = createTheme();
         return(
             <ThemeProvider theme={theme}>
-                <NavigationComponent/>
+                {/* <NavigationComponent/> */}
                 <div className="container">
                   <div className="row">
                     <div className="col-12">
@@ -92,9 +91,10 @@ class LoginFormComponent extends React.Component<propTypes,statetypes>{
                           margin="normal"
                           required
                           fullWidth
-                          id="email"
+                          id="standard-required"
+                          variant="standard" 
                           type="email"
-                          label="Email Address"
+                          label="Email ID"
                           name="email"
                           value = {this.state.email}
                           onChange={this.handlemail}
@@ -105,10 +105,11 @@ class LoginFormComponent extends React.Component<propTypes,statetypes>{
                           margin="normal"
                           required
                           fullWidth
+                          id="standard-required"
+                          variant="standard"  
                           name="password"
                           label="Password"
                           type="password"
-                          id="password"
                           value={this.state.password}
                           onChange={this.handlepassword}
                           autoComplete="current-password"

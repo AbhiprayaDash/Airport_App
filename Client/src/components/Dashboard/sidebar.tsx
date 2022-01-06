@@ -26,7 +26,7 @@ export const SideBar:FC<PropTypes> = (props:PropTypes)=>{
                   })}
                 </ul>
               </nav>
-            </IconContext.Provider>
+      </IconContext.Provider>
     </>
   );
 }
