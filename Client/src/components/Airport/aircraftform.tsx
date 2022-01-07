@@ -23,7 +23,7 @@ const airlineList =[
 ]
 const AircraftForm:FC =()=>{
     const [airline,setairline] = useState<string>('')
-    var AircraftList:any = useAppSelector((state:any) => state.Aircraft.AircraftList);
+    let AircraftList:any = useAppSelector((state:any) => state.Aircraft.AircraftList);
     const number:Number = useAppSelector((state:any)=>state.Aircraft.number)
     const theme = createTheme();
     const dispatch = useAppDispatch();

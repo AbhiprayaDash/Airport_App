@@ -39,10 +39,10 @@ const Chart:FC<PropTypes> =(props:PropTypes) =>{
         const response:Array<any>= useAppSelector((state:any) => state.Transaction.response);
         const airportresponse:Array<any> = useAppSelector((state:any) => state.Airport.response);
         const Airportresponse:Array<any> = [...airportresponse];
-        var totalfuelavailable:Number=0;
-        var totalfuelcapacity:Number=0;
+        let totalfuelavailable:Number=0;
+        let totalfuelcapacity:Number=0;
         const dispatch = useAppDispatch();
-        var transactiondata:Array<any> = response
+        let transactiondata:Array<any> = response
         const [topfuelcap,settopfuelcapacity]= useState<Array<any>>([])
         const [topfuelavailable,settopfuelavailable] = useState<Array<any>>([])
         const [topOuttransaction,setOuttransaction] = useState<Array<any>>([]) 
@@ -50,14 +50,14 @@ const Chart:FC<PropTypes> =(props:PropTypes) =>{
         const [totalIntransaction,settotalIntransaction] = useState<Number>(0)
         const [totalOuttransaction,settotalOuttransaction] = useState<Number>(0)
         const [totaltransaction,settotaltransaction] = useState<Number>(0)
-        var label:Array<string>=transactiondata.map((transaction) => new Date(transaction.Duration.date)
+        let label:Array<string>=transactiondata.map((transaction) => new Date(transaction.Duration.date)
             .toLocaleString("en-US", { timeZone: 'Asia/Kolkata', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' })
             .toString())
             .slice(0, 15)
-        var topairportcapacitylabel:Array<string> = topfuelcap?.map((response:any)=>response.name)
-        var topIntransactionlabel:Array<string> = topIntransaction?.map((response:any)=>response.airport.name)
-        var topOuttransactionlabel:Array<string> = topOuttransaction?.map((response:any)=>response.airport.name)
-        var airportlabel:Array<string> =Airportresponse?.sort(function (a:any, b:any) {
+        const topairportcapacitylabel:Array<string> = topfuelcap?.map((response:any)=>response.name)
+        const topIntransactionlabel:Array<string> = topIntransaction?.map((response:any)=>response.airport.name)
+        const topOuttransactionlabel:Array<string> = topOuttransaction?.map((response:any)=>response.airport.name)
+        const airportlabel:Array<string> =Airportresponse?.sort(function (a:any, b:any) {
             var nameA = a.name.toUpperCase();
             var nameB = b.name.toUpperCase(); 
             if (nameA < nameB) {

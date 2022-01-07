@@ -14,12 +14,10 @@ import '../../css/sidebar.css'
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import MenuIcon from "@material-ui/icons/Menu";
 import  { useState, useEffect, Fragment, FC } from "react";
-import { Link as RouterLink, Redirect } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { ModalComponent } from "../Modal/modal";
 import { SideBar } from "./sidebar";
 import axios from "axios";
-import LogoutComponent from "../Auth/logout";
-import logo from '../../images/tim-gouw-OwD1ON8O-O4-unsplash.jpg'
 import '../../css/dashboard.css'
 const useStyles = makeStyles(() => ({
   header: {
@@ -93,9 +91,9 @@ const DashboardNavigation:FC<PropTypes>=(props:PropTypes)=>{
     setResponsiveness();
 
     window.addEventListener("resize", () => setResponsiveness());
-    var AccessToken:string=localStorage.getItem('user')|| 'null'
-    var base64Url:any = AccessToken.split('.')[1];
-    var UserObject:any = JSON.parse(window.atob(base64Url));
+    const AccessToken:string=localStorage.getItem('user')|| 'null'
+    const base64Url:any = AccessToken.split('.')[1];
+    const UserObject:any = JSON.parse(window.atob(base64Url));
     loaduser(UserObject)
     return () => {
       window.removeEventListener("resize", () => setResponsiveness());

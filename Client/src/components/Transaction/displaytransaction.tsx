@@ -27,11 +27,11 @@ const DisplayTransaction:FC<PropTypes> = (props:PropTypes) =>{
     const handleOpenTransaction = () => setOpenfuncTransaction(true);
     const handleCloseTransaction = () => setOpenfuncTransaction(false);
     const response:Array<any> = useSelector((state:any)=>state.Transaction.response)
-    var Aircraftresult=useAppSelector<Array<any>>((state)=>state.Aircraft.response);
-    var filterResponse:any = useAppSelector((state:any) => state.Transaction.filterResponse);
+    const Aircraftresult=useAppSelector<Array<any>>((state)=>state.Aircraft.response);
+    let filterResponse:any = useAppSelector((state:any) => state.Transaction.filterResponse);
     const dispatch = useAppDispatch()
-    var Responsecopy:Array<any> = [...response]
-    var filteredResponse = Responsecopy.map((response:any)=>{
+    const Responsecopy:Array<any> = [...response]
+    const filteredResponse = Responsecopy.map((response:any)=>{
         let res:any = Object.assign({}, response);
         let DurationObj={
             date:moment(res.Duration.date).format("LLL")
@@ -40,7 +40,7 @@ const DisplayTransaction:FC<PropTypes> = (props:PropTypes) =>{
         res.aircraft=res.hasOwnProperty('aircraft')?res.aircraft.aircraft_no:'No Aircraft'
         return res
     })
-    var filterResponse = filterResponse.map((response:any)=>{
+    filterResponse = filterResponse.map((response:any)=>{
         let res:any = Object.assign({}, response);
         let DurationObj={
             date:moment(res.Duration.date).format("LLL")

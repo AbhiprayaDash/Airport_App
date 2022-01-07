@@ -28,7 +28,7 @@ const DisplayAircrafts:FC<PropTypes> =(props:PropTypes) => {
     const handleOpenAircraft= () => setOpenfuncAircraft(true);
     const handleCloseAircraft = () => setOpenfuncAircraft(false);
     const response:any = useAppSelector((state:any) => state.Aircraft.response);
-    var filterResponse:any = useAppSelector((state:any) => state.Aircraft.FilterAircraftList);
+    let filterResponse:any = useAppSelector((state:any) => state.Aircraft.FilterAircraftList);
     const dispatch = useAppDispatch();
     const loaddata=async()=>{
         if(response.length===0)

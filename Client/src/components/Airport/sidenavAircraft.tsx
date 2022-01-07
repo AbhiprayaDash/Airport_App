@@ -18,7 +18,7 @@ const SideNavbarAircraft:FC<propTypes> =(props:propTypes) =>{
     const handleChange = (panel:any) => (event:any, newExpanded:any) => {
         setExpanded(newExpanded ? panel : false);
     }; 
-    var SlicedAircraft=[]
+    let SlicedAircraft=[]
     if(aircrafts.length>0)
     {
         SlicedAircraft=aircrafts

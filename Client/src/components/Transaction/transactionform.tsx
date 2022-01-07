@@ -30,8 +30,8 @@ type stateTypes= {
 }
 
 const TransactionForm:FC =() =>{
-    var Airportresult=useAppSelector<Array<any>>((state)=>state.Airport.response);
-    var Aircraftresult=useAppSelector<Array<any>>((state)=>state.Aircraft.response); 
+    const Airportresult=useAppSelector<Array<any>>((state)=>state.Airport.response);
+    const Aircraftresult=useAppSelector<Array<any>>((state)=>state.Aircraft.response); 
     const AirportList=Airportresult.map((airport)=>airport.name)
     const AircraftList=Aircraftresult.map((aircraft)=>aircraft.aircraft_no)
     const [type,setType]=useState<string>('IN')

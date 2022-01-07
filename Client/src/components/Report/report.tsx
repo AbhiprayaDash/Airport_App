@@ -20,10 +20,10 @@ type PropTypes = {
 }
 
 const ReportComponent:FC<PropTypes> = (props:PropTypes) =>{
-    var response = useAppSelector<Array<any>>((state:any)=>state.Transaction.response)
-    var airportresponse = useAppSelector<Array<any>>((state:any)=>state.Airport.response)
+    const response = useAppSelector<Array<any>>((state:any)=>state.Transaction.response)
+    const airportresponse = useAppSelector<Array<any>>((state:any)=>state.Airport.response)
     const dispatch = useAppDispatch()
-    var AirportRes=airportresponse.slice(1)
+    const AirportRes=airportresponse.slice(1)
     const [expanded, setExpanded] = useState('panel1');
     const handleChange = (panel:any) => (event:any, newExpanded:any) => {
         setExpanded(newExpanded ? panel : false);

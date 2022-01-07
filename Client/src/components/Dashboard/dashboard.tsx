@@ -23,14 +23,14 @@ type PropTypes={
 const Dashboard:React.FC<PropTypes> = (props:PropTypes)=> {
     const Aircraftres:any = useAppSelector((state:any) => state.Aircraft.response);
     const Airportres:any = useAppSelector((state:any) => state.Airport.response);
-    var filteredAirportres = [...Airportres].map((response:any)=>{
+    const filteredAirportres = [...Airportres].map((response:any)=>{
         let res:any = Object.assign({}, response);
         res.fuelavailable+=' L'
         return res;
     })
     const Transactionres:any = useAppSelector((state:any) => state.Transaction.response);
-    var Responsecopy:Array<any> = [...Transactionres]
-    var filteredResponse = Responsecopy.map((response:any)=>{
+    const Responsecopy:Array<any> = [...Transactionres]
+    const filteredResponse = Responsecopy.map((response:any)=>{
         let res:any = Object.assign({}, response);
         res.quantity+=' L'
         let DurationObj={

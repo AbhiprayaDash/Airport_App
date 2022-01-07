@@ -30,7 +30,7 @@ const  DisplayAirports:FC<PropTypes>=(props:PropTypes)=>{
     const handleOpenAirport = () => setOpenfuncAirport(true);
     const handleCloseAirport = () => setOpenfuncAirport(false);
     const response:any = useAppSelector((state:any) => state.Airport.response);
-    var filterResponse:any = useAppSelector((state:any) => state.Airport.FilterAirportList);
+    let filterResponse:any = useAppSelector((state:any) => state.Airport.FilterAirportList);
     const dispatch = useAppDispatch();
     const loaddata=async()=>{
         if(response.length===0)

@@ -14,8 +14,8 @@ import { Paper } from "@mui/material";
 
 const SideNavbarTransaction:FC = () =>{
     const [filtername, setfiltername] = useState<string>('Filter By');
-    var Aircraftresult=useAppSelector<Array<any>>((state)=>state.Aircraft.response);
-    var AircraftList=Aircraftresult.map((aircraft)=>aircraft.aircraft_no)
+    const Aircraftresult=useAppSelector<Array<any>>((state)=>state.Aircraft.response);
+    const AircraftList=Aircraftresult.map((aircraft)=>aircraft.aircraft_no)
     const [expanded, setExpanded] = useState('panel1');
     const handleChange = (panel:any) => (event:any, newExpanded:any) => {
         setExpanded(newExpanded ? panel : false);

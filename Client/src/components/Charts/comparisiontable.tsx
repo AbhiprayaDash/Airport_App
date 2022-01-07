@@ -19,7 +19,7 @@ export const Totaltransaction = () =>{
     const [totalIntransaction,settotalIntransaction] = useState<Number>(0)
     const [totalOuttransaction,settotalOuttransaction] = useState<Number>(0)
     const [totaltransaction,settotaltransaction] = useState<Number>(0)
-    var transactiondata:Array<any> = response
+    const transactiondata:Array<any> = response
     const loaddata =async ()=>{
         if(response.length===0)
         {

@@ -6,7 +6,6 @@ import { ToastContainer } from "react-toastify";
 import { errormsg, successmsg } from "../../services/toastservice";
 import { postlogindata } from "../../services/authservice";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import NavigationComponent from "../Navigation/navcomponent";
 type statetypes={
     password:string,
     email:string,
